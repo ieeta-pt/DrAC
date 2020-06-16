@@ -2,6 +2,9 @@ import argparse
 import sys
 import configparser
 from DatasetReader import DatasetReader
+from Annotator import Annotator
+from Relation import Relation
+from Writer import Writer
 
 def help(show=False):
 	parser = argparse.ArgumentParser(description="")
@@ -43,7 +46,11 @@ def vocabularyCreationMode(settings):
 
 def annotationMode(settings):
 	print("Annotation mode!")
-	clinicalNotes = DatasetReader().readClinicalNotes(settings["dataset"]["directory"],settings["dataset"]["name"])
+	clinicalNotes = DatasetReader.readClinicalNotes(settings["dataset"]["directory"], settings["dataset"]["name"])
+	nejiAnnotations = Annotator.annotate(clinicalNotes)
+	annotations = Relation.inferRelations(nejiAnnotations)
+	Writer.writeMatrix(annotations)
+	print("Done!")
 
 def main():
 	args = help()
