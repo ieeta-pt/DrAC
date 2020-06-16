@@ -4,14 +4,22 @@ class Writer():
 		pass
 
 	def writeVocabularies(vocabularies, location):
-		out = open(location+"aaa", "w")
-		for x in vocabularies:
-			try:
-				tmp = "UMLS:{}:T200:Drugs\t".format(x)
-				for desc in tsv[x]:
-					tmp += desc+"|"
-				tmp = tmp[:-1]+"\n"
-				out.write(tmp)
-			except:
-				pass
-		out.close()
+		"""
+		This method writes the vocabularies in an location.
+		:param vocabularies: Dict containing all the vocabularies, key is the vocabulary name value is the dict with the vocabulary
+			{
+				"fileName":{"UMLS:CUI:TUI":[List of concepts]},
+				...
+			}
+		:param location: It is the location to write all the vocabularies.
+		"""
+		for vocName in vocabularies:
+			out = open("{}{}.tsv".format(location, vocName), "w")
+			for cuiTui in vocabularies[vocName]:
+				listOfConcepts = vocabularies[vocName][cuiTui]
+				tmpLine = "{}\t".format(cuiTui)
+				for concept in listOfConcepts:
+					tmpLine += concept + "|"
+				tmpLine = tmpLine[:-1] + "\n"
+				out.write(tmpLine)
+			out.close()
