@@ -130,3 +130,6 @@ dmypy.json
 
 dataset/*
 !dataset/README.md
+
+vocabularies/*
+!vocabularies/README.md
