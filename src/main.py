@@ -49,6 +49,7 @@ def vocabularyCreationMode(settings):
 	print("Vocabulary creation mode!")
 	vocabularies = Vocabulary.create(settings["vocabularies"])
 	Writer.writeVocabularies(vocabularies, settings["vocabularies"]["output"])
+	print("Done!")
 
 def annotationMode(settings):
 	print("Annotation mode!")
