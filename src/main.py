@@ -5,6 +5,7 @@ from DatasetReader import DatasetReader
 from Annotator import Annotator
 from Relation import Relation
 from Writer import Writer
+from Vocabulary import Vocabulary
 
 def help(show=False):
 	parser = argparse.ArgumentParser(description="")
@@ -34,6 +35,9 @@ def validateSettings(settings, args):
 	if (args.vocabulary and args.annotate) or \
 		(not args.vocabulary and not args.annotate):
 		return False
+	if args.vocabulary:
+		if "vocabularies" not in settings:
+			return False
 	if args.annotate:
 		if "dataset" not in settings:
 			return False
@@ -43,6 +47,8 @@ def validateSettings(settings, args):
 
 def vocabularyCreationMode(settings):
 	print("Vocabulary creation mode!")
+	vocabularies = Vocabulary.create(settings["vocabularies"])
+	Writer.writeVocabularies(vocabularies, settings["vocabularies"]["output"])
 
 def annotationMode(settings):
 	print("Annotation mode!")
