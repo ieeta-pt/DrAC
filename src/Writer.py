@@ -21,7 +21,7 @@ class Writer():
 		"""
 		for vocName in vocabularies:
 			for tui in vocabularies[vocName]:
-				out = open("{}{}_{}.tsv".format(location, vocName, tui), "w")
+				out = open("{}{}_{}.tsv".format(location, vocName, tui), "w", encoding='utf8')
 				for cuiTui in vocabularies[vocName][tui]:
 					listOfConcepts = vocabularies[vocName][tui][cuiTui]
 					tmpLine = "{}\t".format(cuiTui)

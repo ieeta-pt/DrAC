@@ -67,7 +67,7 @@ class Vocabulary():
 				cui = line[0]
 				desc = line[14].lower()
 				if cui in cuiToTui:
-					cuiName = "{}_{}".format(cuiToTui[cui][0], name)
+					cuiName = name#"{}_{}".format(cuiToTui[cui][0], name)
 					if cuiName not in voc:
 						voc[cuiName] = {}
 					cuiTui = "UMLS:{}:{}:{}".format(cui, cuiToTui[cui][0], name)
