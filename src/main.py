@@ -19,6 +19,8 @@ def help(show=False):
 							help='In this mode, the system will create the vocabularies to use in Neju (default: False)')
 	executionMode.add_argument('-a', '--annotate', default=False, action='store_true', \
 							help='In this mode, the system will annotate the dataset (default: False)')
+	executionMode.add_argument('-e', '--evaluate', default=False, action='store_true', \
+							help='In this mode, the system will annotate and evaluate the dataset without converting it to the matrix (default: False)')
 	if show:
 		parser.print_help()
 	return parser.parse_args()
@@ -32,13 +34,21 @@ def readSettings(settingsFile):
 
 def validateSettings(settings, args):
 	#Ensure the selection of one execution mode, otherwise do not work
-	if (args.vocabulary and args.annotate) or \
-		(not args.vocabulary and not args.annotate):
+	if (args.vocabulary and args.annotate and args.evaluate) or \
+		(not args.vocabulary and not args.annotate and not args.evaluate):
 		return False
+
 	if args.vocabulary:
 		if "vocabularies" not in settings:
 			return False
-	if args.annotate:
+		if 	"umls_rxnorm" not in settings["vocabularies"] or \
+			"umls_drugsbank" not in settings["vocabularies"] or \
+			"umls_aod" not in settings["vocabularies"] or \
+			"tuis" not in settings["vocabularies"] or \
+			"output" not in settings["vocabularies"]:
+			return False
+
+	if args.annotate or args.evaluate:
 		if "dataset" not in settings:
 			return False
 		if "directory" not in settings["dataset"] or "name" not in settings["dataset"]:
@@ -59,6 +69,13 @@ def annotationMode(settings):
 	Writer.writeMatrix(annotations)
 	print("Done!")
 
+def evaluationMode(settings):
+	print("Evaluation mode!")
+	clinicalNotes = DatasetReader.readClinicalNotes(settings["dataset"]["directory"], settings["dataset"]["name"])
+	nejiAnnotations = Annotator.annotate(clinicalNotes)
+	print("to do")
+	print("Done!")
+
 def main():
 	args = help()
 	settings = readSettings(args.settings)
@@ -68,6 +85,9 @@ def main():
 
 		if args.annotate:
 			annotationMode(settings)
+
+		if args.evaluate:
+			evaluationMode(settings)
 	else:
 		print("The settings are not defined correctly. Please confirm all the necessary parameters in the documentation!")
 		help(show=True)

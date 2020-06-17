@@ -3,8 +3,8 @@
 This system was validated using two public datasets:
 - 2018 (Track 2) ADE and Medication Extraction Challenge: Containing the TXT files (clinical notes) and the ANN files (annotations)
 	- test/
-	- test_data_Task2/
-	- 'test_data_Tasks1&3'/
+	- test_data_Task2/	NOT USED
+	- 'test_data_Tasks1&3'/	NOT USED
 	- train/
 - 2014 De-identification and Heart Disease Risk Factors Challenge: Containing the XML files with the text and the annotations
 	- testing-RiskFactors-Complete/

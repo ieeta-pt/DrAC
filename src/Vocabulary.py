@@ -27,17 +27,17 @@ class Vocabulary():
 		#...
 		return vocabularies
 
-	def _relationWithCUIandTUI(mrsty):
+	def _relationWithCUIandTUI(tuisFile):
 		"""
 		This method creates the dict with the relation between CUIs ans TUIs
-		:param mrsty: File location to read this relation
+		:param tuisFile: File location to read the relations between CUIs ans TUIs
 		:return: Dict with the relations, key is the CUI and value is the TUI
 			{
 				"CUI":("TUI","Name"),
 			}
 		"""
 		cuiToTui = {}
-		with codecs.open(mrsty, 'r', encoding='utf8') as fp:
+		with codecs.open(tuisFile, 'r', encoding='utf8') as fp:
 			for line in fp:
 				line = line.strip().split("|")
 				cui = line[0]

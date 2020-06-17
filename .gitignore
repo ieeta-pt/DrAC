@@ -133,3 +133,5 @@ dataset/*
 
 vocabularies/*
 !vocabularies/README.md
+
+notes
