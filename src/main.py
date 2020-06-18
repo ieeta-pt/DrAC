@@ -65,6 +65,7 @@ def annotationMode(settings):
 	print("Annotation mode!")
 	clinicalNotes = DatasetReader.readClinicalNotes(settings["dataset"]["directory"], settings["dataset"]["name"])
 	nejiAnnotations = Annotator.annotate(clinicalNotes)
+	Writer.writeAnnotations(nejiAnnotations, settings["dataset"]["neji_annotations"])
 	annotations = Relation.inferRelations(nejiAnnotations)
 	Writer.writeMatrix(annotations)
 	print("Done!")
@@ -72,8 +73,8 @@ def annotationMode(settings):
 def evaluationMode(settings):
 	print("Evaluation mode!")
 	clinicalNotes = DatasetReader.readClinicalNotes(settings["dataset"]["directory"], settings["dataset"]["name"])
-	nejiAnnotations = Annotator.annotate(clinicalNotes)
-	print("to do")
+	nejiAnnotations = Evaluator.readNejiAnnotations(settings["dataset"]["neji_annotations"])
+	Evaluator.evaluate(clinicalNotes, nejiAnnotations)
 	print("Done!")
 
 def main():
