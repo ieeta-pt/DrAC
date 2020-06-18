@@ -6,6 +6,7 @@ from Annotator import Annotator
 from Relation import Relation
 from Writer import Writer
 from Vocabulary import Vocabulary
+from Evaluator import Evaluator
 
 def help(show=False):
 	parser = argparse.ArgumentParser(description="")
@@ -20,7 +21,13 @@ def help(show=False):
 	executionMode.add_argument('-a', '--annotate', default=False, action='store_true', \
 							help='In this mode, the system will annotate the dataset (default: False)')
 	executionMode.add_argument('-e', '--evaluate', default=False, action='store_true', \
-							help='In this mode, the system will annotate and evaluate the dataset without converting it to the matrix (default: False)')
+							help='In this mode, the system will read the annotations and evaluate the dataset without converting it to \
+							the matrix (default: False)')
+
+	complementaryMode = parser.add_argument_group('Complementary functions', 'Choose the complementary functions for the execution modes!')
+	complementaryMode.add_argument('-r', '--read-ann', default=False, action='store_true', \
+							help='This flag is complementary to the --annotate or --evaluate execution mode. With this flag activated, the system \
+							will used the neji annotations stored previously (default: False)')
 	if show:
 		parser.print_help()
 	return parser.parse_args()
@@ -61,19 +68,26 @@ def vocabularyCreationMode(settings):
 	Writer.writeVocabularies(vocabularies, settings["vocabularies"]["output"])
 	print("Done!")
 
-def annotationMode(settings):
+def annotationMode(settings, read):
 	print("Annotation mode!")
 	clinicalNotes = DatasetReader.readClinicalNotes(settings["dataset"]["directory"], settings["dataset"]["name"])
-	nejiAnnotations = Annotator.annotate(clinicalNotes)
-	Writer.writeAnnotations(nejiAnnotations, settings["dataset"]["neji_annotations"])
+	if read:
+		nejiAnnotations = Annotator.readNejiAnnotations(settings["dataset"]["neji_annotations"])
+	else:
+		nejiAnnotations = Annotator.annotate(clinicalNotes)
+		Writer.writeAnnotations(nejiAnnotations, settings["dataset"]["neji_annotations"])
+
 	annotations = Relation.inferRelations(nejiAnnotations)
 	Writer.writeMatrix(annotations)
 	print("Done!")
 
-def evaluationMode(settings):
+def evaluationMode(settings, read):
 	print("Evaluation mode!")
 	clinicalNotes = DatasetReader.readClinicalNotes(settings["dataset"]["directory"], settings["dataset"]["name"])
-	nejiAnnotations = Evaluator.readNejiAnnotations(settings["dataset"]["neji_annotations"])
+	if read:
+		nejiAnnotations = Annotator.readNejiAnnotations(settings["dataset"]["neji_annotations"])
+	else:
+		nejiAnnotations = Annotator.annotate(clinicalNotes)
 	Evaluator.evaluate(clinicalNotes, nejiAnnotations)
 	print("Done!")
 
@@ -85,10 +99,10 @@ def main():
 			vocabularyCreationMode(settings)
 
 		if args.annotate:
-			annotationMode(settings)
+			annotationMode(settings, args.read_ann)
 
 		if args.evaluate:
-			evaluationMode(settings)
+			evaluationMode(settings, args.read_ann)
 	else:
 		print("The settings are not defined correctly. Please confirm all the necessary parameters in the documentation!")
 		help(show=True)

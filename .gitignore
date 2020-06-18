@@ -135,3 +135,5 @@ vocabularies/*
 !vocabularies/README.md
 
 notes
+results/*
+!results/dummy
