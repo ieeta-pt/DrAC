@@ -14,7 +14,7 @@ class DatasetReader():
 					"file name"":{
 						"cn": "clinical note",
 						"annotation":{
-							"id":("concept",[(span,span), ...])
+							"id":("concept","type",[(span,span), ...])
 						},
 						"relation":{
 							"id": (type, annId1, annId2)

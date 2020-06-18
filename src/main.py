@@ -12,8 +12,8 @@ def help(show=False):
 	parser = argparse.ArgumentParser(description="")
 	configs = parser.add_argument_group('System settings', 'The system parameters to run the system in the different modes')
 	configs.add_argument('-s', '--settings', dest='settings', \
-                        type=str, default="../settings.ini", \
-                        help='The system settings file (default: ../settings.ini)')	
+						type=str, default="../settings.ini", \
+						help='The system settings file (default: ../settings.ini)')	
 
 	executionMode = parser.add_argument_group('Execution Mode', 'Choose what is the execution mode!')
 	executionMode.add_argument('-v', '--vocabulary', default=False, action='store_true', \
@@ -88,7 +88,7 @@ def evaluationMode(settings, read):
 		nejiAnnotations = Annotator.readNejiAnnotations(settings["dataset"]["neji_annotations"])
 	else:
 		nejiAnnotations = Annotator.annotate(clinicalNotes)
-	Evaluator.evaluate(clinicalNotes, nejiAnnotations)
+	Evaluator.evaluateNeji(clinicalNotes, nejiAnnotations)
 	print("Done!")
 
 def main():
