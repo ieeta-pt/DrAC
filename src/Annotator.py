@@ -20,16 +20,26 @@ class Annotator():
 				}
 				"test":{...}
 			}
-		:return: todo
+		:return: Dict with the neji annotations, key is the dataset (train or test), value is another dict containing the
+		files name as key and a list of annotations. The annotations have the following structure: date|UMLS:C2740799:T129:DrugsBank|10
+			{
+				"train":{
+					"file name"":["annotation"]
+				}
+				"test":{...}
+			}
 		"""
-		url = "https://bioinformatics.ua.pt/nejiws/annotate/Disorders/annotate"
+		url = "https://bioinformatics.ua.pt/nejiws/annotate/Drugs/annotate"
 		headers = {'Content-Type': 'application/json; charset=UTF-8'}
+		annotations = {}
+		annotations["train"] = {}
 		for fileName in clinicalNotes["train"]:
 			text = clinicalNotes["train"][fileName]["cn"]
 			payload = json.dumps({"text": "%s" % text.lower()}, ensure_ascii=True).encode('utf-8')
 			response = requests.request("POST", url, data=payload, headers=headers)
 			results = json.loads(response.text)
-			print(results)
 			results = results['entities']
-			print(results)
-		return None
+			annotations["train"][fileName] = []
+			for ann in results:
+				annotations["train"][fileName].append(ann)
+		return annotations
