@@ -1,7 +1,5 @@
-# cn-to-cdm
-
 <p align="center"><img src="images/logo.png"
-alt="cn-to-cdm" height="76" border="0" /></p>
+alt="cn-to-cdm" height="150" border="0" /></p>
 
 <p align="center"><b>From Clinical Notes to Common Data Model</b></p>
 
