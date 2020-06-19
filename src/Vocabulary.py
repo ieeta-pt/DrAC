@@ -66,15 +66,14 @@ class Vocabulary():
 				line = line.strip().split("|")
 				cui = line[0]
 				desc = line[14].lower()
-				if cui in cuiToTui:
+				if len(desc) >= 3 and cui in cuiToTui:
 					cuiName = name#"{}_{}".format(cuiToTui[cui][0], name)
 					if cuiName not in voc:
 						voc[cuiName] = {}
 					cuiTui = "UMLS:{}:{}:{}".format(cui, cuiToTui[cui][0], name)
 					if cuiTui not in voc[cuiName]:
 						voc[cuiName][cuiTui] = []
-					if len(desc) >= 3:
-						voc[cuiName][cuiTui].append(desc)
+					voc[cuiName][cuiTui].append(desc)
 		return voc
 
 	def _createAllT200BasedOnRXNorm(rxnorm):
