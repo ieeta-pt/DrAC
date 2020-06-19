@@ -1,6 +1,6 @@
 
 class Writer():
-	def writeMatrix(annotations):
+	def writeMatrix(annotations, location):
 		"""
 		This method writes the matrix with all the information extracted
 		First column: Patient id
@@ -8,14 +8,54 @@ class Writer():
 		:param annotations: Dict with the drug and dosage/strength present in each file, by dataset. Drugs without strength will have the value yes
 			{
 				"train":{
-					"file name"":{
+					"file name":{
 						"concept":"dosage/strength/yes"
 					}
 				}
 				"test":{...}
 			}
+		:param location: It is the location to write the matrix.
 		"""
-		pass
+		for dataset in annotations:#We created two matrix (test and train)
+			matrix = Writer._buildMatrix(annotations[dataset])
+			out = open("{}{}_matrix.tsv".format(location, dataset), "w", encoding='utf8')
+			for line in matrix:
+				tmpLine = ""
+				for entry in line:
+					tmpLine += entry + "\t"
+				tmpLine = tmpLine[:-1] + "\n"
+				out.write(tmpLine)
+			out.close()
+
+	def _buildMatrix(annotations):
+		"""
+		This private method create the matrix with all the information extracted
+		:param annotations: Dict with the drug and dosage/strength present in each file.
+			{
+				"file name":{
+					"concept":"dosage/strength/yes"
+				}
+			}
+		:return: List of lists creating the matrix
+			[["fileName","concept1","concept2","concept3",...]
+			 ["fileID1", "dosage", "", "",...]]
+		"""
+		matrix = [["fileName"]]
+		#Create matrix headers
+		for file in annotations:
+			for concept in annotations[file]:
+				if concept not in matrix[0]:
+					matrix[0].append(concept)
+		#Collect measurements
+		index = 0
+		for file in annotations:
+			index += 1
+			matrix.append([file]+["" for i in range(len(matrix[0]))])
+			for concept in annotations[file]:
+				dosage = annotations[file][concept].replace("\t", " ")#just in case
+				conPos = matrix[0].index(concept)
+				matrix[index][conPos] = dosage
+		return matrix
 
 	def writeVocabularies(vocabularies, location):
 		"""

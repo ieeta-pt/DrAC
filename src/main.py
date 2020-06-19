@@ -82,7 +82,7 @@ def annotationMode(settings, read):
 
 	annotations = Annotator.posProcessing(nejiAnnotations)
 	annWithRelations = Relation.inferRelations(clinicalNotes, annotations)
-	Writer.writeMatrix(annWithRelations)
+	Writer.writeMatrix(annWithRelations, settings["dataset"]["matrix_location"])
 	print("Done!")
 
 def evaluationMode(settings, read, detailEva):
