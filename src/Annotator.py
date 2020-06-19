@@ -16,7 +16,7 @@ class Annotator():
 							"id":("concept",[(span,span), ...])
 						},
 						"relation":{
-							"id": (type, annId1, annId2)
+							"id": (annId1, ("concept","type",[(span,span), ...]))
 						}
 					}
 				}
@@ -36,6 +36,7 @@ class Annotator():
 		annotations = {}
 		annotations["train"] = {}
 		for fileName in clinicalNotes["train"]:
+			print(fileName)
 			try:
 				text = clinicalNotes["train"][fileName]["cn"]
 				payload = json.dumps({"text": "%s" % text.lower()}, ensure_ascii=True).encode('utf-8')
@@ -47,6 +48,7 @@ class Annotator():
 					annotations["train"][fileName].append(ann)
 			except Exception as e:
 				print(e)
+		print("TO DO: Validate the annotation structure")
 		return annotations
 
 	def readNejiAnnotations(location):
@@ -82,3 +84,6 @@ class Annotator():
 						ann[dataset][fileName] = []
 					ann[dataset][fileName].append(nejiann)
 		return ann
+
+	def posProcessing(nejiAnnotations):
+		return nejiAnnotations

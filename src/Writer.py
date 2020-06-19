@@ -1,6 +1,20 @@
 
 class Writer():
 	def writeMatrix(annotations):
+		"""
+		This method writes the matrix with all the information extracted
+		First column: Patient id
+		Remaining columns: medications
+		:param annotations: Dict with the drug and dosage/strength present in each file, by dataset. Drugs without strength will have the value yes
+			{
+				"train":{
+					"file name"":{
+						"concept":"dosage/strength/yes"
+					}
+				}
+				"test":{...}
+			}
+		"""
 		pass
 
 	def writeVocabularies(vocabularies, location):

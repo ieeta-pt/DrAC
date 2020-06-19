@@ -28,6 +28,9 @@ def help(show=False):
 	complementaryMode.add_argument('-r', '--read-ann', default=False, action='store_true', \
 							help='This flag is complementary to the --annotate or --evaluate execution mode. With this flag activated, the system \
 							will used the neji annotations stored previously (default: False)')
+	complementaryMode.add_argument('-d', '--detail-eva', default=False, action='store_true', \
+							help='This flag is complementary to the --evaluate execution mode. With this flag activated, the system \
+							will detail the evaluation by presenting all the false positives and negatives using the dataset (default: False)')
 	if show:
 		parser.print_help()
 	return parser.parse_args()
@@ -77,18 +80,25 @@ def annotationMode(settings, read):
 		nejiAnnotations = Annotator.annotate(clinicalNotes)
 		Writer.writeAnnotations(nejiAnnotations, settings["dataset"]["neji_annotations"])
 
-	annotations = Relation.inferRelations(nejiAnnotations)
-	Writer.writeMatrix(annotations)
+	annotations = Annotator.posProcessing(nejiAnnotations)
+	annWithRelations = Relation.inferRelations(clinicalNotes, annotations)
+	Writer.writeMatrix(annWithRelations)
 	print("Done!")
 
-def evaluationMode(settings, read):
+def evaluationMode(settings, read, detailEva):
 	print("Evaluation mode!")
 	clinicalNotes = DatasetReader.readClinicalNotes(settings["dataset"]["directory"], settings["dataset"]["name"])
 	if read:
 		nejiAnnotations = Annotator.readNejiAnnotations(settings["dataset"]["neji_annotations"])
 	else:
 		nejiAnnotations = Annotator.annotate(clinicalNotes)
-	Evaluator.evaluateNeji(clinicalNotes, nejiAnnotations)
+	Evaluator.evaluateNeji(clinicalNotes, nejiAnnotations, detailEva)
+
+	annotations = Annotator.posProcessing(nejiAnnotations)
+	Evaluator.evaluateAnnotations(clinicalNotes, annotations, detailEva)
+
+	annWithRelations = Relation.inferRelations(clinicalNotes, annotations)
+	Evaluator.evaluateAnnotationsWithRelations(clinicalNotes, annWithRelations, detailEva)
 	print("Done!")
 
 def main():
@@ -102,7 +112,7 @@ def main():
 			annotationMode(settings, args.read_ann)
 
 		if args.evaluate:
-			evaluationMode(settings, args.read_ann)
+			evaluationMode(settings, args.read_ann, args.detail_eva)
 	else:
 		print("The settings are not defined correctly. Please confirm all the necessary parameters in the documentation!")
 		help(show=True)

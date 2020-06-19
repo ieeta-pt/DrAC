@@ -17,7 +17,7 @@ class DatasetReader():
 							"id":("concept","type",[(span,span), ...])
 						},
 						"relation":{
-							"id": (type, annId1, annId2)
+							"id": (annId1, ("concept","type",[(span,span), ...]))
 						}
 					}
 				}
@@ -55,27 +55,41 @@ class DatasetReader():
 						"id":("concept","type",[(span,span), ...])
 					},
 					"relation":{
-						"id": (type, annId1, annId2)
+						"id": (annId1, ("concept","type",[(span,span), ...]))
 					}
 				"""
 				fileName = file.split("/")[-1].split(".")[0]
 				cn[dataset][fileName]["annotation"] = {}
 				cn[dataset][fileName]["relation"] = {}
+				tmpStrength = {}
 				with codecs.open(file, 'r', encoding='utf8') as fp:
-					for line in fp.read().split("\n"):
+					clinicalNote = fp.read().split("\n")
+					for line in clinicalNote:
 						#T1	Reason 10179 10197	recurrent seizures
 						if line.startswith("T"):
 							data = line.split("\t")
 							ann = data[1].replace(";", " ").split(" ")
-							if ann[0].startswith("Drug"):
-								annType = ann[0]
+							annType = ann[0]
+							if ann[0].startswith("Drug") or ann[0].startswith("Strength") or ann[0].startswith("Dosage"):
 								span = []
 								for s in ann[1:]:
 									span.append(int(s))
+									
+							if ann[0].startswith("Drug"):
 								cn[dataset][fileName]["annotation"][data[0]] = (data[2], annType, span)
-						#R1	Reason-Drug Arg1:T1 Arg2:T3
-						elif line.startswith("R"):
-							pass
+							elif ann[0].startswith("Strength") or ann[0].startswith("Dosage"):
+								tmpStrength[data[0]] = (data[2], annType, span)
+
+					for line in clinicalNote:
+						#R9	Strength-Drug Arg1:T11 Arg2:T6
+						if line.startswith("R"):
+							data = line.split("\t")
+							ann = data[1].split(" ")
+							if "Strength-Drug" in ann[0] or "Dosage-Drug" in ann[0]:
+								annType = ann[0]
+								drugId = ann[2].split(":")[1]
+								infoTuple = tmpStrength[ann[1].split(":")[1]]
+								cn[dataset][fileName]["relation"][data[0]] = (drugId, infoTuple)
 		return cn
 
 	def _reader2014Track2(directory):

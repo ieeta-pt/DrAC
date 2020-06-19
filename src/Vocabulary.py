@@ -73,7 +73,8 @@ class Vocabulary():
 					cuiTui = "UMLS:{}:{}:{}".format(cui, cuiToTui[cui][0], name)
 					if cuiTui not in voc[cuiName]:
 						voc[cuiName][cuiTui] = []
-					voc[cuiName][cuiTui].append(desc)
+					if len(desc) >= 3:
+						voc[cuiName][cuiTui].append(desc)
 		return voc
 
 	def _createAllT200BasedOnRXNorm(rxnorm):
