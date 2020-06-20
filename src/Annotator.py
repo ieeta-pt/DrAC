@@ -45,10 +45,10 @@ class Annotator():
 				results = results['entities']
 				annotations["train"][fileName] = []
 				for ann in results:
+					ann = tuple(ann.split("|"))
 					annotations["train"][fileName].append(ann)
 			except Exception as e:
 				print(e)
-		print("TO DO: Validate the annotation structure")
 		return annotations
 
 	def readNejiAnnotations(location):

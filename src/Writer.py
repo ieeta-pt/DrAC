@@ -108,6 +108,6 @@ class Writer():
 		out = open("{}{}_nejiann.tsv".format(location, "train"), "w", encoding='utf8')
 		for fileName in nejiAnnotations["train"]:
 			for ann in nejiAnnotations["train"][fileName]:
-				out.write("{}|{}\n".format(fileName, ann))
+				out.write("{}|{}|{}|{}\n".format(fileName, ann[0],ann[1],ann[2]))
 		out.close()
 
