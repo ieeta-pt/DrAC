@@ -5,3 +5,5 @@ This directory must have the OHDSI standard vocabularies. In order to download t
 - RXNorm
 
 Then, extract the CSV files to this directory or other (but in that case, it is necessary to define the new directory in the settings file).
+
+This vocabularies will be also used as database for the Usagi tool during the harmonisation procedure.

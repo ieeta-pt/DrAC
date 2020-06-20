@@ -90,6 +90,14 @@ def validateSettings(settings, args):
 			"user" not in settings["database"]  or \
 			"password" not in settings["database"] :
 			return False
+
+	if args.annotate and args.migrate:
+		if "harmonisation" not in settings:
+			return False
+		if 	"usagi_output" not in settings["harmonisation"] or \
+			"dataset" not in settings["harmonisation"]:
+			return False
+
 	return True
 
 def vocabularyCreationMode(settings):
@@ -109,8 +117,9 @@ def annotationMode(settings, read):
 
 	annotations = Annotator.posProcessing(nejiAnnotations)
 	annWithRelations = Relation.inferRelations(clinicalNotes, annotations)
-	Writer.writeMatrix(annWithRelations, settings["dataset"]["matrix_location"])
+	matrix = Writer.writeMatrix(annWithRelations, settings["dataset"]["matrix_location"])
 	print("Done!")
+	return matrix
 
 def evaluationMode(settings, read, detailEva):
 	print("Evaluation mode!")
@@ -128,11 +137,11 @@ def evaluationMode(settings, read, detailEva):
 	Evaluator.evaluateAnnotationsWithRelations(clinicalNotes, annWithRelations, detailEva)
 	print("Done!")
 
-def migrationMode(settings, loadIntoDB):
-	pass
+def migrationMode(matrix, settings, loadIntoDB):
+	print("Migration mode!")
+	print("Done!")
 
 def loadingOHDSIVocabulariesMode(settings):
-
 	print("Loading OHDSI Vocabularies mode!")
 	print("This procedure can take several minutes! Please be patient...")
 	Writer.writeVocabularies(settings["database"], settings["vocabularies"]["ohdsi"])
@@ -146,9 +155,9 @@ def main():
 			vocabularyCreationMode(settings)
 
 		if args.annotate:
-			annotationMode(settings, args.read_ann)
+			matrix = annotationMode(settings, args.read_ann)
 			if args.migrate:
-				migrationMode(settings, args.load_db)
+				migrationMode(matrix[settings["harmonisation"]["dataset"]], settings, args.load_db)
 
 		if args.evaluate:
 			evaluationMode(settings, args.read_ann, args.detail_eva)

@@ -19,9 +19,12 @@ class Writer():
 				"test":{...}
 			}
 		:param location: It is the location to write the matrix.
+		:return: Dict with both matrix
 		"""
+		allMatrix = {}
 		for dataset in annotations:#We created two matrix (test and train)
 			matrix = Writer._buildMatrix(annotations[dataset])
+			allMatrix[dataset] = matrix
 			out = open("{}{}_matrix.tsv".format(location, dataset), "w", encoding='utf8')
 			for line in matrix:
 				tmpLine = ""
@@ -30,6 +33,7 @@ class Writer():
 				tmpLine = tmpLine[:-1] + "\n"
 				out.write(tmpLine)
 			out.close()
+		return allMatrix
 
 	def _buildMatrix(annotations):
 		"""
@@ -116,6 +120,12 @@ class Writer():
 		out.close()
 
 	def writeVocabularies(dbSettings, ohdsiVocabularies):
+		"""
+		THis method reads the OHDSI Vocabulaires in CSV files and write them in the database
+		:param dbSettings: Dict with all the fields to connect with the database (settings["database"])
+		:param ohdsiVocabularies: Location of the OHDSI Vocabularies
+		"""
+		#I may need to change this due to huge files see: https://pythondata.com/working-large-csv-files-python/
 		engine = create_engine(dbSettings["datatype"]+"://"+dbSettings["user"]+":"+dbSettings["password"]+"@"+dbSettings["server"]+":"+dbSettings["port"]+"/"+dbSettings["database"])
 		vocabulariesFiles = glob.glob('{}*.{}'.format(ohdsiVocabularies, "csv"))
 		if not vocabulariesFiles:
