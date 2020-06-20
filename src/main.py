@@ -16,7 +16,7 @@ def help(show=False):
 						help='The system settings file (default: ../settings.ini)')	
 
 	executionMode = parser.add_argument_group('Execution Mode', 'Choose what is the execution mode!')
-	executionMode.add_argument('-v', '--vocabulary', default=False, action='store_true', \
+	executionMode.add_argument('-v', '--voc-builder', default=False, action='store_true', \
 							help='In this mode, the system will create the vocabularies to use in Neju (default: False)')
 	executionMode.add_argument('-a', '--annotate', default=False, action='store_true', \
 							help='In this mode, the system will annotate the dataset (default: False)')
@@ -24,13 +24,23 @@ def help(show=False):
 							help='In this mode, the system will read the annotations and evaluate the dataset without converting it to \
 							the matrix (default: False)')
 
+	executionMode.add_argument('-o', '--load-ohdsi-voc', default=False, action='store_true', \
+							help='In this mode, the system will load the OHDSI vocabularies into the database (default: False)')
+
 	complementaryMode = parser.add_argument_group('Complementary functions', 'Choose the complementary functions for the execution modes!')
 	complementaryMode.add_argument('-r', '--read-ann', default=False, action='store_true', \
-							help='This flag is complementary to the --annotate or --evaluate execution mode. With this flag activated, the system \
-							will used the neji annotations stored previously (default: False)')
+							help='This flag is complementary to the --annotate or --evaluate execution mode. With this flag activated, \
+							the system will used the neji annotations stored previously (default: False)')
 	complementaryMode.add_argument('-d', '--detail-eva', default=False, action='store_true', \
 							help='This flag is complementary to the --evaluate execution mode. With this flag activated, the system \
 							will detail the evaluation by presenting all the false positives and negatives using the dataset (default: False)')
+	
+	complementaryMode.add_argument('-m', '--migrate', default=False, action='store_true', \
+							help='This flag is complementary to the --annotate execution mode. With this flag activated, \
+							the system will load the annotated results into the OMOP CDM Schema (default: False)')
+	complementaryMode.add_argument('-l', '--load-db', default=False, action='store_true', \
+							help='This flag is complementary to the --annotate execution mode and it only works if the --migrate flag is active.\
+							With this flag activated, the system will load the annotated results into the database (default: False)')	
 	if show:
 		parser.print_help()
 	return parser.parse_args()
@@ -43,12 +53,11 @@ def readSettings(settingsFile):
 	return configuration._sections
 
 def validateSettings(settings, args):
-	#Ensure the selection of one execution mode, otherwise do not work
-	if (args.vocabulary and args.annotate and args.evaluate) or \
-		(not args.vocabulary and not args.annotate and not args.evaluate):
+	if sum([args.voc_builder,args.annotate,args.evaluate,args.load_ohdsi_voc]) != 1:
+		print("Please you only can choose one execution mode!")
 		return False
 
-	if args.vocabulary:
+	if args.voc_builder:
 		if "vocabularies" not in settings:
 			return False
 		if 	"umls_rxnorm" not in settings["vocabularies"] or \
@@ -58,10 +67,28 @@ def validateSettings(settings, args):
 			"output" not in settings["vocabularies"]:
 			return False
 
+	if args.load_ohdsi_voc:
+		if "vocabularies" not in settings:
+			return False
+		if "ohdsi" not in settings["vocabularies"]:
+			return False
+
 	if args.annotate or args.evaluate:
 		if "dataset" not in settings:
 			return False
 		if "directory" not in settings["dataset"] or "name" not in settings["dataset"]:
+			return False
+
+	if args.load_ohdsi_voc or args.annotate:
+		if "database" not in settings:
+			return False
+		if  "datatype" not in settings["database"] or \
+			"server" not in settings["database"]  or \
+			"database" not in settings["database"]  or \
+			"schema" not in settings["database"]  or \
+			"port" not in settings["database"]  or \
+			"user" not in settings["database"]  or \
+			"password" not in settings["database"] :
 			return False
 	return True
 
@@ -101,18 +128,29 @@ def evaluationMode(settings, read, detailEva):
 	Evaluator.evaluateAnnotationsWithRelations(clinicalNotes, annWithRelations, detailEva)
 	print("Done!")
 
+def migrationMode(settings, loadIntoDB):
+	pass
+
+def loadingOHDSIVocabulariesMode(settings):
+	pass
+
 def main():
 	args = help()
 	settings = readSettings(args.settings)
 	if validateSettings(settings, args):
-		if args.vocabulary:
+		if args.voc_builder:
 			vocabularyCreationMode(settings)
 
 		if args.annotate:
 			annotationMode(settings, args.read_ann)
+			if args.migrate:
+				migrationMode(settings, args.load_db)
 
 		if args.evaluate:
 			evaluationMode(settings, args.read_ann, args.detail_eva)
+
+		if args.load_ohdsi_voc:
+			loadingOHDSIVocabulariesMode(settings)
 	else:
 		print("The settings are not defined correctly. Please confirm all the necessary parameters in the documentation!")
 		help(show=True)

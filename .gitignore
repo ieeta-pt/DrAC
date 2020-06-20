@@ -137,3 +137,7 @@ vocabularies/*
 notes
 results/*
 !results/dummy
+
+
+OHDSIVocabularies/*
+!OHDSIVocabularies/README.md
