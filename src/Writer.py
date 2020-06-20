@@ -1,3 +1,7 @@
+from Tables.BaseTable import BaseTable
+from sqlalchemy import create_engine
+import pandas as pd
+import glob
 
 class Writer():
 	def writeMatrix(annotations, location):
@@ -111,3 +115,16 @@ class Writer():
 				out.write("{}|{}|{}|{}\n".format(fileName, ann[0],ann[1],ann[2]))
 		out.close()
 
+	def writeVocabularies(dbSettings, ohdsiVocabularies):
+		engine = create_engine(dbSettings["datatype"]+"://"+dbSettings["user"]+":"+dbSettings["password"]+"@"+dbSettings["server"]+":"+dbSettings["port"]+"/"+dbSettings["database"])
+		vocabulariesFiles = glob.glob('{}*.{}'.format(ohdsiVocabularies, "csv"))
+		if not vocabulariesFiles:
+			print("The directory does not have any vocabularies to read")
+		for file in vocabulariesFiles:
+			table = file.split("/")[-1].split(".")[0].lower()
+			print("Loading {} table...".format(table))
+			fileContent = pd.read_csv(file, na_values='null', sep="\t")
+			fileContent.to_sql(table, engine, if_exists 	= 'replace',
+												 index 		= False,
+												 schema 	= dbSettings["schema"],
+												 dtype 		= BaseTable.getDataTypesForSQL(table))
