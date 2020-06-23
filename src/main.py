@@ -3,7 +3,6 @@ import sys
 import configparser
 from DatasetReader import DatasetReader
 from Annotator import Annotator
-from Relation import Relation
 from Writer import Writer
 from Vocabulary import Vocabulary
 from Evaluator import Evaluator
@@ -74,7 +73,7 @@ def validateSettings(settings, args):
 			return False
 
 	if args.annotate or args.evaluate:
-		if "dataset" not in settings:
+		if "dataset" not in settings or "post_vocabularies" not in settings:
 			return False
 		if "directory" not in settings["dataset"] or "name" not in settings["dataset"]:
 			return False
@@ -115,7 +114,7 @@ def annotationMode(settings, read):
 		nejiAnnotations = Annotator.annotate(clinicalNotes)
 		Writer.writeAnnotations(nejiAnnotations, settings["dataset"]["neji_annotations"])
 
-	annotations = Annotator.posProcessing(clinicalNotes, nejiAnnotations)
+	annotations = Annotator.posProcessing(clinicalNotes, nejiAnnotations, settings["post_vocabularies"])
 	matrix = Writer.writeMatrix(annotations, settings["dataset"]["matrix_location"])
 	print("Done!")
 	return matrix
@@ -129,7 +128,7 @@ def evaluationMode(settings, read, detailEva):
 		nejiAnnotations = Annotator.annotate(clinicalNotes)
 	Evaluator.evaluateNeji(clinicalNotes, nejiAnnotations, detailEva)
 
-	annotations = Annotator.posProcessing(clinicalNotes, nejiAnnotations)
+	annotations = Annotator.posProcessing(clinicalNotes, nejiAnnotations, settings["post_vocabularies"])
 	Evaluator.evaluateAnnotations(clinicalNotes, annotations, detailEva)
 	print("Done!")
 

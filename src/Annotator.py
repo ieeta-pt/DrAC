@@ -3,6 +3,7 @@ import requests
 import glob
 import codecs
 from Utils import Utils
+from Vocabulary import Vocabulary
 
 #Flags to simplify the organization of theinformation in the list
 DOSAGE = 0
@@ -92,7 +93,7 @@ class Annotator():
 					ann[dataset][fileName].append(nejiann)
 		return ann
 
-	def posProcessing(clinicalNotes, nejiAnnotations):
+	def posProcessing(clinicalNotes, nejiAnnotations, vocabularies):
 		"""
 		:param clinicalNotes: Dict of clinical notes with the following structure (but only the "cn" from each file will be used)
 			{
@@ -117,6 +118,7 @@ class Annotator():
 				}
 				"test":{...}
 			}
+		:param vocabularies: Vocabularies to be used in the post processing
 		:return: Dict with the drug and dosage/quantity/route/sig (list) present in each file, by dataset.
 			{
 				"train":{
@@ -127,6 +129,7 @@ class Annotator():
 				"test":{...}
 			}
 		"""
+		voc = Vocabulary.readPostProcessingVoc(vocabularies)
 		annotations = {}
 		for dataset in nejiAnnotations:
 			annotations[dataset] = {}
@@ -141,26 +144,48 @@ class Annotator():
 					if annSpan in readedSpans:
 						continue
 					readedSpans.append(annSpan)
-					filterAnn = [(concept, code, span) for (concept, code, span) in annotation if span == annSpan]
-					if len(filterAnn) > 1:
-						drug, dosage = Utils.mergeAnnsToGetStrength(filterAnn)
-						if drug:
-							results[DOSAGE] = dosage
-							
 					sentence = Utils.getSentence(int(annSpan), clinicalNote)
-					results[ROUTE] = Annotator._annotateRoute(filterAnn[0], sentence)
-					results[QUANTITY] = Annotator._annotateQuantaty(filterAnn[0], sentence, results[ROUTE])
-					results[SIG] = Annotator._identifySig(filterAnn[0], sentence, results[ROUTE], results[QUANTITY])
+					results[ROUTE] = Annotator._annotateRoute(sentence, voc["route"])
+					if results[ROUTE] != None:
+						filterAnn = [(concept, code, span) for (concept, code, span) in annotation if span == annSpan and concept is not None]
+						if len(filterAnn) > 1:
+							drug, dosage = Utils.mergeAnnsToGetStrength(filterAnn)
+							if drug:
+								results[DOSAGE] = dosage
+						else:
+							drug = filterAnn[0][0]
 
-					if results[DOSAGE] != None or results[QUANTITY] != None or results[ROUTE] != None or results[SIG] != None:
+						if results[DOSAGE] == None:
+							results[DOSAGE] = Annotator._annotateDosage(drug, sentence, voc["strenght"])
+						results[QUANTITY] = Annotator._annotateQuantity(filterAnn[0], sentence, results[ROUTE])
+
 						annotations[dataset][file][drug] = results
 		return annotations
 
-	def _annotateRoute(concept, sentence):
+	def _annotateRoute(sentence, voc):
+		"""
+		This method annotates the drug route in the setence that the concept was found.
+		:param sentence: The sentence to analyze
+		:param voc: The vocabulary to use in a list of tuples (concept, type)
+		:return: Route or None
+		"""
+		route = []
+		for entry, group in voc:
+			search = " {} ".format(entry)
+			if search in sentence.lower():
+				if "other" in group:
+					group = "zzzz" #To be the last option in the list
+				route.append((entry, group))
+		if len(route) > 1:
+			route = sorted(route, key=lambda e: (e[1], -len(e[0])))
+			return route[0][0]
+		if len(route) == 1:
+			return route[0][0]
 		return None
 
-	def _annotateQuantaty(concept, sentence, route):
+	def _annotateQuantity(concept, sentence, route):
+		#regex
 		return None
 
-	def _identifySig(concept, sentence, route, quantity):
+	def _annotateDosage(concept, sentence, strenght):
 		return None

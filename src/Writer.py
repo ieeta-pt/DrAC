@@ -41,7 +41,7 @@ class Writer():
 		:param annotations: Dict with the drug and dosage/strength present in each file.
 			{
 				"file name":{
-					"concept":"dosage/strength/yes"
+					"concept":[...]
 				}
 			}
 		:return: List of lists creating the matrix
@@ -52,7 +52,7 @@ class Writer():
 		#Create matrix headers
 		for file in annotations:
 			for concept in annotations[file]:
-				if concept not in matrix[0]:
+				if concept not in matrix[0] and concept is not None:
 					matrix[0].append(concept)
 		#Collect measurements
 		index = 0
@@ -60,15 +60,16 @@ class Writer():
 			index += 1
 			matrix.append([file]+["" for i in range(len(matrix[0]))])
 			for concept in annotations[file]:
-				conceptsInfo = annotations[file][concept]
-				cell = ""
-				for entry in conceptsInfo:
-					if entry:
-						cell += entry + "|"
-				if len(cell) > 0:
-					cell = cell[:-1]
-				conPos = matrix[0].index(concept)
-				matrix[index][conPos] = cell
+				if concept is not None:
+					conceptsInfo = annotations[file][concept]
+					cell = ""
+					for entry in conceptsInfo:
+						if entry:
+							cell += entry + "|"
+					if len(cell) > 0:
+						cell = cell[:-1]
+					conPos = matrix[0].index(concept)
+					matrix[index][conPos] = cell
 		return matrix
 
 	def writeVocabularies(vocabularies, location):

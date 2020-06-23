@@ -100,4 +100,31 @@ class Vocabulary():
 				voc[cuiTui].append(desc)
 		return {"T200_Drugs": voc}
 
-
+	def readPostProcessingVoc(files):
+		"""
+		This method reads the post processing vocabularies that are in the same format the ones used in Neji
+		:param files: All the files with the vocabularies defined in settings under [post_processing]
+		:return: Dict of types of concepts, key is the type (i.e., route, dosage, etc..) and value is list of tuples(concepts, group)
+			{
+				"route":[("concept", "group")],
+				"all":...
+			}
+		"""
+		voc = {}
+		voc["all"] = []
+		for fileKey in files:
+			with codecs.open(files[fileKey], 'r', encoding='utf8') as fp:
+				for line in fp:
+					line = line.split("\t")
+					concType = line[0].split(":")[2].lower()
+					group = line[0].split(":")[0].lower()
+					if concType not in voc:
+						voc[concType] = []
+					for concept in line[1].split("|"):
+						if len(concept) > 0:
+							entry = (concept.strip(), group)
+							if entry not in voc["all"]:
+								voc["all"].append(entry)
+							if entry not in voc[concType]:
+								voc[concType].append(entry)
+		return voc
