@@ -5,7 +5,7 @@ class ConceptAncestor(BaseTable):
 	"""
 	Class to build the concept_ancestor table for uploading automatically the Standard Vocabularies
 	"""
-	def __init__(self, content):
+	def __init__(self):
 		columns = [
 			'ancestor_concept_id',
 			'descendant_concept_id',

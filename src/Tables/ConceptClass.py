@@ -5,7 +5,7 @@ class ConceptClass(BaseTable):
 	"""
 	Class to build the concept_class table for uploading automatically the Standard Vocabularies
 	"""
-	def __init__(self, content):
+	def __init__(self):
 		columns = [
 			'concept_class_id',
 			'concept_class_name',

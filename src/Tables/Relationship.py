@@ -5,7 +5,7 @@ class Relationship(BaseTable):
 	"""
 	Class to build the relationship table for uploading automatically the Standard Vocabularies
 	"""
-	def __init__(self, content):
+	def __init__(self):
 		columns = [
 			'relationship_id',
 			'relationship_name',

@@ -5,7 +5,7 @@ class ConceptRelationship(BaseTable):
 	"""
 	Class to build the concept_relationship table for uploading automatically the Standard Vocabularies
 	"""
-	def __init__(self, content):
+	def __init__(self):
 		columns = [
 			'concept_id_1',
 			'concept_id_2',

@@ -5,7 +5,7 @@ class Vocabulary(BaseTable):
 	"""
 	Class to build the vocabulary table for uploading automatically the Standard Vocabularies
 	"""
-	def __init__(self, content):
+	def __init__(self):
 		columns = [
 			'vocabulary_id',
 			'vocabulary_name',
