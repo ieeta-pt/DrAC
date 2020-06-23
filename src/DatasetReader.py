@@ -70,14 +70,17 @@ class DatasetReader():
 							data = line.split("\t")
 							ann = data[1].replace(";", " ").split(" ")
 							annType = ann[0]
-							if ann[0].startswith("Drug") or ann[0].startswith("Strength") or ann[0].startswith("Dosage"):
+							if ann[0].startswith("Drug") or \
+								ann[0].startswith("Strength") or \
+								ann[0].startswith("Dosage") or \
+								ann[0].startswith("Route"):
 								span = []
 								for s in ann[1:]:
 									span.append(int(s))
 									
 							if ann[0].startswith("Drug"):
 								cn[dataset][fileName]["annotation"][data[0]] = (data[2], annType, span)
-							elif ann[0].startswith("Strength") or ann[0].startswith("Dosage"):
+							elif ann[0].startswith("Strength") or ann[0].startswith("Dosage") or ann[0].startswith("Route"):
 								tmpStrength[data[0]] = (data[2], annType, span)
 
 					for line in clinicalNote:
@@ -85,7 +88,7 @@ class DatasetReader():
 						if line.startswith("R"):
 							data = line.split("\t")
 							ann = data[1].split(" ")
-							if "Strength-Drug" in ann[0] or "Dosage-Drug" in ann[0]:
+							if "Strength-Drug" in ann[0] or "Dosage-Drug" in ann[0] or "Route-Drug" in ann[0]:
 								annType = ann[0]
 								drugId = ann[2].split(":")[1]
 								infoTuple = tmpStrength[ann[1].split(":")[1]]

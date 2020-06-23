@@ -41,7 +41,7 @@ class Writer():
 		:param annotations: Dict with the drug and dosage/strength present in each file.
 			{
 				"file name":{
-					"concept":[...]
+					"concept":[dosage, quantity, route, [annSpann]]
 				}
 			}
 		:return: List of lists creating the matrix
@@ -64,7 +64,7 @@ class Writer():
 					conceptsInfo = annotations[file][concept]
 					cell = ""
 					for entry in conceptsInfo:
-						if entry:
+						if entry and isinstance(entry, str):
 							cell += entry + "|"
 					if len(cell) > 0:
 						cell = cell[:-1]

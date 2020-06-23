@@ -9,7 +9,7 @@ from Vocabulary import Vocabulary
 DOSAGE = 0
 QUANTITY = 1
 ROUTE = 2
-SIG = 3
+SPAN = 3
 
 class Annotator():
 	def annotate(clinicalNotes):
@@ -119,11 +119,11 @@ class Annotator():
 				"test":{...}
 			}
 		:param vocabularies: Vocabularies to be used in the post processing
-		:return: Dict with the drug and dosage/quantity/route/sig (list) present in each file, by dataset.
+		:return: Dict with the drug and dosage/quantity/route/span (list) present in each file, by dataset.
 			{
 				"train":{
 					"file name"":{
-						"concept":[dosage, quantity, route, sig]
+						"concept":[dosage, quantity, route, annSpann]
 					}
 				}
 				"test":{...}
@@ -158,6 +158,7 @@ class Annotator():
 						if results[DOSAGE] == None:
 							results[DOSAGE] = Annotator._annotateDosage(drug, sentence, voc["strenght"])
 						results[QUANTITY] = Annotator._annotateQuantity(filterAnn[0], sentence, results[ROUTE])
+						results[SPAN] = [annSpan]
 
 						annotations[dataset][file][drug] = results
 		return annotations

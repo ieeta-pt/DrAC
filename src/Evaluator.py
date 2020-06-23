@@ -15,7 +15,7 @@ class Evaluator():
 							"id":("concept","type",[(span,span), ...])
 						},
 						"relation":{
-							"id": (type, annId1, annId2)
+							"id": (annId1, ("concept","type",[(span,span), ...]))
 						}
 					}
 				}
@@ -145,5 +145,111 @@ class Evaluator():
 				#UMLS:C0000120:T121:AOD	
 		#		print("AdHoc:UNK:UNK:AdHoc\t{}".format(concept))
 	
-	def evaluateAnnotations(clinicalNotes, annotations, detailEva=False):
-		pass
+	def evaluateAnnotations(clinicalNotes, annotations, showDetail=False):
+		"""
+		This method evaluates the final result of the NLP process.
+		This evaluation considers the drugs with routes associated, since one pre requisite of this methodology was to detect 
+		drugs and routes, mainly because the OMOP CDM structure.
+		Therefore, this evaluation will compare the route found and the concept initial span
+		This evaluation only considers if the drug was detecting considering the initial span.
+		Strength and quantity were not evaluated in this method (for now).
+		:param clinicalNotes: Dict of clinical notes with the following structure
+			{
+				"train":{
+					"file name"":{
+						"cn": "clinical note",
+						"annotation":{
+							"id":("concept","type",[(span,span), ...])
+						},
+						"relation":{
+							"id": (annId1, ("concept","type",[(span,span), ...]))
+						}
+					}
+				}
+				"test":{...}
+			}
+		:param annotation: Dict with the drug and dosage/quantity/route (list) present in each file, by dataset.
+			{
+				"train":{
+					"file name"":{
+						"concept":[dosage, quantity, route, annSpan]
+					}
+				}
+				"test":{...}
+			}
+		:param showDetail: Boolean that when is set as True, the system shows all the false positives and false negatives annotations
+		"""
+		for dataset in clinicalNotes:
+			if dataset not in annotations:
+				print ("Dataset " + dataset + " not annotated yet!")
+				continue
+			print("Dataset: " + dataset)
+			metrics = {}
+			for fileName in clinicalNotes[dataset]:
+				if fileName not in annotations[dataset]:
+					print ("Note " + fileName + " not annotated! Maybe an decoding error during the annotation procedure!")
+					continue
+				annGSList = []#(drug, route)
+				for relID in clinicalNotes[dataset][fileName]["relation"]:
+					annID = clinicalNotes[dataset][fileName]["relation"][relID][0]
+					ann = clinicalNotes[dataset][fileName]["annotation"][annID]
+					rel = clinicalNotes[dataset][fileName]["relation"][relID][1]
+					if rel[1].lower() == "route": #Considering only the routes
+						route = rel[0]
+						annGSList.append((ann[0], str(ann[2][0]), route))
+				annList = []#(drug, span, route)
+				for ann in annotations[dataset][fileName]:
+					if ann is None: #the none entries are ignored when the matrix is built, but i need to find the problem
+						continue
+					rel = annotations[dataset][fileName][ann][2]
+					annSpan = annotations[dataset][fileName][ann][3]
+					annList.append((ann, annSpan[0], rel))
+				metrics[fileName] = Evaluator._calculateIndividualMetricsRel(annGSList, annList)
+			Evaluator._calculateGlobalMetrics(metrics, showDetail)
+
+	def _calculateIndividualMetricsRel(annGS, ann):
+		"""
+		Private method to calculate metrics individually (Precision, Recall, F1-Score) and 
+		to provide metrics to global calculation (True positives, False positives, False negatives)
+		considering the relations between routes and drugs
+		:param annGS: List of tuples with the concepts and routes for each Drug annotation in the gold standard
+		:param ann: List of tuples with the concepts and routes for each Drug annotated
+		:return: Dict with individual and global metrics
+			{
+				"individual":(Precision, Recall, F1-Score)
+				"global":(True positives, False positives, False negatives)
+				"false_negatives": False Negatives
+				"false_positives": False Positives
+			}
+		"""
+		falseNegatives = []
+		falsePositives = []
+		tp = 0
+
+		for drug, span, route in annGS:
+			if len([annConcept for annConcept, annSpan, annRoute in ann if span == annSpan and annRoute.lower() == route.lower()]) > 0:
+				tp += 1
+			else:
+				print(drug.lower(), route.lower(), ann)
+				falseNegatives.append((drug.lower(), route.lower()))
+
+		for annConcept, annSpan, annRoute in ann:
+			if len([drug for drug, span, route in annGS if span == annSpan and annRoute.lower() == route.lower()]) == 0:
+				falsePositives.append((annConcept.lower(), annRoute.lower()))
+
+		fn = len(annGS) - tp
+		fp = len(ann) - tp
+		try:
+			precision = tp/(tp+fp)
+			recall = tp/(tp+fn)
+			f1Score = 2*((precision*recall)/(precision+recall))
+		except: #This will only affect the individual metrics, in which it will be difficult to find the worst clinical note
+			precision = 0
+			recall = 0
+			f1Score = 0
+		return {
+				"individual":(precision, recall, f1Score),
+				"global":(tp, fp, fn),
+				"false_negatives":falseNegatives,
+				"false_positives":falsePositives
+			}
