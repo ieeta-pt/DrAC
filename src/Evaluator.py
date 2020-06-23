@@ -147,6 +147,3 @@ class Evaluator():
 	
 	def evaluateAnnotations(clinicalNotes, annotations, detailEva=False):
 		pass
-
-	def evaluateAnnotationsWithRelations(clinicalNotes, annWithRelations, detailEva=False):
-		pass

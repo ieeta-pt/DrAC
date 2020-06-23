@@ -2,6 +2,13 @@ import json
 import requests
 import glob
 import codecs
+from Utils import Utils
+
+#Flags to simplify the organization of theinformation in the list
+DOSAGE = 0
+QUANTITY = 1
+ROUTE = 2
+SIG = 3
 
 class Annotator():
 	def annotate(clinicalNotes):
@@ -85,5 +92,75 @@ class Annotator():
 					ann[dataset][fileName].append(nejiann)
 		return ann
 
-	def posProcessing(nejiAnnotations):
-		return nejiAnnotations
+	def posProcessing(clinicalNotes, nejiAnnotations):
+		"""
+		:param clinicalNotes: Dict of clinical notes with the following structure (but only the "cn" from each file will be used)
+			{
+				"train":{
+					"file name"":{
+						"cn": "clinical note",
+						"annotation":{
+							"id":("concept","type",[(span,span), ...])
+						},
+						"relation":{
+							"id": (annId1, ("concept","type",[(span,span), ...]))
+						}
+					}
+				}
+				"test":{...}
+			}
+		:param nejiAnnotations: Dict with the annotations, key is the dataset (train or test), value is another dict containing the
+		files name as key and a list of annotations. The annotations have the following structure: date|UMLS:C2740799:T129:DrugsBank|10
+			{
+				"train":{
+					"file name"":["annotation"]
+				}
+				"test":{...}
+			}
+		:return: Dict with the drug and dosage/quantity/route/sig (list) present in each file, by dataset.
+			{
+				"train":{
+					"file name"":{
+						"concept":[dosage, quantity, route, sig]
+					}
+				}
+				"test":{...}
+			}
+		"""
+		annotations = {}
+		for dataset in nejiAnnotations:
+			annotations[dataset] = {}
+			for file in nejiAnnotations[dataset]:
+				annotations[dataset][file] = {}
+				clinicalNote = clinicalNotes[dataset][file]["cn"]
+				annotation = sorted(nejiAnnotations[dataset][file], key=lambda x: int(x[2]))
+				readedSpans = []
+
+				for (annConcept, annCode, annSpan) in annotation:
+					results = [None, None, None, None]
+					if annSpan in readedSpans:
+						continue
+					readedSpans.append(annSpan)
+					filterAnn = [(concept, code, span) for (concept, code, span) in annotation if span == annSpan]
+					if len(filterAnn) > 1:
+						drug, dosage = Utils.mergeAnnsToGetStrength(filterAnn)
+						if drug:
+							results[DOSAGE] = dosage
+							
+					sentence = Utils.getSentence(int(annSpan), clinicalNote)
+					results[ROUTE] = Annotator._annotateRoute(filterAnn[0], sentence)
+					results[QUANTITY] = Annotator._annotateQuantaty(filterAnn[0], sentence, results[ROUTE])
+					results[SIG] = Annotator._identifySig(filterAnn[0], sentence, results[ROUTE], results[QUANTITY])
+
+					if results[DOSAGE] != None or results[QUANTITY] != None or results[ROUTE] != None or results[SIG] != None:
+						annotations[dataset][file][drug] = results
+		return annotations
+
+	def _annotateRoute(concept, sentence):
+		return None
+
+	def _annotateQuantaty(concept, sentence, route):
+		return None
+
+	def _identifySig(concept, sentence, route, quantity):
+		return None

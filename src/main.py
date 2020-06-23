@@ -115,9 +115,8 @@ def annotationMode(settings, read):
 		nejiAnnotations = Annotator.annotate(clinicalNotes)
 		Writer.writeAnnotations(nejiAnnotations, settings["dataset"]["neji_annotations"])
 
-	annotations = Annotator.posProcessing(nejiAnnotations)
-	annWithRelations = Relation.inferRelations(clinicalNotes, annotations)
-	matrix = Writer.writeMatrix(annWithRelations, settings["dataset"]["matrix_location"])
+	annotations = Annotator.posProcessing(clinicalNotes, nejiAnnotations)
+	matrix = Writer.writeMatrix(annotations, settings["dataset"]["matrix_location"])
 	print("Done!")
 	return matrix
 
@@ -130,11 +129,8 @@ def evaluationMode(settings, read, detailEva):
 		nejiAnnotations = Annotator.annotate(clinicalNotes)
 	Evaluator.evaluateNeji(clinicalNotes, nejiAnnotations, detailEva)
 
-	annotations = Annotator.posProcessing(nejiAnnotations)
+	annotations = Annotator.posProcessing(clinicalNotes, nejiAnnotations)
 	Evaluator.evaluateAnnotations(clinicalNotes, annotations, detailEva)
-
-	annWithRelations = Relation.inferRelations(clinicalNotes, annotations)
-	Evaluator.evaluateAnnotationsWithRelations(clinicalNotes, annWithRelations, detailEva)
 	print("Done!")
 
 def migrationMode(matrix, settings, loadIntoDB):
