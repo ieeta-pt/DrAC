@@ -35,10 +35,20 @@ class Utils():
 		spanCounter = 0
 		previousSentence = ""
 		for sentence in sentences:
-			spanCounter += len(sentence)# + 1
-			if concept in sentence:
-				print("C",spanCounter, annSpan, sentence)
-			if spanCounter >= annSpan:
-				print("R",spanCounter, annSpan, previousSentence)
-				return previousSentence
-			previousSentence = sentence
+			#spanCounter += len(sentence)# + 1
+			#if concept in sentence:
+			#	print("C",spanCounter, annSpan, sentence)
+			#if spanCounter >= annSpan:
+			#	print("R",spanCounter, annSpan, previousSentence)
+			#	return previousSentence
+			#previousSentence = sentence
+			spanCounter += len(sentence) + 1
+			if spanCounter > annSpan:
+				return sentence
+
+	def getSentenceFromSentencesDict(annSpan, clinicalNoteSentenceDict):
+		validSpanKey = 0
+		for key, _ in clinicalNoteSentenceDict.items():
+			if key < annSpan:
+				validSpanKey = key
+		return validSpanKey, clinicalNoteSentenceDict[validSpanKey]
