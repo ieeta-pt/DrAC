@@ -2,13 +2,15 @@ import json
 import requests
 import glob
 import codecs
+import re
 from Utils import Utils
 from Vocabulary import Vocabulary
 
 #Flags to simplify the organization of theinformation in the list
-DOSAGE = 0
-QUANTITY = 1
+STRENGHT = 0
+DOSAGE = 1
 ROUTE = 2
+#QUANTITY = 3
 SPAN = 3
 
 class Annotator():
@@ -119,11 +121,11 @@ class Annotator():
 				"test":{...}
 			}
 		:param vocabularies: Vocabularies to be used in the post processing
-		:return: Dict with the drug and dosage/quantity/route/span (list) present in each file, by dataset.
+		:return: Dict with the drug and strenght/dosage/quantity/route/span (list) present in each file, by dataset.
 			{
 				"train":{
 					"file name"":{
-						"concept":[dosage, quantity, route, annSpann]
+						"concept":[strenght, dosage, route, quantity, [annSpann]]
 					}
 				}
 				"test":{...}
@@ -140,24 +142,25 @@ class Annotator():
 				readedSpans = []
 
 				for (annConcept, annCode, annSpan) in annotation:
-					results = [None, None, None, None]
+					results = [None, None, None, None]#, None]
 					if annSpan in readedSpans:
 						continue
 					readedSpans.append(annSpan)
-					sentence = Utils.getSentence(int(annSpan), clinicalNote)
+					sentence = Utils.getSentence(int(annSpan), clinicalNote, annConcept.lower())
 					results[ROUTE] = Annotator._annotateRoute(sentence, voc["route"])
 					if results[ROUTE] != None:
 						filterAnn = [(concept, code, span) for (concept, code, span) in annotation if span == annSpan and concept is not None]
 						if len(filterAnn) > 1:
 							drug, dosage = Utils.mergeAnnsToGetStrength(filterAnn)
 							if drug:
-								results[DOSAGE] = dosage
+								results[STRENGHT] = dosage
 						else:
 							drug = filterAnn[0][0]
 
-						if results[DOSAGE] == None:
-							results[DOSAGE] = Annotator._annotateDosage(drug, sentence, voc["strenght"])
-						results[QUANTITY] = Annotator._annotateQuantity(filterAnn[0], sentence, results[ROUTE])
+						if results[STRENGHT] == None:
+							results[STRENGHT] = Annotator._annotateStrenght(drug, sentence, voc["strenght"])
+						results[DOSAGE] = Annotator._annotateDosage(drug, sentence, voc["all"])
+						#results[QUANTITY] = Annotator._annotateQuantity(filterAnn[0], sentence, results[ROUTE])
 						results[SPAN] = [annSpan]
 
 						annotations[dataset][file][drug] = results
@@ -172,7 +175,7 @@ class Annotator():
 		"""
 		route = []
 		for entry, group in voc:
-			search = " {} ".format(entry)
+			search = " {} ".format(entry.lower())
 			if search in sentence.lower():
 				if "other" in group:
 					group = "zzzz" #To be the last option in the list
@@ -185,8 +188,43 @@ class Annotator():
 		return None
 
 	def _annotateQuantity(concept, sentence, route):
-		#regex
+		#NOT USED
+		return None
+
+	def _annotateStrenght(concept, sentence, strenght):
+		sentence = "teste 500/200 mg per day"
+		DECIMAL_NUM   = "(?:\\d+,)?\\d+(?:\\.\\d+)?(?:(?: |-)?(?:-|to)(?: |-)?(?:\\d+,)?\\d+(?:\\.\\d+)?)?"
+		STRENGTH_UNIT = "mg/dl|mg/ml|g/l|milligrams|milligram|mg|grams|gram|g|micrograms|microgram|mcg|meq|iu|cc|units|unit|tablespoons|tablespoon|teaspoons|teaspoon"
+		strength = re.compile(r"\b(%s/)?(%s)(\s+|-)?(%s)\b" %(DECIMAL_NUM, DECIMAL_NUM, STRENGTH_UNIT), re.IGNORECASE)
+		x = strength.search(sentence)
+		if x:
+			#print(dir(x.groupdict))
+			#print(x.groups())
+			pass
 		return None
 
 	def _annotateDosage(concept, sentence, strenght):
+		"""
+		:return: The dosage/quantity of the drug taken by the patient
+			two tablets -> 2
+		"""
+		DECIMAL_NUM   = "(?:\\d+,)?\\d+(?:\\.\\d+)?(?:(?: |-)?(?:-|to)(?: |-)?(?:\\d+,)?\\d+(?:\\.\\d+)?)?"
+		volume = re.compile(r"\b(%s)\s+(ml)\b" %DECIMAL_NUM, re.IGNORECASE)
+		x = volume.search(sentence)
+		if x:
+			pass
+			#print(dir(x.groupdict))
+			#print(x.groups())
+			#['__class__', '__copy__', '__deepcopy__', '__delattr__', '__dir__', '__doc__', 
+			#'__eq__', '__format__', '__ge__', '__getattribute__', '__getitem__', '__gt__', 
+			#'__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__ne__', '__new__', 
+			#'__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', 
+			#'__subclasshook__', 'end', 'endpos', 'expand', 'group', 'groupdict', 'groups', 
+			#'lastgroup', 'lastindex', 'pos', 're', 'regs', 'span', 'start', 'string']
+
+
+
+			#		"concept":
+			#patient:[strenght, dosage, route, [annSpann]]
+			#patient:[5mg, 2, route, [annSpann]]
 		return None

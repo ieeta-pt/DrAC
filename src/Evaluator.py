@@ -168,11 +168,11 @@ class Evaluator():
 				}
 				"test":{...}
 			}
-		:param annotation: Dict with the drug and dosage/quantity/route (list) present in each file, by dataset.
+		:param annotation: Dict with the drug and strenght/dosage/quantity/route (list) present in each file, by dataset.
 			{
 				"train":{
 					"file name"":{
-						"concept":[dosage, quantity, route, annSpan]
+						"concept":[strenght, dosage, route, quantity, [annSpann]]
 					}
 				}
 				"test":{...}
@@ -189,12 +189,12 @@ class Evaluator():
 				if fileName not in annotations[dataset]:
 					print ("Note " + fileName + " not annotated! Maybe an decoding error during the annotation procedure!")
 					continue
-				annGSList = []#(drug, route)
+				annGSList = []#(drug, span, route)
 				for relID in clinicalNotes[dataset][fileName]["relation"]:
 					annID = clinicalNotes[dataset][fileName]["relation"][relID][0]
-					ann = clinicalNotes[dataset][fileName]["annotation"][annID]
 					rel = clinicalNotes[dataset][fileName]["relation"][relID][1]
 					if rel[1].lower() == "route": #Considering only the routes
+						ann = clinicalNotes[dataset][fileName]["annotation"][annID]
 						route = rel[0]
 						annGSList.append((ann[0], str(ann[2][0]), route))
 				annList = []#(drug, span, route)
@@ -204,10 +204,10 @@ class Evaluator():
 					rel = annotations[dataset][fileName][ann][2]
 					annSpan = annotations[dataset][fileName][ann][3]
 					annList.append((ann, annSpan[0], rel))
-				metrics[fileName] = Evaluator._calculateIndividualMetricsRel(annGSList, annList)
+				metrics[fileName] = Evaluator._calculateIndividualMetricsRel(annGSList, annList, fileName)
 			Evaluator._calculateGlobalMetrics(metrics, showDetail)
 
-	def _calculateIndividualMetricsRel(annGS, ann):
+	def _calculateIndividualMetricsRel(annGS, ann, doc):
 		"""
 		Private method to calculate metrics individually (Precision, Recall, F1-Score) and 
 		to provide metrics to global calculation (True positives, False positives, False negatives)
@@ -230,7 +230,6 @@ class Evaluator():
 			if len([annConcept for annConcept, annSpan, annRoute in ann if span == annSpan and annRoute.lower() == route.lower()]) > 0:
 				tp += 1
 			else:
-				print(drug.lower(), route.lower(), ann)
 				falseNegatives.append((drug.lower(), route.lower()))
 
 		for annConcept, annSpan, annRoute in ann:

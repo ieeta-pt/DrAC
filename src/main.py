@@ -126,7 +126,7 @@ def evaluationMode(settings, read, detailEva):
 		nejiAnnotations = Annotator.readNejiAnnotations(settings["dataset"]["neji_annotations"])
 	else:
 		nejiAnnotations = Annotator.annotate(clinicalNotes)
-	Evaluator.evaluateNeji(clinicalNotes, nejiAnnotations, detailEva)
+	#Evaluator.evaluateNeji(clinicalNotes, nejiAnnotations, detailEva)
 
 	annotations = Annotator.posProcessing(clinicalNotes, nejiAnnotations, settings["post_vocabularies"])
 	Evaluator.evaluateAnnotations(clinicalNotes, annotations, detailEva)

@@ -1,4 +1,4 @@
-
+from nltk import tokenize
 
 def hasNumbers(inputString):
 	return bool(re.search(r'\d', inputString))
@@ -28,10 +28,17 @@ class Utils():
 			return drug, sub
 		return None, None
 
-	def getSentence(annSpan, clinicalNote):
-		sentences = clinicalNote.replace("\n", ".").split(".")
+	def getSentence(annSpan, clinicalNote, concept):
+		#AQUI
+		#clinicalNote = clinicalNote.replace("\n", ".")
+		sentences = tokenize.sent_tokenize(clinicalNote)
 		spanCounter = 0
+		previousSentence = ""
 		for sentence in sentences:
-			spanCounter += len(sentence) + 1
-			if spanCounter > annSpan:
-				return sentence
+			spanCounter += len(sentence)# + 1
+			if concept in sentence:
+				print("C",spanCounter, annSpan, sentence)
+			if spanCounter >= annSpan:
+				print("R",spanCounter, annSpan, previousSentence)
+				return previousSentence
+			previousSentence = sentence
