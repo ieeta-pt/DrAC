@@ -35,3 +35,10 @@ class Utils():
 			spanCounter += len(sentence) + 1
 			if spanCounter > annSpan:
 				return sentence
+
+	def getSentenceFromSentencesDict(annSpan, clinicalNoteSentenceDict):
+		validSpanKey = 0
+		for key, _ in clinicalNoteSentenceDict.items():
+			if key < annSpan:
+				validSpanKey = key
+		return validSpanKey, clinicalNoteSentenceDict[validSpanKey]

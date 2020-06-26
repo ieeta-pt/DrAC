@@ -5,6 +5,9 @@ import codecs
 from Utils import Utils
 from Vocabulary import Vocabulary
 
+import re
+from nltk.tokenize import PunktSentenceTokenizer
+
 #Flags to simplify the organization of theinformation in the list
 DOSAGE = 0
 QUANTITY = 1
@@ -139,12 +142,38 @@ class Annotator():
 				annotation = sorted(nejiAnnotations[dataset][file], key=lambda x: int(x[2]))
 				readedSpans = []
 
+				clinicalNote = re.sub(r'\n', ' ', clinicalNote) # re.sub(r'(?![\w ])\n', ' ', clinicalNote)
+
+				# clinicalNote = re.sub(r'[ ]{2,}', '\n', clinicalNote) #THIS RULE IS MORE SPECIFIC AND RUINS THE DIRECT MAPPING FROM SPAN TO ANNOTATION
+				# print(clinicalNote)
+
+
+
+				clinicalNoteSentencesDict = nltkSentenceSplit(clinicalNote)
+
+
+
 				for (annConcept, annCode, annSpan) in annotation:
 					results = [None, None, None, None]
+
+					# print("Original annotation: {} {}".format(annConcept, annSpan))
+					# print("New annotation: {}".format(clinicalNote[int(annSpan):int(annSpan)+len(annConcept)]))
+
 					if annSpan in readedSpans:
 						continue
 					readedSpans.append(annSpan)
-					sentence = Utils.getSentence(int(annSpan), clinicalNote)
+					# sentence = Utils.getSentence(int(annSpan), clinicalNote)
+					initialSpan, sentence = Utils.getSentenceFromSentencesDict(int(annSpan), clinicalNoteSentencesDict)
+					# print(sentence[int(annSpan)-int(initialSpan):int(annSpan)-int(initialSpan)+len(annConcept)])
+					# print("Original annotation: {} {}".format(annConcept, annSpan))
+					# print("New annotation: {}".format(sentence[int(annSpan)-int(initialSpan):int(annSpan)-int(initialSpan)+len(annConcept)]))
+					print(file)
+					if "docusate sodium" in annConcept.lower():
+						print("shit")
+						print(initialSpan, annSpan, sentence)
+						if "docusate sodium" in sentence.lower():
+							print("worked")
+
 					results[ROUTE] = Annotator._annotateRoute(sentence, voc["route"])
 					if results[ROUTE] != None:
 						filterAnn = [(concept, code, span) for (concept, code, span) in annotation if span == annSpan and concept is not None]
@@ -190,3 +219,17 @@ class Annotator():
 
 	def _annotateDosage(concept, sentence, strenght):
 		return None
+
+def nltkSentenceSplit(document):
+	sentenceTokenizer = PunktSentenceTokenizer()
+	sentences = sentenceTokenizer.span_tokenize(document)
+	sentenceDict = dict()
+
+	for beginSpan, endSpan in sentences:
+		# print(beginSpan, endSpan, document[beginSpan:endSpan])
+		sentenceDict[beginSpan] = document[beginSpan:endSpan]
+
+	return sentenceDict
+
+	# sentences = nltk.sent_tokenize(sentences)
+	# return sentences
