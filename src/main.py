@@ -7,9 +7,6 @@ from Writer import Writer
 from Vocabulary import Vocabulary
 from Evaluator import Evaluator
 
-import os
-import nltk
-
 def help(show=False):
 	parser = argparse.ArgumentParser(description="")
 	configs = parser.add_argument_group('System settings', 'The system parameters to run the system in the different modes')
@@ -76,10 +73,10 @@ def validateSettings(settings, args):
 			return False
 
 	if args.annotate or args.evaluate:
-			if "dataset" not in settings or "post_vocabularies" not in settings:
-				return False
-			if "directory" not in settings["dataset"] or "name" not in settings["dataset"]:
-				return False
+		if "dataset" not in settings or "post_vocabularies" not in settings:
+			return False
+		if "directory" not in settings["dataset"] or "name" not in settings["dataset"]:
+			return False
 
 	if args.load_ohdsi_voc or args.annotate:
 		if "database" not in settings:
@@ -129,7 +126,7 @@ def evaluationMode(settings, read, detailEva):
 		nejiAnnotations = Annotator.readNejiAnnotations(settings["dataset"]["neji_annotations"])
 	else:
 		nejiAnnotations = Annotator.annotate(clinicalNotes)
-	#Evaluator.evaluateNeji(clinicalNotes, nejiAnnotations, detailEva)
+	Evaluator.evaluateNeji(clinicalNotes, nejiAnnotations, detailEva)
 
 	annotations = Annotator.posProcessing(clinicalNotes, nejiAnnotations, settings["post_vocabularies"])
 	Evaluator.evaluateAnnotations(clinicalNotes, annotations, detailEva)
@@ -145,23 +142,10 @@ def loadingOHDSIVocabulariesMode(settings):
 	Writer.writeVocabularies(settings["database"], settings["vocabularies"]["ohdsi"])
 	print("Done!")
 
-
-def nltkInitialize(settings):
-	nltk_dir = settings["nltk"]["nltk_dir"]
-	if not os.path.exists(nltk_dir):
-		nltk.download('punkt', download_dir=nltk_dir)
-		print("NLTK sources downloaded to: {}".format(nltk_dir))
-	nltk.data.path.append(nltk_dir)
-	print("NLTK sources loaded.")
-
-
 def main():
 	args = help()
 	settings = readSettings(args.settings)
 	if validateSettings(settings, args):
-
-		nltkInitialize(settings)
-
 		if args.voc_builder:
 			vocabularyCreationMode(settings)
 

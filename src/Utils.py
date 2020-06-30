@@ -1,4 +1,3 @@
-from nltk import tokenize
 
 def hasNumbers(inputString):
 	return bool(re.search(r'\d', inputString))
@@ -28,27 +27,46 @@ class Utils():
 			return drug, sub
 		return None, None
 
-	def getSentence(annSpan, clinicalNote, concept):
-		#AQUI
-		#clinicalNote = clinicalNote.replace("\n", ".")
-		sentences = tokenize.sent_tokenize(clinicalNote)
-		spanCounter = 0
-		previousSentence = ""
-		for sentence in sentences:
-			#spanCounter += len(sentence)# + 1
-			#if concept in sentence:
-			#	print("C",spanCounter, annSpan, sentence)
-			#if spanCounter >= annSpan:
-			#	print("R",spanCounter, annSpan, previousSentence)
-			#	return previousSentence
-			#previousSentence = sentence
-			spanCounter += len(sentence) + 1
-			if spanCounter > annSpan:
-				return sentence
+	def getSentencesByAnnotation(clinicalNote, annotation):
+		"""
+		This method returns the teen (or less) words after the concepts annotated (inclusivly)
+		If there is another concept in the teen words, the set is interrupted and the new words
+		are associated to this new concept.
+		:param clinicalNote: The clinical note to process without any pre-processing
+		:param annotation: The neji annotation with the following structure: (annConcept, annCode, annSpan)
+		:return: Dict with key the span of the concept and value a list of words that followed the concept.
+		"""
+		result = {}
+		MAX = 10
+		LAST = False
+		readedSpans = set()
+		for (annConcept, annCode, annSpan) in annotation:
+			readedSpans.add(int(annSpan))
+		readedSpans = list(readedSpans)
+		readedSpans.sort()
 
-	def getSentenceFromSentencesDict(annSpan, clinicalNoteSentenceDict):
-		validSpanKey = 0
-		for key, _ in clinicalNoteSentenceDict.items():
-			if key < annSpan:
-				validSpanKey = key
-		return validSpanKey, clinicalNoteSentenceDict[validSpanKey]
+		span = 0
+		currentConceptSpan = readedSpans[0]
+		nextConceptSpan = readedSpans[1]
+		readedSpansCounter = 1
+		counter = 0
+		clinicalNote = clinicalNote.replace("\n", " ")
+		for word in clinicalNote.split(" "):
+			if span >= nextConceptSpan and nextConceptSpan <= span+len(word):
+				readedSpansCounter += 1
+				currentConceptSpan = nextConceptSpan
+				if not LAST:
+					counter = 0
+				if readedSpansCounter >= len(readedSpans):
+					LAST = True
+				else:
+					nextConceptSpan = readedSpans[readedSpansCounter]
+
+			if 	(span >= currentConceptSpan and span < nextConceptSpan and counter < MAX) or \
+				(LAST and counter < MAX):
+				if currentConceptSpan not in result:
+					result[currentConceptSpan] = []
+				result[currentConceptSpan].append(word.lower())
+				counter += 1
+			span += len(word) + 1
+		return result
