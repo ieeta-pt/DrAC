@@ -1,3 +1,6 @@
+import re
+
+drugRegex = re.compile("[^\d]+(?=( \d+))", re.IGNORECASE)
 
 def hasNumbers(inputString):
 	return bool(re.search(r'\d', inputString))
@@ -6,6 +9,27 @@ def startsWithNumbers(inputString):
 	return inputString[:1].isdigit() 
 
 class Utils():
+	# def mergeAnnsToGetStrength(filterAnn):
+	# 	sub = ""
+	# 	concepts = set()
+	# 	for con in filterAnn:
+	# 		concepts.add(con[0])
+	# 	concepts = list(concepts)
+	# 	if len(concepts) == 2:
+	# 		concept1 = concepts[0]
+	# 		concept2 = concepts[1]
+	# 		if concept1 in concept2:
+	# 			sub = concept2.replace(concept1, "").strip()
+	# 			drug = concept1
+	# 			if concept2 in concept1:
+	# 			sub = concept1.replace(concept2, "").strip()
+	# 			drug = concept2
+	# 	elif len(concepts) > 2:
+	# 		print("More than 2 in _mergeAnns (Unusual, but check)")
+	# 	if startsWithNumbers(sub):
+	# 		return drug, sub
+	# 	return None, None
+
 	def mergeAnnsToGetStrength(filterAnn):
 		sub = ""
 		concepts = set()
@@ -16,15 +40,25 @@ class Utils():
 			concept1 = concepts[0]
 			concept2 = concepts[1]
 			if concept1 in concept2:
-				sub = concept2.replace(concept1, "").strip()
-				drug = concept1
-			if concept2 in concept1:
-				sub = concept1.replace(concept2, "").strip()
-				drug = concept2
+				match = drugRegex.search(concept2)
+				if match is None:
+					drug = concept2
+					sub = None
+				else:
+					drug = match[0]
+					sub = concept2.replace(concept1, "").strip()
+			elif concept2 in concept1:
+				match = drugRegex.search(concept1)
+				if match is None:
+					drug = concept1
+					sub = None
+				else:
+					drug = match[0]
+					sub = concept1.replace(concept2, "").strip()
+			return drug, sub
+
 		elif len(concepts) > 2:
 			print("More than 2 in _mergeAnns (Unusual, but check)")
-		if startsWithNumbers(sub):
-			return drug, sub
 		return None, None
 
 	def getSentencesByAnnotation(clinicalNote, annotation):
