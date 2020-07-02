@@ -153,10 +153,7 @@ class Annotator():
 						
 						if int(annSpan) not in sentences:
 							continue 
-						results[ROUTE] = Annotator._annotateRoute(sentences[int(annSpan)], voc["route"])
-						
-						#if 'docusate sodium' in annConcept.lower():
-						#	print(file, results[ROUTE], sentences[int(annSpan)])
+						results[ROUTE] = Annotator._annotateRoute(sentences[int(annSpan)], voc["route-complex"], voc["route"])
 
 						if results[ROUTE] != None:
 							filterAnn = [(concept, code, span) for (concept, code, span) in annotation if span == annSpan and concept is not None]
@@ -232,14 +229,20 @@ class Annotator():
 				results.append(ann)
 		return results
 
-	def _annotateRoute(sentence, voc):
+	def _annotateRoute(sentence, complexVoc, voc):
 		"""
 		This method annotates the drug route in the setence that the concept was found.
 		:param sentence: The list of 10 or less word that are after the concept
+		:param complexVoc: The vocabulary of routes with more than one word, list of tuples (concept, type)
 		:param voc: The vocabulary to use in a list of tuples (concept, type)
 		:return: Tuple with Route or None and route span counter
 		"""
 		route = []
+		for entry, group in complexVoc:
+			search = " {} ".format(entry.lower())
+			if search in " ".join(sentence):
+				return entry
+
 		for entry, group in voc:
 			search = entry.lower()
 			if search in sentence:

@@ -197,7 +197,44 @@ IV:UNK:Route:DrugDescription	peripheral iv|peripheral i.v|peripheral i.v.|iv inf
 Injected:UNK:Route:DrugDescription	sc injection|injection|injected|inject|injections
 Transfusion:UNK:Route:DrugDescription	tranfusions|tranfusion|transfusion|transfusions|transfused|tranfused
 TypesInjections:UNK:Route:DrugDescription	infusion|subcutaneous|subcut|sub-cutaneous|sub-q|sub-cutaneously|subcutaneously|intramuscular|sub q|subq|sub-cu|sub cu
-Tubes:UNK:Route:DrugDescription	epidural catheter|epidural|rectal|appl rectal|rectally|gastrostomy tube|g-tube|g tube|gtube|ng tube||ng-tube
+Tubes:UNK:Route:DrugDescription	epidural catheter|epidural|rectal|appl rectal|rectally|gastrostomy tube|g-tube|g tube|gtube|ng tube|ng-tube
 Body:UNK:Route:DrugDescription	topical|appl topical|topically|per rectum|inh inhalation|vaginal|apply to shoulders|apply to shoulder|anal rea|intrathecal
 Noise:UNK:Route:DrugDescription	inhalation|inhaler|intranasal|neb inhalation|nasal canulairrigated|nasal|nasal cannula|inhaled|ophthalmic|drop ophthalmic|appl ophthalmic
 Other:UNK:Route:DrugDescription	gtt|sc|drip|inh|neb|nebs|peripheral|peripherally|sq|ggt|drips|each lumen|per lumen|facemask|face mask|each nostril|nostril|line|scalp|skin|each ear|ears|right ear|left ear|abdomen folds
+Manual:UNK:Route-Complex:DrugDescription	by mouth
+Manual:UNK:Route-Complex:DrugDescription	mucous membrane
+Manual:UNK:Route-Complex:DrugDescription	nasal cannula
+Manual:UNK:Route-Complex:DrugDescription	each lumen
+Manual:UNK:Route-Complex:DrugDescription	each nostril
+Manual:UNK:Route-Complex:DrugDescription	per lumen
+Manual:UNK:Route-Complex:DrugDescription	picc line
+Manual:UNK:Route-Complex:DrugDescription	both nostrils
+Manual:UNK:Route-Complex:DrugDescription	treatment inhalation
+Manual:UNK:Route-Complex:DrugDescription	appl rectal
+Manual:UNK:Route-Complex:DrugDescription	per rectum
+Manual:UNK:Route-Complex:DrugDescription	neb inhalation
+Manual:UNK:Route-Complex:DrugDescription	right eye
+Manual:UNK:Route-Complex:DrugDescription	each ear
+Manual:UNK:Route-Complex:DrugDescription	areas of redness
+Manual:UNK:Route-Complex:DrugDescription	abdomen folds
+Manual:UNK:Route-Complex:DrugDescription	face mask
+Manual:UNK:Route-Complex:DrugDescription	each eye ophthalmic
+Manual:UNK:Route-Complex:DrugDescription	central line
+Manual:UNK:Route-Complex:DrugDescription	gtt left eye
+Manual:UNK:Route-Complex:DrugDescription	nebulizer inhalation
+Manual:UNK:Route-Complex:DrugDescription	drop ophthalmic
+Manual:UNK:Route-Complex:DrugDescription	appl ophthalmic
+Manual:UNK:Route-Complex:DrugDescription	in your left eye
+Manual:UNK:Route-Complex:DrugDescription	both eyes
+Manual:UNK:Route-Complex:DrugDescription	appl topical
+Manual:UNK:Route-Complex:DrugDescription	peripheral iv
+Manual:UNK:Route-Complex:DrugDescription	gastrostomy tube
+Manual:UNK:Route-Complex:DrugDescription	face tent
+Manual:UNK:Route-Complex:DrugDescription	sublinqual gtt
+Manual:UNK:Route-Complex:DrugDescription	on affected region
+Manual:UNK:Route-Complex:DrugDescription	nasal canula
+Manual:UNK:Route-Complex:DrugDescription	apply to shoulders
+Manual:UNK:Route-Complex:DrugDescription	each eye
+Manual:UNK:Route-Complex:DrugDescription	chewable po
+Manual:UNK:Route-Complex:DrugDescription	venti mask
+Manual:UNK:Route-Complex:DrugDescription	tunneled hd line
