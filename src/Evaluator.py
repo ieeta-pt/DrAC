@@ -172,7 +172,7 @@ class Evaluator():
 			{
 				"train":{
 					"file name"":{
-						"concept":[strenght, dosage, route, quantity, [annSpann]]
+						("concept",annSpan):[strenght, dosage, route, quantity]
 					}
 				}
 				"test":{...}
@@ -198,12 +198,11 @@ class Evaluator():
 						route = rel[0]
 						annGSList.append((ann[0], str(ann[2][0]), route))
 				annList = []#(drug, span, route)
-				for ann in annotations[dataset][fileName]:
+				for ann, annSpan in annotations[dataset][fileName]:
 					if ann is None: #the none entries are ignored when the matrix is built, but i need to find the problem
 						continue
-					rel = annotations[dataset][fileName][ann][2]
-					annSpan = annotations[dataset][fileName][ann][3]
-					annList.append((ann, annSpan[0], rel))
+					rel = annotations[dataset][fileName][(ann, annSpan)][2]
+					annList.append((ann, annSpan, rel))
 				metrics[fileName] = Evaluator._calculateIndividualMetricsRel(annGSList, annList, fileName)
 			Evaluator._calculateGlobalMetrics(metrics, showDetail)
 

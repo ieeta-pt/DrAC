@@ -125,7 +125,7 @@ class Annotator():
 			{
 				"train":{
 					"file name"":{
-						"concept":[strenght, dosage, route, quantity, [annSpann]]
+						("concept", annSpan):[strenght, dosage, route, quantity]
 					}
 				}
 				"test":{...}
@@ -140,7 +140,7 @@ class Annotator():
 				clinicalNote = clinicalNotes[dataset][file]["cn"]
 				annotation = sorted(nejiAnnotations[dataset][file], key=lambda x: int(x[2]))
 				disambiguatedAnn = Annotator._disambiguate(annotation)
-				filteredAnn = Annotator._filter(disambiguatedAnn, Utils.getVocListWithoutGroup(voc["black-list"]))
+				filteredAnn = Annotator._filter(disambiguatedAnn, Utils.getVocListWithoutGroup(voc["all"]))#voc["black-list"]))
 				if len(filteredAnn) > 0:
 					sentences = Utils.getSentencesByAnnotation(clinicalNote, filteredAnn)
 
@@ -152,11 +152,11 @@ class Annotator():
 						readedSpans.append(annSpan)
 						
 						if int(annSpan) not in sentences:
-							continue #this is because concepts that were partially found. Example 2025 l-asparaginase vs 2027 asparaginase
+							continue 
 						results[ROUTE] = Annotator._annotateRoute(sentences[int(annSpan)], voc["route"])
 						
-						if "docusate sodium" in annConcept.lower():
-							print(results[ROUTE], sentences[int(annSpan)])
+						#if 'docusate sodium' in annConcept.lower():
+						#	print(file, results[ROUTE], sentences[int(annSpan)])
 
 						if results[ROUTE] != None:
 							filterAnn = [(concept, code, span) for (concept, code, span) in annotation if span == annSpan and concept is not None]
@@ -171,9 +171,10 @@ class Annotator():
 							##	results[STRENGHT] = Annotator._annotateStrenght(drug, sentence, voc["strenght"])
 							##results[DOSAGE] = Annotator._annotateDosage(drug, sentence, voc["all"])
 							#results[QUANTITY] = Annotator._annotateQuantity(filterAnn[0], sentence, results[ROUTE])
-							results[SPAN] = [annSpan]
+							
+							#results[SPAN] = [annSpan]
 
-							annotations[dataset][file][drug] = results
+							annotations[dataset][file][(drug, annSpan)] = results
 
 		return annotations
 

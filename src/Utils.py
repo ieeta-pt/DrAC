@@ -71,7 +71,7 @@ class Utils():
 		:return: Dict with key the span of the concept and value a list of words that followed the concept.
 		"""
 		result = {}
-		MAX = 10
+		MAX = 16 #means 15
 		LAST = False
 		readedSpans = set()
 		for (annConcept, annCode, annSpan) in annotation:

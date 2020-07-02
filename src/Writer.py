@@ -41,7 +41,7 @@ class Writer():
 		:param annotations: Dict with the drug and dosage/strength present in each file.
 			{
 				"file name":{
-					"concept":[dosage, quantity, route, [annSpann]]
+					("concept", annSpan):[dosage, quantity, route]
 				}
 			}
 		:return: List of lists creating the matrix
@@ -51,7 +51,7 @@ class Writer():
 		matrix = [["fileName"]]
 		#Create matrix headers
 		for file in annotations:
-			for concept in annotations[file]:
+			for concept, span in annotations[file]:
 				if concept not in matrix[0] and concept is not None:
 					matrix[0].append(concept)
 		#Collect measurements
@@ -59,9 +59,9 @@ class Writer():
 		for file in annotations:
 			index += 1
 			matrix.append([file]+["" for i in range(len(matrix[0]))])
-			for concept in annotations[file]:
+			for concept, span in annotations[file]:
 				if concept is not None:
-					conceptsInfo = annotations[file][concept]
+					conceptsInfo = annotations[file][(concept, span)]
 					cell = ""
 					for entry in conceptsInfo:
 						if entry and isinstance(entry, str):
