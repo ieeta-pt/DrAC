@@ -46,7 +46,7 @@ class Utils():
 					sub = None
 				else:
 					drug = match[0]
-					sub = concept2.replace(concept1, "").strip()
+					sub = concept2.replace(drug, "").strip()
 			elif concept2 in concept1:
 				match = drugRegex.search(concept1)
 				if match is None:
@@ -54,7 +54,7 @@ class Utils():
 					sub = None
 				else:
 					drug = match[0]
-					sub = concept1.replace(concept2, "").strip()
+					sub = concept1.replace(drug, "").strip()
 			return drug, sub
 
 		elif len(concepts) > 2:
