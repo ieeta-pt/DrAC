@@ -135,6 +135,7 @@ vocabularies/*
 !vocabularies/README.md
 !vocabularies/DrugDescription.tsv
 !vocabularies/Abreviations.tsv
+!vocabularies/BlackList.tsv
 
 notes
 results/*

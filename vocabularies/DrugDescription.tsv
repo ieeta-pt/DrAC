@@ -1,0 +1,203 @@
+MedXN:UNK:Strenght:DrugDescription	mg/dl|mg/ml|g/l|milligrams|milligram|mg|grams|gram|g|micrograms|microgram|mcg|meq|iu|cc|units|unit|tablespoons|tablespoon|teaspoons|teaspoon
+MedXN:UNK:DosageForm:DrugDescription	tablet|tab|capsule|caplet|cap|pill|lozenge|packet|patch|puff|squirt|gel|softgel
+MedXN:UNK:DosageFormExtended:DrugDescription	extended release enteric coated capsule|12 hour extended release capsule|24 hour extended release capsule|extended release enteric coated tablet|12 hour extended release tablet|24 hour extended release tablet|16 hour transdermal patch|24 hour transdermal patch|72 hour transdermal patch|mucous membrane topical solution|sustained release buccal tablet|soap topical bar|enteric coated capsule|extended release capsule|augmented topical cream|orderable drug form|augmented topical gel|gas for inhalation|metered dose inhaler|dry powder inhaler|solution for injection|suspension for injection|augmented topical lotion|augmented topical ointment|biweekly transdermal patch|weekly transdermal patch|medicated bar soap|medicated liquid soap|ophthalmic irrigation solution|extended release suspension|enteric coated tablet|extended release tablet|toothpaste dental toothpaste|prefilled applicator|chewable bar|topical cake|oral capsule|liquid cleanser|ear cream|eye cream|nasal cream|ophthalmic cream|oral cream|otic cream|rectal cream|topical cream|vaginal cream|buccal film|cutaneous foam|oral foam|rectal foam|topical foam|vaginal foam|inhalation gas|eye gel|nasal gel|ophthalmic gel|oral gel|rectal gel|topical gel|urethral gel|vaginal gel|chewing gum|drug implant|nasal inhalant|nasal inhaler|nasal jelly|ophthalmic jelly|oral jelly|rectal jelly|vaginal jelly|cleanser liquid|topical lotion|topical oil|ear ointment|eye ointment|nasal ointment|ophthalmic ointment|oral ointment|otic ointment|rectal ointment|topical ointment|vaginal ointment|medicated pad|oral paste|transdermal patch|drug pellet|cutaneous powder|inhalant powder|inhalation powder|oral powder|rectal powder|topical powder|vaginal powder|vaginal ring|mouthwash rinse|oral rinse|medicated shampoo|bar soap|ophthalmic sol|cutaneous solution|inhalant solution|inhalation solution|injectable solution|intramuscular solution|intraperitoneal solution|intravenous solution|irrigation solution|nasal solution|ophthalmic solution|oral solution|otic solution|rectal solution|topical solution|mucosal spray|nasal spray|oral spray|powder spray|rectal spray|topical spray|vaginal spray|oral strip|rectal suppositories|vaginal suppositories|rectal suppository|urethral suppository|vaginal suppository|injectable suspension|intramuscular suspension|intrathecal suspension|intravenous suspension|nasal suspension|ophthalmic suspension|oral suspension|otic suspension|rectal suspension|prefilled syringe|buccal tablet|chewable tablet|disintegrating tablet|gastro-resistant tablet|oral tablet|sublingual tablet|vaginal tablet|enteric-coated tablet|medicated tape|oral troche|bar|beads|cake|caplet|caps|capsule|cement|cream|crystal|disk|douche|elixir|enema|flake|foam|gargle|gas|gel|granule|inhalant|jelly|liquid|lotion|lozenge|mouthwash|mouthwash/rinse|oil|ointment|pack|paste|patch|pellet|powder|pudding|salve|solid|solution|spray|suppositories|suppository|suspension|syrup|tablet|toothpaste|troche|unguent|wafer
+MedXN:UNK:DosageFormAll:DrugDescription	extended release enteric coated capsule|12 hour extended release capsule|24 hour extended release capsule|extended release enteric coated tablet|12 hour extended release tablet|24 hour extended release tablet|16 hour transdermal patch|24 hour transdermal patch|72 hour transdermal patch|mucous membrane topical solution|sustained release buccal tablet|soap topical bar|enteric coated capsule|extended release capsule|augmented topical cream|orderable drug form|augmented topical gel|gas for inhalation|metered dose inhaler|dry powder inhaler|solution for injection|suspension for injection|augmented topical lotion|augmented topical ointment|biweekly transdermal patch|weekly transdermal patch|medicated bar soap|medicated liquid soap|ophthalmic irrigation solution|extended release suspension|enteric coated tablet|extended release tablet|toothpaste dental toothpaste|prefilled applicator|chewable bar|topical cake|oral capsule|liquid cleanser|ear cream|eye cream|nasal cream|ophthalmic cream|oral cream|otic cream|rectal cream|topical cream|vaginal cream|buccal film|cutaneous foam|oral foam|rectal foam|topical foam|vaginal foam|inhalation gas|eye gel|nasal gel|ophthalmic gel|oral gel|rectal gel|topical gel|urethral gel|vaginal gel|chewing gum|drug implant|nasal inhalant|nasal inhaler|nasal jelly|ophthalmic jelly|oral jelly|rectal jelly|vaginal jelly|cleanser liquid|topical lotion|topical oil|ear ointment|eye ointment|nasal ointment|ophthalmic ointment|oral ointment|otic ointment|rectal ointment|topical ointment|vaginal ointment|medicated pad|oral paste|transdermal patch|drug pellet|cutaneous powder|inhalant powder|inhalation powder|oral powder|rectal powder|topical powder|vaginal powder|vaginal ring|mouthwash rinse|oral rinse|medicated shampoo|bar soap|ophthalmic sol|cutaneous solution|inhalant solution|inhalation solution|injectable solution|intramuscular solution|intraperitoneal solution|intravenous solution|irrigation solution|nasal solution|ophthalmic solution|oral solution|otic solution|rectal solution|topical solution|mucosal spray|nasal spray|oral spray|powder spray|rectal spray|topical spray|vaginal spray|oral strip|rectal suppositories|vaginal suppositories|rectal suppository|urethral suppository|vaginal suppository|injectable suspension|intramuscular suspension|intrathecal suspension|intravenous suspension|nasal suspension|ophthalmic suspension|oral suspension|otic suspension|rectal suspension|prefilled syringe|buccal tablet|chewable tablet|disintegrating tablet|gastro-resistant tablet|oral tablet|sublingual tablet|vaginal tablet|enteric-coated tablet|vaginal tablet|medicated tape|oral troche|bar|beads|cake|caplet|cap|capsule|cement|cream|crystal|disk|douche|elixir|enema|flake|foam|gargle|gas|gel|granule|inhalant|jelly|liquid|lotion|lozenge|mouthwash|mouthwash/rinse|oil|ointment|pack|paste|patch|pellet|powder|pudding|salve|solid|solution|spray|suppositories|suppository|suspension|syrup|tablet|tab|toothpaste|troche|unguents|wafer|pill|packet|puff|squirt|softgel|nebulizer|neb|supplement|supplementation|aerosol|emulsion|implant|injection|shampoo|soap
+MedXN:UNK:Duration:DrugDescription	hours|hour|hrs|days|day|weeks|week|months|month|mons|mon|years|year|yrs|yr
+MedXN:UNK:Num:DrugDescription	half|one|two|three|four|five|six|seven|eight|nine|ten|twelve
+MedXN:UNK:Meal:DrugDescription	breakfast|lunch|dinner|supper|meals|meal
+MedXN:UNK:DayTime:DrugDescription	am|pm|a\\.m\\.|p\\.m\\.|morning|afternoon|noon|evening|night|daytime|nighttime|bedtime|h\\.s\\.|hs
+MedXN:UNK:Days:DrugDescription	monday|mon|tuesday|tues|wednesday|wed|thursday|thurs|friday|fri|saturday|sat|sunday|sun|day|mondays|tuesdays|wednesdays|thursdays|fridays|saturdays|sundays
+MedXN:UNK:TimeUnit:DrugDescription	hour|hr|h|minute|min|hours|hrs|minutes|mins
+MedXN:UNK:DayUnit:DrugDescription	day|d|week|wk|month|mon|days|weeks|wks|months|mons
+MedXN:UNK:Route:DrugDescription	subcutaneously|sq|intervenous|intervenously|injected|transdermal|gastric|duodental|skin|pv|topical|topically|vaginally|po|p\\.o\\.|mouth|oral|orally|rectally|anally|pr|p\\.r\\.|ou|o\\.u\\.|iv|nostril|intramuscular
+SNOMED:35608078:Route:DrugDescription	Epilesional 
+SNOMED:35608653:Route:DrugDescription	Subdermal 
+SNOMED:35611042:Route:DrugDescription	Periosseous 
+SNOMED:35611043:Route:DrugDescription	Translingual 
+SNOMED:35615950:Route:DrugDescription	Intracavernosal 
+SNOMED:35616193:Route:DrugDescription	Genito-urinary 
+SNOMED:35616224:Route:DrugDescription	Pericardial 
+SNOMED:35624178:Route:DrugDescription	Extracorporeal hemodialysis 
+SNOMED:35627166:Route:DrugDescription	Haemodiafiltration
+SNOMED:35627167:Route:DrugDescription	Percutaneous
+SNOMED:35631981:Route:DrugDescription	Line lock
+SNOMED:36703536:Route:DrugDescription	Subretinal
+SNOMED:37018288:Route:DrugDescription	Extracorporeal 
+SNOMED:37103746:Route:DrugDescription	Intestinal use
+SNOMED:37207459:Route:DrugDescription	Intestinal 
+SNOMED:37207460:Route:DrugDescription	Intraglandular 
+SNOMED:37207461:Route:DrugDescription	Intracholangiopancreatic 
+SNOMED:37207462:Route:DrugDescription	Intraportal 
+SNOMED:37207463:Route:DrugDescription	Peritumoral 
+SNOMED:37207464:Route:DrugDescription	Posterior juxtascleral 
+SNOMED:37207465:Route:DrugDescription	Subretinal 
+SNOMED:37397638:Route:DrugDescription	Infiltration 
+SNOMED:4006860:Route:DrugDescription	Intraarticular
+SNOMED:4023156:Route:DrugDescription	Auricular
+SNOMED:40486069:Route:DrugDescription	Respiratory tract 
+SNOMED:40486444:Route:DrugDescription	Conjunctival 
+SNOMED:40487473:Route:DrugDescription	Intraepicardial 
+SNOMED:40487501:Route:DrugDescription	Digestive tract 
+SNOMED:40487850:Route:DrugDescription	Transendocardial 
+SNOMED:40487858:Route:DrugDescription	Transplacental 
+SNOMED:40487983:Route:DrugDescription	Intraepidermal
+SNOMED:40488317:Route:DrugDescription	Intracerebral 
+SNOMED:40489989:Route:DrugDescription	Intrajejunal 
+SNOMED:40489990:Route:DrugDescription	Intracolonic 
+SNOMED:40490507:Route:DrugDescription	Cutaneous 
+SNOMED:40490837:Route:DrugDescription	Intraileal 
+SNOMED:40490866:Route:DrugDescription	Periodontal 
+SNOMED:40490896:Route:DrugDescription	Peridural 
+SNOMED:40490898:Route:DrugDescription	Lower respiratory tract 
+SNOMED:40491321:Route:DrugDescription	Intramammary 
+SNOMED:40491322:Route:DrugDescription	Intratumoral
+SNOMED:40491830:Route:DrugDescription	Transtympanic 
+SNOMED:40491832:Route:DrugDescription	Transtracheal 
+SNOMED:40492284:Route:DrugDescription	Intraesophageal 
+SNOMED:40492286:Route:DrugDescription	Intragingival 
+SNOMED:40492287:Route:DrugDescription	Intravascular 
+SNOMED:40492288:Route:DrugDescription	Intradural 
+SNOMED:40492300:Route:DrugDescription	Intrameningeal 
+SNOMED:40492301:Route:DrugDescription	Intragastric 
+SNOMED:40492302:Route:DrugDescription	Intracorpus cavernosum 
+SNOMED:40492305:Route:DrugDescription	Intrapericardial 
+SNOMED:40493227:Route:DrugDescription	Intralingual 
+SNOMED:40493258:Route:DrugDescription	Intrahepatic 
+SNOMED:4057765:Route:DrugDescription	Vaginal
+SNOMED:4106215:Route:DrugDescription	Route of administration value
+SNOMED:4132161:Route:DrugDescription	Oral
+SNOMED:4132254:Route:DrugDescription	Gastrostomy 
+SNOMED:4132711:Route:DrugDescription	Nasogastric 
+SNOMED:4133177:Route:DrugDescription	Jejunostomy 
+SNOMED:4142048:Route:DrugDescription	Subcutaneous
+SNOMED:4156704:Route:DrugDescription	Gingival
+SNOMED:4156705:Route:DrugDescription	Intracardiac
+SNOMED:4156706:Route:DrugDescription	Intradermal
+SNOMED:4156707:Route:DrugDescription	Intrapleural
+SNOMED:4156708:Route:DrugDescription	Periarticular
+SNOMED:4157756:Route:DrugDescription	Endosinusial
+SNOMED:4157757:Route:DrugDescription	Intracavernous
+SNOMED:4157758:Route:DrugDescription	Intralesional
+SNOMED:4157759:Route:DrugDescription	Intralymphatic
+SNOMED:4157760:Route:DrugDescription	Intraocular
+SNOMED:4157761:Route:DrugDescription	Perineural
+SNOMED:4163765:Route:DrugDescription	Dental
+SNOMED:4163767:Route:DrugDescription	Intraamniotic
+SNOMED:4163768:Route:DrugDescription	Intrabursal
+SNOMED:4163769:Route:DrugDescription	Intradiscal
+SNOMED:4163770:Route:DrugDescription	Subconjunctival
+SNOMED:4166865:Route:DrugDescription	Suborbital 
+SNOMED:4167393:Route:DrugDescription	Intrathoracic 
+SNOMED:4167540:Route:DrugDescription	Enteral 
+SNOMED:4168038:Route:DrugDescription	Intramyometrial 
+SNOMED:4168047:Route:DrugDescription	Colostomy 
+SNOMED:4168656:Route:DrugDescription	Intratympanic 
+SNOMED:4168665:Route:DrugDescription	Gastro-intestinal stoma 
+SNOMED:4169270:Route:DrugDescription	Intrapulmonary 
+SNOMED:4169440:Route:DrugDescription	Intrasinal 
+SNOMED:4169472:Route:DrugDescription	Tumor cavity 
+SNOMED:4169634:Route:DrugDescription	Submucosal 
+SNOMED:4170083:Route:DrugDescription	Intraductal 
+SNOMED:4170113:Route:DrugDescription	Intravenous central 
+SNOMED:4170267:Route:DrugDescription	Paravertebral 
+SNOMED:4170435:Route:DrugDescription	Urostomy 
+SNOMED:4170440:Route:DrugDescription	Laryngeal 
+SNOMED:4170771:Route:DrugDescription	Surgical cavity 
+SNOMED:4171047:Route:DrugDescription	Intravenous
+SNOMED:4171067:Route:DrugDescription	Intratesticular 
+SNOMED:4171079:Route:DrugDescription	Intracranial 
+SNOMED:4171243:Route:DrugDescription	Mucous fistula 
+SNOMED:4171725:Route:DrugDescription	Intraprostatic 
+SNOMED:4171884:Route:DrugDescription	Intravenous peripheral 
+SNOMED:4171893:Route:DrugDescription	Periosteal 
+SNOMED:4172191:Route:DrugDescription	Esophagostomy 
+SNOMED:4172316:Route:DrugDescription	Nasoduodenal 
+SNOMED:4177987:Route:DrugDescription	Percutaneous 
+SNOMED:4181897:Route:DrugDescription	Buccal
+SNOMED:4184451:Route:DrugDescription	Ocular
+SNOMED:4186831:Route:DrugDescription	Endocervical
+SNOMED:4186832:Route:DrugDescription	Endotracheopulmonary
+SNOMED:4186833:Route:DrugDescription	Extraamniotic
+SNOMED:4186834:Route:DrugDescription	Gastroenteral
+SNOMED:4186836:Route:DrugDescription	Intracoronary
+SNOMED:4186837:Route:DrugDescription	Intrasternal
+SNOMED:4186838:Route:DrugDescription	Intravesical
+SNOMED:4186839:Route:DrugDescription	Oromucosal
+SNOMED:4213522:Route:DrugDescription	Intraosseous
+SNOMED:4217202:Route:DrugDescription	Intrathecal
+SNOMED:4220455:Route:DrugDescription	Caudal 
+SNOMED:4222254:Route:DrugDescription	Body cavity use
+SNOMED:4222259:Route:DrugDescription	Intraventricular cardiac
+SNOMED:4223965:Route:DrugDescription	Intrabiliary 
+SNOMED:4224886:Route:DrugDescription	Intracerebroventricular
+SNOMED:4225555:Route:DrugDescription	Epidural
+SNOMED:4229543:Route:DrugDescription	Intratracheal 
+SNOMED:4232601:Route:DrugDescription	Transmucosal 
+SNOMED:4233974:Route:DrugDescription	Urethral
+SNOMED:4240824:Route:DrugDescription	Intraarterial
+SNOMED:4243022:Route:DrugDescription	Intraperitoneal
+SNOMED:4246511:Route:DrugDescription	Intramedullary 
+SNOMED:4262099:Route:DrugDescription	Transdermal
+SNOMED:4262914:Route:DrugDescription	Nasal
+SNOMED:4263689:Route:DrugDescription	Topical 
+SNOMED:4269621:Route:DrugDescription	Intrauterine
+SNOMED:4290759:Route:DrugDescription	Rectal
+SNOMED:4292110:Route:DrugDescription	Sublingual
+SNOMED:4292410:Route:DrugDescription	Intraluminal 
+SNOMED:4302352:Route:DrugDescription	Intrasynovial 
+SNOMED:4302354:Route:DrugDescription	Intraduodenal 
+SNOMED:4302493:Route:DrugDescription	Subtendinous 
+SNOMED:4302612:Route:DrugDescription	Intramuscular
+SNOMED:4302785:Route:DrugDescription	Intravitreal
+SNOMED:4302788:Route:DrugDescription	Intraspinal 
+SNOMED:4303263:Route:DrugDescription	Intrabronchial 
+SNOMED:4303277:Route:DrugDescription	Oropharyngeal 
+SNOMED:4303409:Route:DrugDescription	Intracameral
+SNOMED:4303515:Route:DrugDescription	Paracervical 
+SNOMED:4303646:Route:DrugDescription	Periurethral 
+SNOMED:4303667:Route:DrugDescription	Intracoronal 
+SNOMED:4303673:Route:DrugDescription	Retrobulbar 
+SNOMED:4303676:Route:DrugDescription	Intracartilaginous 
+SNOMED:4303795:Route:DrugDescription	Orogastric 
+SNOMED:4303939:Route:DrugDescription	Intratendinous 
+SNOMED:4304274:Route:DrugDescription	Peribulbar 
+SNOMED:4304277:Route:DrugDescription	Fistula 
+SNOMED:4304412:Route:DrugDescription	Surgical drain 
+SNOMED:4304571:Route:DrugDescription	Ureteral 
+SNOMED:4304730:Route:DrugDescription	Transcervical 
+SNOMED:4304882:Route:DrugDescription	Intraabdominal 
+SNOMED:4305382:Route:DrugDescription	Transurethral 
+SNOMED:4305564:Route:DrugDescription	Peritendinous 
+SNOMED:4305679:Route:DrugDescription	Ileostomy 
+SNOMED:4305690:Route:DrugDescription	Intracorneal 
+SNOMED:4305834:Route:DrugDescription	Nasojejunal 
+SNOMED:4305993:Route:DrugDescription	Intracisternal 
+SNOMED:4306649:Route:DrugDescription	Subgingival 
+SNOMED:4306657:Route:DrugDescription	Intraovarian 
+SNOMED:4327128:Route:DrugDescription	Interstitial 
+SNOMED:44783786:Route:DrugDescription	Arteriovenous fistula 
+SNOMED:44801748:Route:DrugDescription	Haemodiafiltration 
+SNOMED:45956871:Route:DrugDescription	Haemodialysis
+SNOMED:45956872:Route:DrugDescription	Intracervical
+SNOMED:45956874:Route:DrugDescription	Inhalation
+SNOMED:45956875:Route:DrugDescription	Route of administration not applicable
+SNOMED:45956877:Route:DrugDescription	Haemofiltration
+SNOMED:45956878:Route:DrugDescription	Submucosal rectal
+SNOMED:45956879:Route:DrugDescription	Regional perfusion
+SNOMED:45956880:Route:DrugDescription	Epilesional
+SNOMED:45956881:Route:DrugDescription	Iontophoresis
+SNOMED:46270168:Route:DrugDescription	Sublesional 
+SNOMED:46272911:Route:DrugDescription	Intraneural 
+SNOMED:46272926:Route:DrugDescription	Intramural 
+SNOMED:703330:Route:DrugDescription	Intraglandular
+SNOMED:762840:Route:DrugDescription	Arteriovenous graft 
+Eye:UNK:Route:DrugDescription	each eye|both eyes|eyes|left eye|right eye|l eye|r eye|drops in your left eye|drops in your right eye|drops in your eye|drops in eye|drops in eyes|in your left eye|in your right eye|ophthalmic in your left eye|ophthalmic in your right eye|gtt left eye|gtt right eye|eye|each eye ophthalmic
+Oral:UNK:Route:DrugDescription	po|p.o.|p.o|po /ng|po/ng|po / ng|oral|po/ ng|orally|by mouth|oral administration|po/pr|po / pr|po/ pr|chewable|chewable po|tongue|throat|sublingually|sublingual|sublinqual gtt
+IV:UNK:Route:DrugDescription	peripheral iv|peripheral i.v|peripheral i.v.|iv infusion|infusions|iv|i.v|i.v.|intravenous|iv gtt|iv drip|intravenously|intra-venous
+Injected:UNK:Route:DrugDescription	sc injection|injection|injected|inject|injections
+Transfusion:UNK:Route:DrugDescription	tranfusions|tranfusion|transfusion|transfusions|transfused|tranfused
+TypesInjections:UNK:Route:DrugDescription	infusion|subcutaneous|subcut|sub-cutaneous|sub-q|sub-cutaneously|subcutaneously|intramuscular|sub q|subq|sub-cu|sub cu
+Tubes:UNK:Route:DrugDescription	epidural catheter|epidural|rectal|appl rectal|rectally|gastrostomy tube|g-tube|g tube|gtube|ng tube||ng-tube
+Body:UNK:Route:DrugDescription	topical|appl topical|topically|per rectum|inh inhalation|vaginal|apply to shoulders|apply to shoulder|anal rea|intrathecal
+Noise:UNK:Route:DrugDescription	inhalation|inhaler|intranasal|neb inhalation|nasal canulairrigated|nasal|nasal cannula|inhaled|ophthalmic|drop ophthalmic|appl ophthalmic
+Other:UNK:Route:DrugDescription	gtt|sc|drip|inh|neb|nebs|peripheral|peripherally|sq|ggt|drips|each lumen|per lumen|facemask|face mask|each nostril|nostril|line|scalp|skin|each ear|ears|right ear|left ear|abdomen folds

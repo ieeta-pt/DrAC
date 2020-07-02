@@ -139,39 +139,97 @@ class Annotator():
 				annotations[dataset][file] = {}
 				clinicalNote = clinicalNotes[dataset][file]["cn"]
 				annotation = sorted(nejiAnnotations[dataset][file], key=lambda x: int(x[2]))
-				readedSpans = []
-				sentences = Utils.getSentencesByAnnotation(clinicalNote, annotation)
+				disambiguatedAnn = Annotator._disambiguate(annotation)
+				filteredAnn = Annotator._filter(disambiguatedAnn, Utils.getVocListWithoutGroup(voc["black-list"]))
+				if len(filteredAnn) > 0:
+					sentences = Utils.getSentencesByAnnotation(clinicalNote, filteredAnn)
 
-				for (annConcept, annCode, annSpan) in annotation:
-					results = [None, None, None, None]
-					if annSpan in readedSpans:
-						continue
-					readedSpans.append(annSpan)
-					
-					if int(annSpan) not in sentences:
-						continue #this is because concepts that were partially found. Example 2025 l-asparaginase vs 2027 asparaginase
-					results[ROUTE] = Annotator._annotateRoute(sentences[int(annSpan)], voc["route"])
-					
-					if "docusate sodium" in annConcept.lower():
-						print(sentences[int(annSpan)])
-					if results[ROUTE] != None:
-						filterAnn = [(concept, code, span) for (concept, code, span) in annotation if span == annSpan and concept is not None]
-						if len(filterAnn) > 1:
-							drug, dosage = Utils.mergeAnnsToGetStrength(filterAnn)
-							if drug:
-								results[STRENGHT] = dosage
-						else:
-							drug = filterAnn[0][0]
+					readedSpans = []
+					for (annConcept, annCode, annSpan) in filteredAnn:
+						results = [None, None, None, None]
+						if annSpan in readedSpans:
+							continue
+						readedSpans.append(annSpan)
+						
+						if int(annSpan) not in sentences:
+							continue #this is because concepts that were partially found. Example 2025 l-asparaginase vs 2027 asparaginase
+						results[ROUTE] = Annotator._annotateRoute(sentences[int(annSpan)], voc["route"])
+						
+						if "docusate sodium" in annConcept.lower():
+							print(results[ROUTE], sentences[int(annSpan)])
 
-						##if results[STRENGHT] == None:
-						##	results[STRENGHT] = Annotator._annotateStrenght(drug, sentence, voc["strenght"])
-						##results[DOSAGE] = Annotator._annotateDosage(drug, sentence, voc["all"])
-						#results[QUANTITY] = Annotator._annotateQuantity(filterAnn[0], sentence, results[ROUTE])
-						results[SPAN] = [annSpan]
+						if results[ROUTE] != None:
+							filterAnn = [(concept, code, span) for (concept, code, span) in annotation if span == annSpan and concept is not None]
+							if len(filterAnn) > 1:
+								drug, dosage = Utils.mergeAnnsToGetStrength(filterAnn)
+								if drug:
+									results[STRENGHT] = dosage
+							else:
+								drug = filterAnn[0][0]
 
-						annotations[dataset][file][drug] = results
+							##if results[STRENGHT] == None:
+							##	results[STRENGHT] = Annotator._annotateStrenght(drug, sentence, voc["strenght"])
+							##results[DOSAGE] = Annotator._annotateDosage(drug, sentence, voc["all"])
+							#results[QUANTITY] = Annotator._annotateQuantity(filterAnn[0], sentence, results[ROUTE])
+							results[SPAN] = [annSpan]
+
+							annotations[dataset][file][drug] = results
 
 		return annotations
+
+	def _disambiguate(annotation):
+		"""
+		This method disambiguates annotations by giving more priority to the RXNorm concepts
+		:param annotation: The annotation received from neji (see posProcessing method for more details)
+		:return: The annotations following the same format as the input withou overlap spans
+		"""
+		overlapsDict = {}
+		overlapList = []
+		results = []
+		index = 1
+		for ann in annotation:
+			if ann in overlapList:
+				continue
+			notOverlaped =  True 
+			startSpan = int(ann[2])
+			endSpan = startSpan + len(ann[0])
+			annSpanRange = range(startSpan, endSpan)
+			for annNext in annotation[index:]:
+				startSpanNext = int(annNext[2])
+				endSpanNext = startSpanNext + len(annNext[0])
+				annSpanNextRange = range(startSpanNext, endSpanNext)
+				if len(set(annSpanRange).intersection(annSpanNextRange)) > 0:
+					if startSpan not in overlapsDict:
+						overlapsDict[startSpan] = []
+					overlapsDict[startSpan].append(annNext)
+					notOverlaped = False
+					overlapList.append(annNext)
+			if notOverlaped:
+				results.append(ann)
+			else:
+				overlapsDict[startSpan].append(ann)
+			index += 1
+
+		for overlaps in overlapsDict:
+			tmpAnn = overlapsDict[overlaps][0]
+			for ann in overlapsDict[overlaps]:
+				if len(ann[0]) > len(tmpAnn[0]):
+					tmpAnn = ann
+			results.append(tmpAnn)
+		return results
+	
+	def _filter(annotations, vocList):
+		"""
+		This method filters the annotations by removing the concepts in the voc[black-list]
+		:param annotations: This are the disambiguated annotations following the same format (see posProcessing method for more details)
+		:param voc: The vocabulary with the concepts to remove
+		:return: The annotations filtered using the same format as the input
+		"""
+		results = []
+		for ann in annotations:
+			if ann[0] not in vocList:
+				results.append(ann)
+		return results
 
 	def _annotateRoute(sentence, voc):
 		"""

@@ -70,3 +70,14 @@ class Utils():
 				counter += 1
 			span += len(word) + 1
 		return result
+
+	def getVocListWithoutGroup(voc):
+		"""
+		This method creates a list of concepts from a vocabulary and removes the group.
+		:param voc: List of tuples (concept, group)
+		:return: List of concepts
+		"""
+		results = []
+		for entry, group in voc:
+			results.append(entry)
+		return results
