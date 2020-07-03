@@ -146,7 +146,7 @@ class Annotator():
 						ann[2] = str(int(ann[2])+1)
 						ann = tuple(ann)
 						annotation[idx] = ann
-				disambiguatedAnn = Annotator._disambiguate(annotation)
+				disambiguatedAnn = Utils.disambiguate(annotation)
 				filteredAnn = Annotator._filter(disambiguatedAnn, Utils.getVocListWithoutGroup(voc["all"]))#voc["black-list"]))
 				if len(filteredAnn) > 0:
 					sentences = Utils.getSentencesByAnnotation(clinicalNote, filteredAnn)
@@ -162,8 +162,8 @@ class Annotator():
 							continue 
 						results[ROUTE] = Annotator._annotateRoute(sentences[int(annSpan)], voc["route-complex"], voc["route"])
 
-						if "fluids" in annConcept.lower():
-							print(file, results[ROUTE], annSpan, sentences[int(annSpan)])
+						#if "fluids" in annConcept.lower():
+						#	print(file, results[ROUTE], annSpan, sentences[int(annSpan)])
 
 						if results[ROUTE] != None:
 							filterAnn = [(concept, code, span) for (concept, code, span) in annotation if span == annSpan and concept is not None]
@@ -187,47 +187,6 @@ class Annotator():
 							annotations[dataset][file][(drug, annSpan)] = results
 
 		return annotations
-
-	def _disambiguate(annotation):
-		"""
-		This method disambiguates annotations by giving more priority to the RXNorm concepts
-		:param annotation: The annotation received from neji (see posProcessing method for more details)
-		:return: The annotations following the same format as the input withou overlap spans
-		"""
-		overlapsDict = {}
-		overlapList = []
-		results = []
-		index = 1
-		for ann in annotation:
-			if ann in overlapList:
-				continue
-			notOverlaped =  True 
-			startSpan = int(ann[2])
-			endSpan = startSpan + len(ann[0])
-			annSpanRange = range(startSpan, endSpan)
-			for annNext in annotation[index:]:
-				startSpanNext = int(annNext[2])
-				endSpanNext = startSpanNext + len(annNext[0])
-				annSpanNextRange = range(startSpanNext, endSpanNext)
-				if len(set(annSpanRange).intersection(annSpanNextRange)) > 0:
-					if startSpan not in overlapsDict:
-						overlapsDict[startSpan] = []
-					overlapsDict[startSpan].append(annNext)
-					notOverlaped = False
-					overlapList.append(annNext)
-			if notOverlaped:
-				results.append(ann)
-			else:
-				overlapsDict[startSpan].append(ann)
-			index += 1
-
-		for overlaps in overlapsDict:
-			tmpAnn = overlapsDict[overlaps][0]
-			for ann in overlapsDict[overlaps]:
-				if len(ann[0]) > len(tmpAnn[0]):
-					tmpAnn = ann
-			results.append(tmpAnn)
-		return results
 	
 	def _filter(annotations, vocList):
 		"""
