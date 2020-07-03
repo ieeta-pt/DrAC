@@ -89,7 +89,11 @@ class Annotator():
 					#file name|concept|neji code|inital span
 					data = annotation.split("|")
 					fileName = data[0]
-					nejiann = tuple(data[1:])
+					nejiann = data[1:]
+					if not nejiann[0][0].isalnum():
+						nejiann[0] = nejiann[0][1:]
+						nejiann[2] = str(int(nejiann[2])+1)
+						nejiann = tuple(nejiann)
 					if fileName not in ann[dataset]:
 						ann[dataset][fileName] = []
 					ann[dataset][fileName].append(nejiann)
@@ -139,14 +143,6 @@ class Annotator():
 				annotations[dataset][file] = {}
 				clinicalNote = clinicalNotes[dataset][file]["cn"]
 				annotation = sorted(nejiAnnotations[dataset][file], key=lambda x: int(x[2]))
-				for idx in range(len(annotation)):
-					if annotation[idx][0].startswith("*"):
-						ann = list(annotation[idx])
-						ann[0] = ann[0][1:]
-						ann[2] = str(int(ann[2])+1)
-						ann = tuple(ann)
-						annotation[idx] = ann
-
 				disambiguatedAnn = Annotator._disambiguate(annotation)
 				filteredAnn = Annotator._filter(disambiguatedAnn, Utils.getVocListWithoutGroup(voc["all"]))#voc["black-list"]))
 				if len(filteredAnn) > 0:
@@ -163,7 +159,7 @@ class Annotator():
 							continue 
 						results[ROUTE] = Annotator._annotateRoute(sentences[int(annSpan)], voc["route-complex"], voc["route"])
 
-						# if "docusate sodium" in annConcept.lower():
+						# if "fluids" in annConcept.lower():
 						# 	print(file, results[ROUTE], annSpan, sentences[int(annSpan)])
 
 						if results[ROUTE] != None:
