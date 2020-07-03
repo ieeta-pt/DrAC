@@ -139,13 +139,7 @@ class Annotator():
 				annotations[dataset][file] = {}
 				clinicalNote = clinicalNotes[dataset][file]["cn"]
 				annotation = sorted(nejiAnnotations[dataset][file], key=lambda x: int(x[2]))
-				for idx in range(len(annotation)):
-					if not annotation[idx][0][0].isalnum():
-						ann = list(annotation[idx])
-						ann[0] = ann[0][1:]
-						ann[2] = str(int(ann[2])+1)
-						ann = tuple(ann)
-						annotation[idx] = ann
+				annotation = Utils.cleanConceptBegin(annotation)
 				disambiguatedAnn = Utils.disambiguate(annotation)
 				filteredAnn = Annotator._filter(disambiguatedAnn, Utils.getVocListWithoutGroup(voc["all"]))#voc["black-list"]))
 				if len(filteredAnn) > 0:

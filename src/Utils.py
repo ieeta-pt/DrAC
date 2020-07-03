@@ -163,3 +163,18 @@ class Utils():
 					tmpAnn = ann
 			results.append(tmpAnn)
 		return results
+
+	def cleanConceptBegin(annotation):
+		"""
+		This method cleans the begin of the annotations, for istance when there is present * before the concept
+		:param annotation: List with the annotation for a single clinical note
+		:return: The input list with the annotation clean
+		"""
+		for idx in range(len(annotation)):
+			if not annotation[idx][0][0].isalnum():
+				ann = list(annotation[idx])
+				ann[0] = ann[0][1:]
+				ann[2] = str(int(ann[2])+1)
+				ann = tuple(ann)
+				annotation[idx] = ann
+		return annotation
