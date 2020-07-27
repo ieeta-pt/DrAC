@@ -178,3 +178,20 @@ class Utils():
 				ann = tuple(ann)
 				annotation[idx] = ann
 		return annotation
+
+	def createUniqueConcepts(matrix):
+		"""
+		This method creates a set containing all the mapped concepts to then be used in the Usagi.
+		:param matrix: Matrix resulting from the annotation process (List of lists)
+		:return: Tuple of lists converted from sets concepts and routes
+		"""
+		concepts = set()
+		for concept in matrix[0]:
+			concepts.add(concept.lower())
+		routes = set()
+		for data in matrix[1:]:
+			for elem in data:
+				info = elem.split("|")
+				if len(info) >= 2:
+					routes.add(info[2].lower())
+		return list(concepts), list(routes)

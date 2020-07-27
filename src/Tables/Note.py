@@ -1,6 +1,6 @@
 import sqlalchemy as sa
 
-class Note():
+class Note(BaseTable):
 	def __init__(self):
 		columns = [
 			'note_id',

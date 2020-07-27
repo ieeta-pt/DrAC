@@ -1,6 +1,6 @@
 import sqlalchemy as sa
 
-class DrugExposure():
+class DrugExposure(BaseTable):
 	def __init__(self):
 		columns = [
 			'drug_exposure_id',

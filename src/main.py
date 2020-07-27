@@ -6,6 +6,8 @@ from Annotator import Annotator
 from Writer import Writer
 from Vocabulary import Vocabulary
 from Evaluator import Evaluator
+from Harmonizer import Harmonizer
+from Utils import Utils
 
 def help(show=False):
 	parser = argparse.ArgumentParser(description="")
@@ -22,7 +24,6 @@ def help(show=False):
 	executionMode.add_argument('-e', '--evaluate', default=False, action='store_true', \
 							help='In this mode, the system will read the annotations and evaluate the dataset without converting it to \
 							the matrix (default: False)')
-
 	executionMode.add_argument('-o', '--load-ohdsi-voc', default=False, action='store_true', \
 							help='In this mode, the system will load the OHDSI vocabularies into the database (default: False)')
 
@@ -134,6 +135,21 @@ def evaluationMode(settings, read, detailEva):
 
 def migrationMode(matrix, settings, loadIntoDB):
 	print("Migration mode!")
+	"""
+	Aqui tenho o metodo de migrar
+	que pode ou nao carregar na bd (facil esta parte)
+	le:
+		- o output do usagi
+		- a informação do patient (se calhar aqui nao faço a migração)
+		- a matrix (que ja vem em argumento)
+	recebe a matrix
+	harmoniza os headers com a informação do usagi
+	enfia no drug exposure
+	"""
+	usagiInput = Utils.createUniqueConcepts(matrix)
+	Writer.writeUsagiInputs(usagiInput, settings["harmonisation"]["usagi_input"])
+
+	#Harmonizer.harmonize(matrix, settings["harmonisation"]["usagi_output"])
 	print("Done!")
 
 def loadingOHDSIVocabulariesMode(settings):

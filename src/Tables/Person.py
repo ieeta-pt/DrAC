@@ -1,6 +1,6 @@
 import sqlalchemy as sa
 
-class Person():
+class Person(BaseTable):
     def __init__(self):
         columns = [
             'person_id',

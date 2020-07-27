@@ -1,6 +1,6 @@
 import sqlalchemy as sa
 
-class NoteNLP():
+class NoteNLP(BaseTable):
 	def __init__(self):
 		columns = [
 			'note_nlp_id',
