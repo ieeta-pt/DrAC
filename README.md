@@ -1,8 +1,8 @@
+[![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://github.com/bioinformatics-ua/DrAC/tree/master)
+
 <p align="center"><img src="images/logo.png" alt="cn-to-cdm" height="100" border="0" /></p>
 
 <p align="center"><b>DrAC - Drug Annotator for Common data model</b></p>
-
-[![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://github.com/bioinformatics-ua/DrAC/tree/master)
 
 Extracting Patients' information from clinical notes and export them to an OMOP CDM database.
 
