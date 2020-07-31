@@ -149,7 +149,7 @@ def migrationMode(matrix, settings, loadIntoDB):
 	usagiInput = Utils.createUniqueConcepts(matrix)
 	Writer.writeUsagiInputs(usagiInput, settings["harmonisation"]["usagi_input"])
 
-	#Harmonizer.harmonize(matrix, settings["harmonisation"]["usagi_output"])
+	Harmonizer.harmonize(matrix, settings["harmonisation"]["usagi_output"])
 	print("Done!")
 
 def loadingOHDSIVocabulariesMode(settings):

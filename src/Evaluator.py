@@ -42,14 +42,18 @@ class Evaluator():
 					print ("Note " + fileName + " not annotated! Maybe an decoding error during the annotation procedure!")
 					continue
 				annGSList = []
-				for annID in clinicalNotes[dataset][fileName]["annotation"]:
-					ann = clinicalNotes[dataset][fileName]["annotation"][annID]
-					annGSList.append((ann[0], str(ann[2][0])))
-				annList = []
-				for ann in nejiAnnotations[dataset][fileName]:
-					annList.append((ann[0],ann[2]))
-				annList = list(set(annList))
-				metrics[fileName] = Evaluator._calculateIndividualMetrics(annGSList, annList)
+				if "annotation" not in clinicalNotes[dataset][fileName]:
+					if showDetail:
+						print("File " + fileName + " not available in the gold standard|")
+				else:
+					for annID in clinicalNotes[dataset][fileName]["annotation"]:
+						ann = clinicalNotes[dataset][fileName]["annotation"][annID]
+						annGSList.append((ann[0], str(ann[2][0])))
+					annList = []
+					for ann in nejiAnnotations[dataset][fileName]:
+						annList.append((ann[0],ann[2]))
+					annList = list(set(annList))
+					metrics[fileName] = Evaluator._calculateIndividualMetrics(annGSList, annList)
 			Evaluator._calculateGlobalMetrics(metrics, showDetail)
 
 	def _calculateIndividualMetrics(annGS, ann):
@@ -82,9 +86,14 @@ class Evaluator():
 
 		fn = len(annGS) - tp
 		fp = len(ann) - tp
-		precision = tp/(tp+fp)
-		recall = tp/(tp+fn)
-		f1Score = 2*((precision*recall)/(precision+recall))
+		try:
+			precision = tp/(tp+fp)
+			recall = tp/(tp+fn)
+			f1Score = 2*((precision*recall)/(precision+recall))
+		except:
+			precision = 0
+			recall = 0
+			f1Score = 0
 		return {
 				"individual":(precision, recall, f1Score),
 				"global":(tp, fp, fn),
@@ -190,20 +199,28 @@ class Evaluator():
 					print ("Note " + fileName + " not annotated! Maybe an decoding error during the annotation procedure!")
 					continue
 				annGSList = []#(drug, span, route)
-				for relID in clinicalNotes[dataset][fileName]["relation"]:
-					annID = clinicalNotes[dataset][fileName]["relation"][relID][0]
-					rel = clinicalNotes[dataset][fileName]["relation"][relID][1]
-					if rel[1].lower() == "route": #Considering only the routes
-						ann = clinicalNotes[dataset][fileName]["annotation"][annID]
-						route = rel[0]
-						annGSList.append((ann[0], str(ann[2][0]), route))
-				annList = []#(drug, span, route)
-				for ann, annSpan in annotations[dataset][fileName]:
-					if ann is None: #the none entries are ignored when the matrix is built, but i need to find the problem
-						continue
-					rel = annotations[dataset][fileName][(ann, annSpan)][2]
-					annList.append((ann, annSpan, rel))
-				metrics[fileName] = Evaluator._calculateIndividualMetricsRel(annGSList, annList, fileName)
+
+				if "relation" not in clinicalNotes[dataset][fileName]:
+					if showDetail:
+						print("File " + fileName + " not available in the gold standard|")
+				else:
+					for relID in clinicalNotes[dataset][fileName]["relation"]:
+						annID = clinicalNotes[dataset][fileName]["relation"][relID][0]
+						rel = clinicalNotes[dataset][fileName]["relation"][relID][1]
+						if rel[1].lower() == "route": #Considering only the routes
+							ann = clinicalNotes[dataset][fileName]["annotation"][annID]
+							route = rel[0]
+							annGSList.append((ann[0], str(ann[2][0]), route))
+					annList = []#(drug, span, route)
+					for ann, annSpan in annotations[dataset][fileName]:
+						if ann is None: #the none entries are ignored when the matrix is built, but i need to find the problem
+							continue
+						rel = annotations[dataset][fileName][(ann, annSpan)][2]
+						annList.append((ann, annSpan, rel))
+					#print(annGSList)
+					#print(annList)
+					#print("---")
+					metrics[fileName] = Evaluator._calculateIndividualMetricsRel(annGSList, annList, fileName)
 			Evaluator._calculateGlobalMetrics(metrics, showDetail)
 
 	def _calculateIndividualMetricsRel(annGS, ann, doc):
@@ -241,6 +258,12 @@ class Evaluator():
 			precision = tp/(tp+fp)
 			recall = tp/(tp+fn)
 			f1Score = 2*((precision*recall)/(precision+recall))
+
+			if precision > 1 or recall > 1:
+				print("The document {} contains annotation issues in the gold standard".format(doc))
+				precision = 0
+				recall = 0
+				f1Score = 0
 		except: #This will only affect the individual metrics, in which it will be difficult to find the worst clinical note
 			precision = 0
 			recall = 0

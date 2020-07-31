@@ -71,7 +71,8 @@ class Utils():
 		:return: Dict with key the span of the concept and value a list of words that followed the concept.
 		"""
 		result = {}
-		MAX = 16 #means 15
+		AFTER = 16 #means 15
+		BEFORE = 2 #Before mention
 		LAST = False
 		readedSpans = set()
 		for (annConcept, annCode, annSpan) in annotation:
@@ -96,8 +97,8 @@ class Utils():
 				else:
 					nextConceptSpan = readedSpans[readedSpansCounter]
 
-			if 	(span >= currentConceptSpan and span < nextConceptSpan and counter < MAX) or \
-				(LAST and counter < MAX):
+			if 	(span >= currentConceptSpan and span < nextConceptSpan and counter < AFTER) or \
+				(LAST and counter < AFTER):
 				if currentConceptSpan not in result:
 					result[currentConceptSpan] = []
 				result[currentConceptSpan].append(word.lower())
