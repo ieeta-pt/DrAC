@@ -46,11 +46,11 @@ For help, tip:
     $ python main.py -h
     
 ## First stage
-datasets more info (here)[https://github.com/bioinformatics-ua/DrAC/blob/master/dataset/README.md]
+datasets more info [here](https://github.com/bioinformatics-ua/DrAC/blob/master/dataset/README.md)
 
 ### Vocabulary creation
 Explain the vocabulary creation
-more info (here)[https://github.com/bioinformatics-ua/DrAC/tree/master/vocabularies/README.md]
+more info [here](https://github.com/bioinformatics-ua/DrAC/tree/master/vocabularies/README.md)
 
     $ python main.py -v
     
@@ -73,7 +73,7 @@ or -d for more details
 ### Load OHDSI Vocabularies
     $ python main.py -o
     
-more info (here)[https://github.com/bioinformatics-ua/DrAC/blob/master/OHDSIVocabularies/README.md]
+more info [here](https://github.com/bioinformatics-ua/DrAC/blob/master/OHDSIVocabularies/README.md)
     
 ### Usagi
     $ python3 main.py -a -r -u
@@ -93,4 +93,4 @@ Creates the CSV file and migrates info to BD
     
     $ python main.py -a -r -m -l
 
-results more info (here)[https://github.com/bioinformatics-ua/DrAC/blob/master/results/README.md]
+results more info [here](https://github.com/bioinformatics-ua/DrAC/blob/master/results/README.md)
