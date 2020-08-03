@@ -1,0 +1,82 @@
+Admission Date: [**2172-8-5**]
+Discharge Date: [**2172-8-6**]
+Date of Birth: [**2114-3-9**]             
+Sex: F
+
+Service: MEDICINE
+
+Allergies:
+No Known Allergies to Drugs
+
+Attending:[**First Name**]
+Chief Complaint: dyspnea, hoarseness, covid and cough
+
+Major Surgical or Invasive Procedure:
+Bronchoscopy x2
+Radiation therapy 
+Chemotherapy 
+
+History of Present Illness:
+Mrs. [**Known lastname**] is a 58 year-old female, 60 pack-year smoker, with dyspnea, hoarseness, and cough x1 month admitted to [**Hospital**].
+The patient was found to have 2.5mm opening of distal trachea secondary to external compression from mediastinal. Patient was also noted to have pericardial effusion.
+.
+On arrival to the [**Hospital**], patient was intubated, sedated, and unable to provide history.
+
+Social History:
+Unknown
+
+Family History:
+Unknown
+
+Physical Exam:
+General: Intubated, sedated, not responsive to verbal stimuli
+Skin: Mottled at arms and superior to nipple line
+Neck: Large
+Chest: Right chest tube, pigtail catheter in place
+Lungs: Upper airway noise
+
+Medications on Admission:
+Home medications:
+Carbatrol po
+Levetiracetam po
+Metoprolol po
+Omeprazole po
+
+Discharge Medications:
+Expired
+
+
+Discharge Disposition:
+Expired
+
+
+Discharge Diagnosis:
+Expired
+
+
+Discharge Condition:
+Expired
+
+
+Discharge Instructions:
+Expired
+
+
+Followup Instructions:
+Expired
+
+
+Department: MEDICAL SPECIALTIES
+When: [**Date**]
+With: [**First Name**] [**Last Name**], MD [**Telephone**]
+Building: ZZ [**Hospital**] Building ([**Hospital**]/[**Hospital**] Complex) [**Location**]
+Campus: NORTH     Best Parking: Garage of Dean
+
+Department: COGNITIVE NEUROLOGY UNIT
+When: [**Date**]
+With: [**First Name**] [**Last Name**], MD [**Telephone**]
+Building: ZZ [**Hospital**] Building ([**Hospital**]/[**Hospital**] Complex) [**Location**]
+Campus: NORTH     Best Parking: Garage of Dean
+
+
+
