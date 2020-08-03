@@ -9,7 +9,7 @@ This system was validated using two public datasets:
 	- test_data_Tasks1&3/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_NOT USED_ 	
 	
 - 2009 i2b2 Track on Medication Extraction: Contains discharge summaries and annotation files with the identification of medications and their respective dosage, route of administration, frequency and duration.
-	- train.test.released.8.17.09/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_Contains discharge summary files_
+	- train.test.released.8.17.09/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; _Contains discharge summary files_
 	- converted.noduplicates.sorted/ &nbsp; _Contains annotation files_
 
 These datasets are public but have controlled access. To use them, please request their access at:
