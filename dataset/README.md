@@ -37,7 +37,9 @@ When adding new datasets to the system, it is necessary to implement a new datas
 }
 ```
 
-2. Add the new reader to `readClinicalNotes`
+Even though the pipeline does not currently explore this option, the reader enables the division in "train" and "test" partitions as it might be of interest to use the "train" partition for training and developing annotation systems, and the "test" partition solely for testing purposes. 
+
+2. Add the new reader to `readClinicalNotes`.
 
 ## Running the pipeline
 
