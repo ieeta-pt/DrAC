@@ -1,5 +1,6 @@
 # Datasets
 
+## Public datasets
 This system was validated using two public datasets:
 - 2018 n2c2 Track on ADE and Medication Extraction Challenge: Contains clinical notes and annotation files with the identification of medications and their respective dosage, strength, route of administration, duration and reason, as well as adverse drug events (ADE).
 	- train/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; _Contains discharge summaries (.txt) and annotation files (.ann)_ 
@@ -14,7 +15,11 @@ This system was validated using two public datasets:
 These datasets are public but have controlled access. To use them, please request their access at:
 https://portal.dbmi.hms.harvard.edu/projects/n2c2-nlp/
 
-<hr/>
+
+## Example dataset
+To test the pipeline using dummy discharge summaries, three discharge summary samples are provided in `Examples/`.
+
+## Initial steps
 
 Before running the system, it is necessary to:
 
@@ -23,9 +28,4 @@ Before running the system, it is necessary to:
 &nbsp;&nbsp;&nbsp;**OR**
 
 - Configure the new dataset directory in the Settings.ini file.
-
-<hr/>
-
-
-To test the pipeline using dummy discharge summaries, three discharge summary samples are provided in `Examples/`.
 
