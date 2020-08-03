@@ -26,8 +26,8 @@ class DatasetReader():
 		"""
 		if datasetName == "2018_track2":
 			return DatasetReader._reader2018Track2(directory)
-		elif datasetName == "2014_track2":
-			return DatasetReader._reader2014Track2(directory)
+		elif datasetName == "2009":
+			return DatasetReader._reader2009(directory)
 		else:
 			raise("There are no reader defined for this dataset, please implement it or used one of the ones already existent!")
 		return None
@@ -95,6 +95,92 @@ class DatasetReader():
 								cn[dataset][fileName]["relation"][data[0]] = (drugId, infoTuple)
 		return cn
 
-	def _reader2014Track2(directory):
-		print("to do")
-		print(directory)
+	def _reader2009(directory):
+		cn = {}
+		cn["train"] = {}
+		allCNs = sorted(glob.glob('{}train.test.released.8.17.09/*'.format(directory)))
+		for file in allCNs:
+			fileName = file.split("/")[-1]
+			cn["train"][fileName] = {}
+			with codecs.open(file, 'r', encoding='utf8') as fp:
+				cn["train"][fileName]["cn"] = fp.read()
+
+		allAnn = sorted(glob.glob('{}converted.noduplicates.sorted/*.{}'.format(directory, "m")))
+		for file in allAnn:
+			"""
+				"annotation":{
+					"id":("concept","type",[(span,span), ...])
+				},
+				"relation":{
+					"id": (annId1, ("concept","type",[(span,span), ...]))
+				}
+			"""
+			fileName = file.split("/")[-1].split(".")[0]
+			cn["train"][fileName]["annotation"] = {}
+			cn["train"][fileName]["relation"] = {}
+			tmpStrength = {}
+
+			#m="ace inhibitor" 149:6 149:7||do="nm"||mo="nm"||f="nm"||du="nm"||r="nm"||ln="narrative"
+			#m="lasix" 149:3 149:3||do="nm"||mo="nm"||f="nm"||du="nm"||r="nm"||ln="narrative"
+			#1.medication name and its offset (marker “m”) 
+			#2.dosage and its offset (marker “do”) 
+			#3.mode/route of administration and its offset (marker “mo”)
+			idx = 0
+			relIdx = 0
+			with codecs.open(file, 'r', encoding='utf8') as fp:
+				annotations = fp.read().split("\n")
+				for line in annotations:
+					data = line.split("||")
+					conceptData = data[0].split('"')
+					#print(concept, len(concept))
+					if len(conceptData) > 2:
+						concept = conceptData[1]
+						firstSpan = conceptData[2].strip().split()[0]
+						span = getSpan2019(cn["train"][fileName]["cn"], firstSpan)
+						cn["train"][fileName]["annotation"][str(idx)] = (concept, "Drug", span)
+						
+						dosageData = data[1].split('"')
+						dosage = dosageData[1]
+						if dosage != "nm":
+							dosageSpan = []
+							if len(dosageData) > 2:
+								dosageSpan = getSpan2019(cn["train"][fileName]["cn"], dosageData[2])
+							cn["train"][fileName]["relation"][str(relIdx)] = (str(idx), (dosage,"Strength",dosageSpan))
+							relIdx += 1
+
+						routeData = data[2].split('"')
+						route = routeData[1]
+						if route != "nm":
+							routeSpan = []
+							if len(routeData) == 2:
+								routeSpan = getSpan2019(cn["train"][fileName]["cn"], routeData[2])
+							cn["train"][fileName]["relation"][str(relIdx)] = (str(idx), (route,"Route",routeSpan))
+							relIdx += 1
+
+						idx += 1
+		return cn
+
+def getSpan2019(cn, spanText):
+	lines = cn.split("\n")
+	try:
+		lineToReach = int(spanText.split(":")[0])
+		wordToReach = int(spanText.split(":")[1])
+	except:
+		return []
+
+	lineCount = 0
+	span = 0
+	for line in lines:
+		lineCount += 1
+		if lineCount < lineToReach:
+			span += len(line) + 1 #\n
+		else:
+			words = line.split()
+			wordCount = 0
+			for word in words:
+				if wordCount < wordToReach:
+					span += len(word) + 1 #space
+				else:
+					return [span]
+				wordCount += 1
+	return []

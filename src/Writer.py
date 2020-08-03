@@ -66,6 +66,8 @@ class Writer():
 					for entry in conceptsInfo:
 						if entry and isinstance(entry, str):
 							cell += entry + "|"
+						elif entry is None:
+							cell += "|"
 					if len(cell) > 0:
 						cell = cell[:-1]
 					conPos = matrix[0].index(concept)
@@ -145,3 +147,14 @@ class Writer():
 												 index 		= False,
 												 schema 	= dbSettings["schema"],
 												 dtype 		= BaseTable.getDataTypesForSQL(table))
+
+	def writeUsagiInputs(uniqueConcepts, file):
+		concepts, routes = uniqueConcepts
+		out = open(file, "w", encoding='utf8')
+		out.write("source\n")
+		for concept in concepts:
+			out.write(concept+"\n")
+		out.write("---\n")
+		for route in routes:
+			out.write(route+"\n")
+		out.close()

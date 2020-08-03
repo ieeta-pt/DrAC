@@ -156,20 +156,14 @@ class Annotator():
 							continue 
 						results[ROUTE] = Annotator._annotateRoute(sentences[int(annSpan)], voc["route-complex"], voc["route"])
 
-						#if "fluids" in annConcept.lower():
-						#	print(file, results[ROUTE], annSpan, sentences[int(annSpan)])
-
 						if results[ROUTE] != None:
 							filterAnn = [(concept, code, span) for (concept, code, span) in annotation if span == annSpan and concept is not None]
 							if len(filterAnn) > 1:
-								drug, dosage = Utils.mergeAnnsToGetStrength(filterAnn)
-								# if "docusate sodium" in annConcept.lower(): print(drug, dosage)
+								drug, strength = Utils.mergeAnnsToGetStrength(filterAnn)
 								if drug:
-									results[STRENGHT] = dosage
+									results[STRENGHT] = strength
 							else:
 								drug = filterAnn[0][0]
-
-							# if "docusate sodium" in annConcept.lower(): print(drug)
 
 							##if results[STRENGHT] == None:
 							##	results[STRENGHT] = Annotator._annotateStrenght(drug, sentence, voc["strenght"])

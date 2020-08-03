@@ -1,0 +1,96 @@
+Admission Date: [**2115-10-25**]              
+Discharge Date: [**2115-10-25**]
+Date of Birth: [**2080-9-9**]             
+Sex: M
+
+Service: MEDICINE
+
+Allergies:
+Vicodin
+
+Attending:[**First Name**]
+Chief Complaint: Post-cardiac arrest, asthma exacerbation
+
+Major Surgical or Invasive Procedure:
+Intubation
+Removal of chest tubes placed at an outside hospital
+R CVL placement
+
+
+History of Present Illness:
+Mr. [**Known lastname 3234**] is a 35 year old gentleman with a asthma and PMH signifciant with dilated cardiomyopathy s/p AICD. The patient presented hypoxemic respiratory distress. He received vecuronium on an epi gtt for asthma and was then transferred to [**Hospital1 8**] for further evaluation. Of note, the patient was admitted for dyspnea, and was subsequently diagnosed with a CAP. Per his family, he has also had multiple admissions this winter for asthma exacerbations.
+.
+Currently, the patient is intubated, sedated, and parlyzed.
+
+Social History:
+Unknown
+
+Family History:
+Unknown
+
+Physical Exam:
+ADMISSION:
+Gen: ETT in place, intubated, sedated
+HEENT: ETT in place
+Pulm: Poor air movement bilaterally
+Abd: S/D hypoactive BS bilaterally
+Neuro: Unresponsive
+Ext: 1+ edema bilaterally
+
+Medications on Admission:
+albuterol MDI po
+Benadryl prn po
+Carvedilol 25 [**Hospital1 **] po
+Ibuprofen prn po
+Lsinopril 40 daily po
+Lasix 80 mg po bid
+
+Discharge Medications:
+1. bisacodyl 5 mg Tablet, Delayed Release (E.C.) Sig: Two (2) Tablet, Delayed Release (E.C.) PO DAILY (Daily) as needed for Constipation.
+2. senna 8.6 mg Tablet Sig: One (1) Tablet PO BID (2 times a day) as needed for Constipation.
+3. acetaminophen 325 mg Tablet Sig: Two (2) Tablet PO Q6H (every 6 hours) as needed for pain/fever.
+4. carvedilol 12.5 mg Tablet Sig: Two (2) Tablet PO BID (2 times a day).
+5. furosemide 40 mg Tablet Sig: Two (2) Tablet PO BID (2 times a day).
+
+Discharge Disposition:
+Extended Care
+
+Facility:
+[**Hospital6 89**] - [**Location (un) 26**]
+
+Discharge Diagnosis:
+Status Asthmaticus
+Ventilator Associated Pneumonia
+Chronic Constipation
+
+
+Discharge Condition:
+Mental Status: Confused - sometimes
+Level of Consciousness: Alert and interactive
+Activity Status: Ambulatory - requires assistance
+
+
+Discharge Instructions:
+You came to hospital after having a an asthma exacerbation and a cardiac arrest. You had another cardiac arrest in the hospital. You required intubation but were breathe on your own. We treated you for asthma and pneumonia. Your mental status improved, though you did have 2 seizures. 
+You were started on seizure medications for this.
+.
+Please take your medications as prescribed and follow up with your doctors [**Name 7899**].
+
+Followup Instructions:
+Department: PULMONARY FUNCTION LAB
+When: [**Date**]
+With: [**First Name**] [**Last Name**], MD [**Telephone**]
+Building: ZZ [**Hospital**] Building ([**Hospital**]/[**Hospital**] Complex) [**Location**]
+Campus: NORTH     Best Parking: Garage of Dean
+
+Department: MEDICAL SPECIALTIES
+When: [**Date**]
+With: [**First Name**] [**Last Name**], MD [**Telephone**]
+Building: ZZ [**Hospital**] Building ([**Hospital**]/[**Hospital**] Complex) [**Location**]
+Campus: NORTH     Best Parking: Garage of Dean
+
+Department: COGNITIVE NEUROLOGY UNIT
+When: [**Date**]
+With: [**First Name**] [**Last Name**], MD [**Telephone**]
+Building: ZZ [**Hospital**] Building ([**Hospital**]/[**Hospital**] Complex) [**Location**]
+Campus: NORTH     Best Parking: Garage of Dean

@@ -1,6 +1,6 @@
 import sqlalchemy as sa
 
-class VisitOccurrence():
+class VisitOccurrence(BaseTable):
     def __init__(self):
         columns = [
             'visit_occurrence_id',
