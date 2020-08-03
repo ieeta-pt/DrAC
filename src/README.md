@@ -75,7 +75,7 @@ or -d for more details
 
     mappings
 
-    <p align="center"><img src="images/UsagiConf.png" alt="UsagiConf" height="100" border="0" /></p>
+<p align="center"><img src="https://github.com/bioinformatics-ua/DrAC/blob/master/images/UsagiConf.png" alt="UsagiConf"  border="0" /></p>
 
 ### Migrate
 Creates the CSV file only
