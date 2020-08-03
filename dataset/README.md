@@ -12,8 +12,7 @@ This system was validated using two public datasets:
 	- train.test.released.8.17.09/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; _Contains discharge summary files_
 	- converted.noduplicates.sorted/ &nbsp; _Contains annotation files_
 
-These datasets are public but have controlled access. To use them, please request their access at:
-https://portal.dbmi.hms.harvard.edu/projects/n2c2-nlp/
+These datasets are public but have controlled access. To use them, please request their access [here](https://portal.dbmi.hms.harvard.edu/projects/n2c2-nlp/).
 
 
 ## Example dataset
