@@ -1,0 +1,15 @@
+RECORD #0003
+[**Record metadata**]
+Discharge Date: [**Date**]
+ATTENDING: [**First Name**]
+SERVICE: [**Hospital**]
+ADMIT DIAGNOSIS: DKA and uremia.
+OPERATIONS AND PROCEDURES: The patient was intubated and also underwent an extubation
+HISTORY OF PRESENT ILLNESS: The patient is a 55-year-old man with end-stage renal disease on hemodialysis.
+MEDICATIONS: The patient has been taking aspirin orally over the past 5 days.
+
+Dictated By: [**First Name**]
+Attending: [**First Name**]
+Dictation ID 002542
+D: [**Date**]
+[report_end]
