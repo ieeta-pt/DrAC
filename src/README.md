@@ -54,7 +54,7 @@ Explain the vocabulary creation
 ### Annotation
     $ python main.py -a
     
-read annotation neji
+or read annotation neji, if already annotated
     
     $ python main.py -a -r
 
@@ -62,7 +62,7 @@ read annotation neji
 
     $ python main.py -e -r
     
-detailed
+or -d for more details
     
     $ python main.py -e -r -d
     
@@ -70,11 +70,18 @@ detailed
 ### Load OHDSI Vocabularies
     $ python main.py -o
     
+### Usagi
+    $ python3 main.py -a -r -u
+
+    mappings
+
+    <p align="center"><img src="images/UsagiConf.png" alt="UsagiConf" height="100" border="0" /></p>
+
 ### Migrate
 Creates the CSV file only
     
-    $ python main.py -a -m
+    $ python main.py -a -r -m
 
 Creates the CSV file and migrates info to BD
     
-    $ python main.py -a -m -l
+    $ python main.py -a -r -m -l

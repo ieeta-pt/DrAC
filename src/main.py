@@ -35,6 +35,9 @@ def help(show=False):
 							help='This flag is complementary to the --evaluate execution mode. With this flag activated, the system \
 							will detail the evaluation by presenting all the false positives and negatives using the dataset (default: False)')
 	
+	complementaryMode.add_argument('-u', '--usagi-input', default=False, action='store_true', \
+							help='This flag is complementary to the --annotate execution mode. With this flag activated, \
+							the system will create the input file to use in the Usagi tool (default: False)')
 	complementaryMode.add_argument('-m', '--migrate', default=False, action='store_true', \
 							help='This flag is complementary to the --annotate execution mode. With this flag activated, \
 							the system will load the annotated results into the OMOP CDM Schema (default: False)')
@@ -91,13 +94,20 @@ def validateSettings(settings, args):
 			"password" not in settings["database"] :
 			return False
 
+	if args.annotate and args.usagi_input:
+		if "harmonisation" not in settings:
+			return False
+		if 	"usagi_input" not in settings["harmonisation"]:
+			return False
+
 	if args.annotate and args.migrate:
 		if "harmonisation" not in settings:
 			return False
 		if 	"usagi_output" not in settings["harmonisation"] or \
 			"dataset" not in settings["harmonisation"]:
 			return False
-
+	if args.annotate and args.migrate and args.usagi_input: #Cannot be together
+		return False
 	return True
 
 def vocabularyCreationMode(settings):
@@ -133,23 +143,16 @@ def evaluationMode(settings, read, detailEva):
 	Evaluator.evaluateAnnotations(clinicalNotes, annotations, detailEva)
 	print("Done!")
 
-def migrationMode(matrix, settings, loadIntoDB):
-	print("Migration mode!")
-	"""
-	Aqui tenho o metodo de migrar
-	que pode ou nao carregar na bd (facil esta parte)
-	le:
-		- o output do usagi
-		- a informação do patient (se calhar aqui nao faço a migração)
-		- a matrix (que ja vem em argumento)
-	recebe a matrix
-	harmoniza os headers com a informação do usagi
-	enfia no drug exposure
-	"""
+def buildUsagiInputFile(matrix, settings):
+	print("Usagi Input file mode!")
 	usagiInput = Utils.createUniqueConcepts(matrix)
 	Writer.writeUsagiInputs(usagiInput, settings["harmonisation"]["usagi_input"])
+	print("Done!")
 
+def migrationMode(matrix, settings, loadIntoDB):
+	print("Migration mode!")
 	Harmonizer.harmonize(matrix, settings["harmonisation"]["usagi_output"])
+	print("to do")
 	print("Done!")
 
 def loadingOHDSIVocabulariesMode(settings):
@@ -167,6 +170,8 @@ def main():
 
 		if args.annotate:
 			matrix = annotationMode(settings, args.read_ann)
+			if args.usagi_input:
+				buildUsagiInputFile(matrix[settings["harmonisation"]["dataset"]], settings)
 			if args.migrate:
 				migrationMode(matrix[settings["harmonisation"]["dataset"]], settings, args.load_db)
 

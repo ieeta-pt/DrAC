@@ -138,7 +138,7 @@ vocabularies/*
 !vocabularies/BlackList.tsv
 
 notes
-results/*
+!results/*
 !results/dummy
 
 
