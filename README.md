@@ -17,10 +17,13 @@ Extracting Patients' information from clinical notes and export them to an OMOP 
 More documentation about the system is available [here](https://github.com/bioinformatics-ua/DrAC/wiki).
 
 ### Team
-  - João R. Almeida
-  - João Silva
-  - Sérgio Matos
-  - José L. Oliveira
+  * João R. Almeida<sup id="a1">[1](#f1)</sup><sup id="a2">[2](#f2)</sup>
+  * João F. Silva<sup id="a1">[1](#f1)</sup>
+  * Sérgio Matos<sup id="a1">[1](#f1)</sup>
+  * José L. Oliveira<sup id="a1">[1](#f1)</sup>
+
+1. <small id="f1"> University of Aveiro, Dept. Electronics, Telecommunications and Informatics (DETI / IEETA), Aveiro, Portugal </small> [↩](#a1)
+2. <small id="f4"> University of A Coruña, Dept. of Information and Communications Technologies, A Coruña, Spain </small> [↩](#a4)
 
 ### Cite
 
@@ -35,5 +38,5 @@ Please let us know if there is any
 [issues](https://github.com/bioinformatics-ua/DrAC/issues).
 
 ### License
-DrAC is under MIT license. For more information, click
-[here](https://opensource.org/licenses/MIT).
+DrAC is under GPL-3.0 license. For more information, click
+[here](https://github.com/bioinformatics-ua/DrAC/blob/master/LICENSE).
