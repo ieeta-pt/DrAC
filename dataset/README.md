@@ -20,9 +20,13 @@ Before running the system, it is necessary to:
 
 - Add the datasets in this directory
 <br/>
+
 **OR**
+
 <br/>
+
 - Configure the new dataset directory in the Settings.ini file.
+
 <hr/>
 
 
