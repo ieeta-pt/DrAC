@@ -19,13 +19,33 @@ https://portal.dbmi.hms.harvard.edu/projects/n2c2-nlp/
 ## Example dataset
 To test the pipeline using dummy discharge summaries, three discharge summary samples are provided in `Examples/`.
 
-## Initial steps
+## Adding new datasets
+When adding new datasets to the system, it is necessary to implement a new dataset reader per added dataset. This is a simple process that involves the following steps:
+
+1. In `src/DatasetReader.py`, create a reader for the new dataset, ensuring that the output dict follows the format:
+
+```python3
+{
+"train":
+	{"file name":{
+		"cn": "clinical note",
+		"annotation":{"id":("concept","type",[(span,span), ...])},
+		"relation":{"id": (annId1, ("concept","type",[(span,span), ...]))}
+		}
+	}
+"test":{...}
+}
+```
+
+2. Add the new reader to `readClinicalNotes`
+
+## Running the pipeline
 
 Before running the system, it is necessary to:
 
-- Add the datasets in this directory
+- Add the datasets in this directory **AND** configure the variable name in Settings.ini to select the dataset to be used
 
 &nbsp;&nbsp;&nbsp;**OR**
 
-- Configure the new dataset directory in the Settings.ini file.
+- Configure the new dataset directory in the Settings.ini file **AND** configure the variable name in Settings.ini to select the dataset to be used
 
