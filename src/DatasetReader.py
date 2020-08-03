@@ -28,6 +28,8 @@ class DatasetReader():
 			return DatasetReader._reader2018Track2(directory)
 		elif datasetName == "2009":
 			return DatasetReader._reader2009(directory)
+		elif datasetName == "examples":
+			return DatasetReader._readerExamples(directory)
 		else:
 			raise("There are no reader defined for this dataset, please implement it or used one of the ones already existent!")
 		return None
@@ -96,6 +98,11 @@ class DatasetReader():
 		return cn
 
 	def _reader2009(directory):
+		"""
+		This private method reads the dataset from N2C2 2009 challenge
+		:param directory: Root directory for the dataset
+		:return: Dict similar to the method readClinicalNotes
+		"""
 		cn = {}
 		cn["train"] = {}
 		allCNs = sorted(glob.glob('{}train.test.released.8.17.09/*'.format(directory)))
@@ -121,7 +128,6 @@ class DatasetReader():
 			tmpStrength = {}
 
 			#m="ace inhibitor" 149:6 149:7||do="nm"||mo="nm"||f="nm"||du="nm"||r="nm"||ln="narrative"
-			#m="lasix" 149:3 149:3||do="nm"||mo="nm"||f="nm"||du="nm"||r="nm"||ln="narrative"
 			#1.medication name and its offset (marker “m”) 
 			#2.dosage and its offset (marker “do”) 
 			#3.mode/route of administration and its offset (marker “mo”)
@@ -132,7 +138,6 @@ class DatasetReader():
 				for line in annotations:
 					data = line.split("||")
 					conceptData = data[0].split('"')
-					#print(concept, len(concept))
 					if len(conceptData) > 2:
 						concept = conceptData[1]
 						firstSpan = conceptData[2].strip().split()[0]
@@ -160,7 +165,31 @@ class DatasetReader():
 						idx += 1
 		return cn
 
+	def _readerExamples(directory):
+		"""
+		This private method reads the dataset example provided in the repository
+		:param directory: Root directory for the dataset
+		:return: Dict similar to the method readClinicalNotes
+		"""
+		cn = {}
+		cn["train"] = {}
+		allCNs = sorted(glob.glob('{}*'.format(directory)))
+		for file in allCNs:
+			fileName = file.split("/")[-1].split(".")[0]
+			cn["train"][fileName] = {}
+			with codecs.open(file, 'r', encoding='utf8') as fp:
+				cn["train"][fileName]["cn"] = fp.read()
+		return cn
+
+
+
 def getSpan2019(cn, spanText):
+	"""
+	This method converts the span annotation line/word into character span
+	:param cn: Original clinical note text
+	:param spanText: Original span text (i.e. 5:2 means line 5, word 2)
+	:return: List containing the character span
+	"""
 	lines = cn.split("\n")
 	try:
 		lineToReach = int(spanText.split(":")[0])
