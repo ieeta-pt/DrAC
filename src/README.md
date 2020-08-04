@@ -51,9 +51,8 @@ matrix=../results/< matrix_file >           #Path where the matrix with extracte
 |`[dataset]`|Section used to define the name of the dataset on which the pipeline should be run (_e.g._, `name=2018_track2`), the path for the respective dataset (_e.g._, `directory=../dataset/2018_track2/`), the path where Neji annotations should be saved, and the path where the matrix with annotated information should be saved.|
 |`[vocabularies]`|Section used to define the paths for the dictionary files and paths used in the first component (`umls_rxnorm`, `umls_drugbank`,`umls_aod`, `tuis`, `output`) and in the second component (`ohdsi`).|
 |`[post_vocabularies]`|Section used to define the paths for additional resource files used in the post processing stage of the annotator.| 
-|`[database]`|Section used to define the parameters for establishing a connection with the database
-|
-|`[harmonisation]`| |
+|`[database]`|Section used to define the parameters for creating the database and establishing a connection with it. |
+|`[harmonisation]`|Section used to define the necessary paths for the harmonisation procedure, which involves the `matrix` file containing extracted information and Usagi input and output files.|
 
 
 ### Help
