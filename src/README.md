@@ -19,7 +19,7 @@ matrix_location=../results/
 
 [vocabularies]
 umls_rxnorm=../vocabularies/RXNORM.csv
-umls_drugsbank=../vocabularies/DRUGBANK.csv
+umls_drugbank=../vocabularies/DRUGBANK.csv
 umls_aod=../vocabularies/AOD.csv
 tuis=../vocabularies/MRSTY.RRF
 output=../vocabularies/
@@ -48,7 +48,7 @@ matrix=../results/train_matrix.tsv
 
 1. `[dataset]`: section used to define the name of the dataset on which the pipeline should be run (_e.g._, `name=2018_track2`), the path for the respective dataset (_e.g._, `directory=../dataset/2018_track2/`), the path where Neji annotations should be saved, and the path where the matrix with annotated information should be saved.
 
-2. `[vocabularies]`: section used to define the paths for the dictionaries used in the first component (`umls_rxnorm`, `umls_drugsbank`,`umls_aod`, `tuis`, `output`) and for the second component (`ohdsi`).
+2. `[vocabularies]`: section used to define the paths for the dictionaries used in the first component (`umls_rxnorm`, `umls_drugbank`,`umls_aod`, `tuis`, `output`) and for the second component (`ohdsi`).
 
 
 ### Help
@@ -63,7 +63,7 @@ This stage is divided in the following parts:
 ### Vocabulary creation
 To create vocabulary files for the Neji annotating system, it is firstly necessary to create domain specific vocabulary files following the procedure presented [here](https://github.com/bioinformatics-ua/DrAC/tree/master/vocabularies/README.md)
 
-Once the previous vocabulary files are created, it is necessary to filter and format them to be compliant with Neji. For this, firstly ensure that the variables `umls_rxnorm`, `umls_drugsbank` and `umls_aod` are correctly defined. Then, simply run the following command to create Neji compliant dictionary files.
+Once the previous vocabulary files are created, it is necessary to filter and format them to be compliant with Neji. For this, firstly ensure that the variables `umls_rxnorm`, `umls_drugbank` and `umls_aod` are correctly defined. Then, simply run the following command to create Neji compliant dictionary files.
 
     $ python main.py -v
 
