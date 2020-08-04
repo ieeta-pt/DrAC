@@ -27,14 +27,14 @@ More documentation about the system is available [here](https://github.com/bioin
 
 ### Cite
 
-Please cite the followings, if you use DrAC:
+Please cite the following, if you use DrAC in your work:
 
 ```bib
 in progress
 ```
 
 ### Issues
-Please let us know if there is any
+Please let us know if there are any
 [issues](https://github.com/bioinformatics-ua/DrAC/issues).
 
 ### License
