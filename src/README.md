@@ -18,17 +18,17 @@ neji_annotations=../results/            #Path where Neji annotations will be sav
 matrix_location=../results/             #Path where the matrix will be saved
 
 [vocabularies]
-umls_rxnorm=../vocabularies/RXNORM.csv
-umls_drugbank=../vocabularies/DRUGBANK.csv
-umls_aod=../vocabularies/AOD.csv
-tuis=../vocabularies/MRSTY.RRF
-output=../vocabularies/
-ohdsi=../OHDSIVocabularies/
+umls_rxnorm=../vocabularies/RXNORM.csv      #Path for the unformated RxNorm dictionary
+umls_drugbank=../vocabularies/DRUGBANK.csv  #Path for the unformated DrugBank dictionary
+umls_aod=../vocabularies/AOD.csv            #Path for the unformated AOD dictionary
+tuis=../vocabularies/MRSTY.RRF              #Path for the UMLS semantic type mapping file
+output=../vocabularies/                     #Output path where the final formated Neji vocabularies will be saved
+ohdsi=../OHDSIVocabularies/                 #Output path where the final OHDSIVocabularies will be saved
 
 [post_vocabularies]
-description=../vocabularies/DrugDescription.tsv
-abrev=../vocabularies/Abreviations.tsv
-black_list=../vocabularies/BlackList.tsv
+description=../vocabularies/DrugDescription.tsv     #Drug description vocabulary used in the post processing stage of the annotator
+abrev=../vocabularies/Abreviations.tsv              #List of abbreviations to be used during the post processing stage of the annotator
+black_list=../vocabularies/BlackList.tsv            #List of terms to be removed during the post processing stage of the annotator
 
 [database]
 datatype=< datatype >       #Server type (i.e., Postgres or other)
@@ -40,15 +40,15 @@ user=< user >               #User to access the database server
 password=< password >       #Password to access the database server
 
 [harmonisation]
-usagi_input=../results/inputForUsagi.csv
-usagi_output=../results/usagiExport.csv
-dataset=< ds_type >         #Dataset to process (i.e., train, test or other)
-matrix=../results/train_matrix.tsv
+usagi_input=../results/inputForUsagi.csv    #Path with the input file for Usagi
+usagi_output=../results/usagiExport.csv     #Output path to export Usagi validated information
+dataset=< ds_type >                         #Dataset to process (i.e., train, test or other)
+matrix=../results/train_matrix.tsv          #Path where the matrix with extracted information was saved in the pipeline's annotating stage 
 ```
 
 1. `[dataset]`: section used to define the name of the dataset on which the pipeline should be run (_e.g._, `name=2018_track2`), the path for the respective dataset (_e.g._, `directory=../dataset/2018_track2/`), the path where Neji annotations should be saved, and the path where the matrix with annotated information should be saved.
 
-2. `[vocabularies]`: section used to define the paths for the dictionaries used in the first component (`umls_rxnorm`, `umls_drugbank`,`umls_aod`, `tuis`, `output`) and for the second component (`ohdsi`).
+2. `[vocabularies]`: section used to define the paths for the dictionaries and paths used in the first component (`umls_rxnorm`, `umls_drugbank`,`umls_aod`, `tuis`, `output`) and for the second component (`ohdsi`).
 
 
 ### Help
@@ -101,8 +101,8 @@ This stage is divided in the following parts:
 ### Load OHDSI Vocabularies
     $ python main.py -o
     
-more info [here](https://github.com/bioinformatics-ua/DrAC/blob/master/OHDSIVocabularies/README.md)
-    
+loads more info [here](https://github.com/bioinformatics-ua/DrAC/blob/master/OHDSIVocabularies/README.md) and creates vocabularies in the output directory  
+   
 ### Usagi
     $ python3 main.py -a -r -u
 
