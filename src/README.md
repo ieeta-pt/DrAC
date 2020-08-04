@@ -4,7 +4,7 @@ DrAC is a system that annotates medication information from clinical notes, harm
 - First component: annotates drug information in clinical text and stores extracted information in a matrix structure;
 - Second component: harmonises and migrates data into an OMOP CDM database.
 
-The pipeline is divided in two major components to provide the possibility of improving a component without compromising the regular functioning of the other (_e.g._, improve the annotator's extraction mechanisms whilst maintaining the second component unmodified).
+The pipeline is divided in two major components to provide the possibility of improving a component without compromising the regular functioning of the other (_e.g._, improve the annotator's extraction mechanisms whilst maintaining the second component unmodified). The proposed pipeline was validated in two different public datasets, as described [here](https://github.com/bioinformatics-ua/DrAC/blob/master/dataset/README.md).
 
 ## Before starting
 ### Settings
@@ -57,7 +57,8 @@ For help, tip:
     $ python main.py -h
     
 ## First stage
-datasets more info [here](https://github.com/bioinformatics-ua/DrAC/blob/master/dataset/README.md)
+The first stage of the pipeline is responsible for annotating drug information in clinical text and storing all extracted information in a matrix structure.
+This stage is divided in the following parts:
 
 ### Vocabulary creation
 To create vocabulary files for the Neji annotating system, it is firstly necessary to create domain specific vocabulary files following the procedure presented [here](https://github.com/bioinformatics-ua/DrAC/tree/master/vocabularies/README.md)
@@ -68,12 +69,20 @@ Once the previous vocabulary files are created, it is necessary to filter and fo
 
 After running the above command, three dictionary files will be created in the `output` directory which can then be uploaded to the Neji annotating service.
 
+
+
 ### Annotation
     $ python main.py -a
+    
+anotador webservice pode ser mudado se mudarem a variável url na classe `Annotator` do `Annotator.py`
     
 or read annotation neji, if already annotated
     
     $ python main.py -a -r
+    
+the result is a matrix that is saved
+
+
 
 ### Evaluator
 
@@ -83,7 +92,12 @@ or -d for more details
     
     $ python main.py -e -r -d
     
+    
+    
 ## Second stage
+The second stage of the pipeline is responsible for harmonising information stored in the matrix structure and migrating it into an OMOP CDM database.
+This stage is divided in the following parts:
+
 ### Load OHDSI Vocabularies
     $ python main.py -o
     
