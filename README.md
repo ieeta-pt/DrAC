@@ -4,7 +4,7 @@
 
 <p align="center"><b>DrAC - Drug Annotator for Common data model</b></p>
 
-Extracting Patients' information from clinical notes and export them to an OMOP CDM database.
+A solution for extracting Patients' information from clinical notes and exporting it to an OMOP CDM database.
 
 ### New Features!
 
