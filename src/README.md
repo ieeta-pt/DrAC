@@ -52,13 +52,7 @@ matrix=../results/< matrix_file >           #Path where the matrix with extracte
 |`[vocabularies]`|Section used to define the paths for the dictionary files and paths used in the first component (`umls_rxnorm`, `umls_drugbank`,`umls_aod`, `tuis`, `output`) and in the second component (`ohdsi`).|
 |`[post_vocabularies]`|Section used to define the paths for additional resource files used in the post processing stage of the annotator.| 
 |`[database]`|Section used to define the parameters for creating the database and establishing a connection with it. |
-|`[harmonisation]`|Section used to define the necessary paths for the harmonisation procedure, which involves the `matrix` file containing extracted information and Usagi input and output files.|
-
-
-### Help
-For help, tip:
-
-    $ python main.py -h
+|`[harmonisation]`|Section used to define the necessary paths for the harmonisation procedure, which involves the `matrix` file containing extracted information and Usagi input and output files.| 
     
 ## First stage
 The first stage of the pipeline is responsible for annotating drug information in clinical text and storing all extracted information in a matrix structure.
@@ -71,23 +65,18 @@ Once the previous vocabulary files are created, it is necessary to filter and fo
 
     $ python main.py -v
 
-After running the above command, three dictionary files will be created in the `output` directory which can then be uploaded to the Neji annotating service.
-
-
+After running the above command, three dictionary files will be created in the `output` directory which can then be uploaded to the Neji annotation service.
 
 ### Annotation
+After creating the necessary vocabularies and configuring the Neji annotation web-service (the url for the web-service can be changed in `Annotator.py` by updating the `url` variable in the `Annotator` class), it is possible to annotate the clinical text documents by running the following command:
+
     $ python main.py -a
     
-anotador webservice pode ser mudado se mudarem a variável url na classe `Annotator` do `Annotator.py`
-    
-anotações gravadas no path da variável `neji_annotations`
-    
-or read annotation neji, if already annotated
-    
+The resulting Neji annotations are saved in the `neji_annotations` path. Since the process of annotating documents with Neji can take some time, it is possible to reuse previously stored Neji annotations. For that, add the flag `-r` or `--read-ann` to the command:
+        
     $ python main.py -a -r
     
-the result is a matrix that is saved
-
+This command bypasses the Neji annotation step by reading previous Neji annotations, which can then be processed in the post-processing stage of the annotation module. The final output of the Annotation module is a matrix with extracted information which is saved at the `matrix_location` directory.
 
 
 ### Evaluator
@@ -127,4 +116,37 @@ Creates the CSV file and migrates info to BD
     
     $ python main.py -a -r -m -l
 
+
+## Results
+
 results more info [here](https://github.com/bioinformatics-ua/DrAC/blob/master/results/README.md)
+
+
+
+## Help
+For help, type the following command:
+
+    $ python main.py -h
+    
+|Settings Flag|Description|
+|---|---|
+|-s SETTINGS_FILE, --settings SETTINGS_FILE|The system settings file (default: ../settings.ini)|
+
+|Execution Flags|Description|
+|---|---|
+|-v, --voc-builder|In this mode, the system will create the vocabularies to use in Neji (default: False)|
+|-a, --annotate|In this mode, the system will annotate the dataset (default: False)|
+|-e, --evaluate|In this mode, the system will read the annotations and evaluate the dataset without converting it to the matrix (default: False)|
+|-o, --load-ohdsi-voc|In this mode, the system will load the OHDSI vocabularies into the database (default: False)|
+
+|Complementary Flags|Description|
+|---|---|
+|-r, --read-ann|This flag is complementary to the --annotate or --evaluate execution mode. With this flag activated, the system will use the previously stored Neji annotations (default: False)|
+|-d, --detail-eva|This flag is complementary to the --evaluate execution mode. With this flag activated, the system will detail the evaluation by presenting all the false positives and negatives using the dataset (default: False)|
+| -m, --migrate|This flag is complementary to the --annotate execution mode. With this flag activated, the system will load the annotated results into the OMOP CDM Schema (default: False)|
+| -l, --load-db|This flag is complementary to the --annotate execution mode and it only works if the --migrate flag is active. With this flag activated, the system will load the annotated results into the database (default:False)|
+          
+        
+          
+         
+
