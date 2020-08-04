@@ -64,7 +64,7 @@ def validateSettings(settings, args):
 		if "vocabularies" not in settings:
 			return False
 		if 	"umls_rxnorm" not in settings["vocabularies"] or \
-			"umls_drugsbank" not in settings["vocabularies"] or \
+			"umls_drugbank" not in settings["vocabularies"] or \
 			"umls_aod" not in settings["vocabularies"] or \
 			"tuis" not in settings["vocabularies"] or \
 			"output" not in settings["vocabularies"]:
