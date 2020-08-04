@@ -12,7 +12,7 @@ The settings file is divided in the following 5 main sections:
 
 ```ini
 [dataset]
-name=< ds_name > 					#Dataset name
+name=< ds_name > 				#Dataset name
 directory=../dataset/< ds_name > 	#Dataset name
 neji_annotations=../results/
 matrix_location=../results/
