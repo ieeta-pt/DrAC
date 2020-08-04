@@ -48,7 +48,8 @@ matrix=../results/train_matrix.tsv
 
 1. `[dataset]`: section used to define the name of the dataset on which the pipeline should be run (_e.g._, `name=2018_track2`), the path for the respective dataset (_e.g._, `directory=../dataset/2018_track2/`), the path where Neji annotations should be saved, and the path where the matrix with annotated information should be saved.
 
-2. `[vocabularies]`: section used to define the name
+2. `[vocabularies]`: section used to define the paths for the dictionaries used in the first component (`umls_rxnorm`, `umls_drugsbank`,`umls_aod`, `tuis`, `output`) and for the second component (`ohdsi`).
+
 
 ### Help
 For help, tip:
@@ -59,11 +60,14 @@ For help, tip:
 datasets more info [here](https://github.com/bioinformatics-ua/DrAC/blob/master/dataset/README.md)
 
 ### Vocabulary creation
-Explain the vocabulary creation
-more info [here](https://github.com/bioinformatics-ua/DrAC/tree/master/vocabularies/README.md)
+To create vocabulary files for the Neji annotating system, it is firstly necessary to create domain specific vocabulary files following the procedure presented [here](https://github.com/bioinformatics-ua/DrAC/tree/master/vocabularies/README.md)
+
+Once the previous vocabulary files are created, it is necessary to filter and format them to be compliant with Neji. For this, firstly ensure that the variables `umls_rxnorm`, `umls_drugsbank` and `umls_aod` are correctly defined. Then, simply run the following command to create Neji compliant dictionary files.
 
     $ python main.py -v
-    
+
+After running the above command, three dictionary files will be created in the `output` directory which can then be uploaded to the Neji annotating service.
+
 ### Annotation
     $ python main.py -a
     
