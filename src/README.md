@@ -22,8 +22,8 @@ umls_rxnorm=../vocabularies/< rxnorm_file >      #Path for the unformated RxNorm
 umls_drugbank=../vocabularies/< drugbank_file >  #Path for the unformated DrugBank dictionary
 umls_aod=../vocabularies/< aod_file >            #Path for the unformated AOD dictionary
 tuis=../vocabularies/< mrsty_file >              #Path for the UMLS semantic type mapping file
-output=../vocabularies/                         #Output path where the final formated Neji vocabularies will be saved
-ohdsi=../OHDSIVocabularies/                     #Output path where the final OHDSIVocabularies will be saved
+output=../vocabularies/                          #Output path where the final formated Neji vocabularies will be saved
+ohdsi=../OHDSIVocabularies/                      #Output path where the final OHDSIVocabularies will be saved
 
 [post_vocabularies]
 description=../vocabularies/DrugDescription.tsv     #Drug description vocabulary used in the post processing stage of the annotator
@@ -46,9 +46,14 @@ dataset=< ds_type >                         #Dataset to process (i.e., train, te
 matrix=../results/< matrix_file >           #Path where the matrix with extracted information was saved in the pipeline's annotating stage 
 ```
 
-1. `[dataset]`: section used to define the name of the dataset on which the pipeline should be run (_e.g._, `name=2018_track2`), the path for the respective dataset (_e.g._, `directory=../dataset/2018_track2/`), the path where Neji annotations should be saved, and the path where the matrix with annotated information should be saved.
-
-2. `[vocabularies]`: section used to define the paths for the dictionaries and paths used in the first component (`umls_rxnorm`, `umls_drugbank`,`umls_aod`, `tuis`, `output`) and for the second component (`ohdsi`).
+| Field           | Description |
+|-----------------|-------------|
+|`[dataset]`|Section used to define the name of the dataset on which the pipeline should be run (_e.g._, `name=2018_track2`), the path for the respective dataset (_e.g._, `directory=../dataset/2018_track2/`), the path where Neji annotations should be saved, and the path where the matrix with annotated information should be saved.|
+|`[vocabularies]`|Section used to define the paths for the dictionary files and paths used in the first component (`umls_rxnorm`, `umls_drugbank`,`umls_aod`, `tuis`, `output`) and in the second component (`ohdsi`).|
+|`[post_vocabularies]`|Section used to define the paths for additional resource files used in the post processing stage of the annotator.| 
+|`[database]`|Section used to define the parameters for establishing a connection with the database
+|
+|`[harmonisation]`| |
 
 
 ### Help
@@ -75,6 +80,8 @@ After running the above command, three dictionary files will be created in the `
     $ python main.py -a
     
 anotador webservice pode ser mudado se mudarem a variável url na classe `Annotator` do `Annotator.py`
+    
+anotações gravadas no path da variável `neji_annotations`
     
 or read annotation neji, if already annotated
     
