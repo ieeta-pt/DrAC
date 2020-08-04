@@ -9,7 +9,7 @@ To obtain access to the `MRCONSO.RRF` and `MRSTY.RRF` resource files, please req
 
 ## Creating Neji dictionaries
 
-To create the vocabulary files to be added in the Neji annotating system, it is necessary two execute two steps:
+To create the vocabulary files to be added in the Neji annotating system, it is necessary to execute two steps:
 - Extract domain specific dictionary files from the UMLS
 - Filter and format the dictionary files according to the format required by the Neji annotating system
 
