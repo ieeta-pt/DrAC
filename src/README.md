@@ -22,8 +22,8 @@ umls_rxnorm=../vocabularies/< rxnorm_file >      #Path for the unformated RxNorm
 umls_drugbank=../vocabularies/< drugbank_file >  #Path for the unformated DrugBank dictionary
 umls_aod=../vocabularies/< aod_file >            #Path for the unformated AOD dictionary
 tuis=../vocabularies/< mrsty_file >              #Path for the UMLS semantic type mapping file
-output=../vocabularies/                     #Output path where the final formated Neji vocabularies will be saved
-ohdsi=../OHDSIVocabularies/                 #Output path where the final OHDSIVocabularies will be saved
+output=../vocabularies/                         #Output path where the final formated Neji vocabularies will be saved
+ohdsi=../OHDSIVocabularies/                     #Output path where the final OHDSIVocabularies will be saved
 
 [post_vocabularies]
 description=../vocabularies/DrugDescription.tsv     #Drug description vocabulary used in the post processing stage of the annotator
@@ -40,10 +40,10 @@ user=< user >               #User to access the database server
 password=< password >       #Password to access the database server
 
 [harmonisation]
-usagi_input=../results/< usagi_in >    #Path with the input file for Usagi
-usagi_output=../results/< usagi_out >     #Output path to export Usagi validated information
+usagi_input=../results/< usagi_in >         #Path with the input file for Usagi
+usagi_output=../results/< usagi_out >       #Output path to export Usagi validated information
 dataset=< ds_type >                         #Dataset to process (i.e., train, test or other)
-matrix=../results/< matrix_file >          #Path where the matrix with extracted information was saved in the pipeline's annotating stage 
+matrix=../results/< matrix_file >           #Path where the matrix with extracted information was saved in the pipeline's annotating stage 
 ```
 
 1. `[dataset]`: section used to define the name of the dataset on which the pipeline should be run (_e.g._, `name=2018_track2`), the path for the respective dataset (_e.g._, `directory=../dataset/2018_track2/`), the path where Neji annotations should be saved, and the path where the matrix with annotated information should be saved.
