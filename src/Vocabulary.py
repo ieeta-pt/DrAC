@@ -20,9 +20,9 @@ class Vocabulary():
 		"""
 		vocabularies = {}
 		cuiToTui = Vocabulary._relationWithCUIandTUI(vocSettings["tuis"])
-		vocabularies["UMLS_RXNorm"] = Vocabulary._createSemanticDict(vocSettings["umls_rxnorm"], cuiToTui, "RXNorm")
+		vocabularies["UMLS_RxNorm"] = Vocabulary._createSemanticDict(vocSettings["umls_rxnorm"], cuiToTui, "RxNorm")
 		#vocabularies["UMLS_All_T200"] = Vocabulary._createAllT200BasedOnRXNorm(vocSettings["rxnorm"])
-		vocabularies["UMLS_DrungBank"] = Vocabulary._createSemanticDict(vocSettings["umls_drugsbank"], cuiToTui, "DrugsBank")
+		vocabularies["UMLS_DrugBank"] = Vocabulary._createSemanticDict(vocSettings["umls_drugbank"], cuiToTui, "DrugBank")
 		vocabularies["UMLS_AOD"] = Vocabulary._createSemanticDict(vocSettings["umls_aod"], cuiToTui, "AOD")
 		#...
 		return vocabularies
@@ -78,8 +78,8 @@ class Vocabulary():
 
 	def _createAllT200BasedOnRXNorm(rxnorm):
 		"""
-		This private method creates the vocabulary based on the UMLS RXNorm without considering the TUIs
-		:param rxnorm: File location to read RXNorm concepts
+		This private method creates the vocabulary based on the UMLS RxNorm without considering the TUIs
+		:param rxnorm: File location to read RxNorm concepts
 		:return: Dict with the vocabulary ready to be written, key is UMLS:CUI:TUI and value is the list of concepts
 			{
 				"T200_Drugs":
