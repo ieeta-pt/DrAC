@@ -130,7 +130,7 @@ class Writer():
 
 	def writeOHDSIVocabularies(dbSettings, ohdsiVocabularies):
 		"""
-		THis method reads the OHDSI Vocabulaires in CSV files and write them in the database
+		This method reads the OHDSI Vocabularies in CSV files and write them in the database
 		:param dbSettings: Dict with all the fields to connect with the database (settings["database"])
 		:param ohdsiVocabularies: Location of the OHDSI Vocabularies
 		"""
