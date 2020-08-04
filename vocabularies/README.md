@@ -19,4 +19,4 @@ Despite the specificity of RxNorm and DrugBank dictionaries, the AOD dictionary 
 cat UMLS_AOD_AOD.tsv | grep -E "T116|T195|T123|T122|T103|T120|T104|T200|T196|T126|T131|T125|T129|T130|T197|T114|T109|T121|T192|T127" > UMLS_AOD_AOD_filtered.tsv
 ```
   
-**NOTE:** if the resulting vocabulary files are not stored in `vocabularies/`, it is necessary to configure the `[dataset]` variables in Settings.ini with their corresponding paths
+**NOTE:** if the resulting vocabulary files are not stored in `vocabularies/`, it is necessary to configure the `[vocabularies]` variables in Settings.ini with their corresponding paths
