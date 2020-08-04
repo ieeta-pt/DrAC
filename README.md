@@ -8,9 +8,9 @@ A solution for extracting Patients' information from clinical notes and exportin
 
 ### New Features!
 
-  - Annotate medications in clinical notes
-  - Harmonise the information into their standard definition
-  - Store the extracted drugs into the OMOP CDM
+  - Annotate medication information in clinical notes
+  - Harmonise the resulting information into their standard definition
+  - Store extracted drug information into the OMOP CDM
 
 ### Documentation
 
