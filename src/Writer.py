@@ -128,7 +128,7 @@ class Writer():
 				out.write("{}|{}|{}|{}\n".format(fileName, ann[0],ann[1],ann[2]))
 		out.close()
 
-	def writeVocabularies(dbSettings, ohdsiVocabularies):
+	def writeOHDSIVocabularies(dbSettings, ohdsiVocabularies):
 		"""
 		THis method reads the OHDSI Vocabulaires in CSV files and write them in the database
 		:param dbSettings: Dict with all the fields to connect with the database (settings["database"])
