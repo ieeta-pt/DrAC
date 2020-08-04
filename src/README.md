@@ -12,10 +12,10 @@ The settings file is divided in the following 5 main sections:
 
 ```ini
 [dataset]
-name=< ds_name > 				#Dataset name
+name=< ds_name > 		        #Dataset name
 directory=../dataset/< ds_name > 	#Dataset name
-neji_annotations=../results/
-matrix_location=../results/
+neji_annotations=../results/            #Path where Neji annotations will be saved
+matrix_location=../results/             #Path where the matrix will be saved
 
 [vocabularies]
 umls_rxnorm=../vocabularies/RXNORM.csv
