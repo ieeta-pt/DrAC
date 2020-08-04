@@ -158,7 +158,7 @@ def migrationMode(matrix, settings, loadIntoDB):
 def loadingOHDSIVocabulariesMode(settings):
 	print("Loading OHDSI Vocabularies mode!")
 	print("This procedure can take several minutes! Please be patient...")
-	Writer.writeVocabularies(settings["database"], settings["vocabularies"]["ohdsi"])
+	Writer.writeOHDSIVocabularies(settings["database"], settings["vocabularies"]["ohdsi"])
 	print("Done!")
 
 def main():
