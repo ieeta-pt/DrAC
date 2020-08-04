@@ -1,9 +1,14 @@
-# Using the system
-Introdutory text
+# What is DrAC
+DrAC is a system that annotates medication information from clinical notes, harmonises extracted information and migrates it into an OMOP CDM database. The pipeline is divided in two independent components:
 
-## Before start
+- First component: annotates drug information in clinical text and stores extracted information in a matrix structure;
+- Second component: harmonises and migrates data into an OMOP CDM database.
+
+The pipeline is divided in two major components to provide the possibility of improving a component without compromising the regular functioning of the other (_e.g._, improve the annotator's extraction mechanisms whilst maintaining the second component unmodified).
+
+## Before starting
 ### Settings
-Settings structure Explain
+The settings file is divided in the following 5 main sections:
 
 ```ini
 [dataset]
@@ -40,6 +45,11 @@ usagi_output=../results/usagiExport.csv
 dataset=< ds_type >         #Dataset to process (i.e., train, test or other)
 matrix=../results/train_matrix.tsv
 ```
+
+1. `[dataset]`: section used to define the name of the dataset on which the pipeline should be run (_e.g._, `name=2018_track2`), the path for the respective dataset (_e.g._, `directory=../dataset/2018_track2/`), the path where Neji annotations should be saved, and the path where the matrix with annotated information should be saved.
+
+2. `[vocabularies]`: section used to define the name
+
 ### Help
 For help, tip:
 
