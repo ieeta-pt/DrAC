@@ -79,9 +79,6 @@ The resulting Neji annotations are saved in the `neji_annotations` path. Since t
 This command bypasses the Neji annotation step by reading previous Neji annotations, which can then be processed in the post-processing stage of the annotation module. The final output of the Annotation module is a matrix with extracted information which is saved at the `matrix_location` directory.
 
 ### Evaluator
-
-
-
 When a dataset provides gold standard annotations, it is possible to evaluate the performance of the annotation component by running the evaluation mode `-e`  with `-r` to use pre-existing Neji annotations. For that, run the following command:
 
     $ python main.py -e -r
