@@ -30,5 +30,5 @@ cat UMLS_AOD_AOD.tsv | grep -E "T116|T195|T123|T122|T103|T120|T104|T200|T196|T12
 
 After creating the three dictionary files, simply run the following command to create the Neji compliant dictionary files.
 
-  $ python main.py -v
+    $ python main.py -v
   
