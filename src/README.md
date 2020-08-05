@@ -82,33 +82,35 @@ This command bypasses the Neji annotation step by reading previous Neji annotati
 When a dataset provides gold standard annotations, it is possible to evaluate the performance of the annotation component by running the evaluation mode `-e`  with `-r` to use pre-existing Neji annotations. For that, run the following command:
 
     $ python main.py -e -r
-    
+ 
 This mode evaluates annotations at two different stages: firstly it evaluates the original annotations obtained from Neji, and secondly it evaluates post-processed annotations. It is possible to obtain a more detailed list of results by adding the `-d` or `--detail-eva` flag:
     
     $ python main.py -e -r -d
     
 ## Second stage
-
-
-
 The second stage of the pipeline is responsible for harmonising information stored in the matrix structure and migrating it into an OMOP CDM database.
 This stage is divided in the following parts:
 
 ### Load OHDSI Vocabularies
+Before harmonising extracted information it is necessary to prepare the OHDSI vocabularies. Firstly, ensure that these vocabularies are correctly set-up by following [these instructions](https://github.com/bioinformatics-ua/DrAC/tree/master/OHDSIVocabularies#ohdsi-vocabularies). Once these resources are set-up, it is necessary to load the vocabularies into the database by running the system with the `-o` or `--load-ohdsi-voc` flag: 
+
     $ python main.py -o
-    
-loads more info [here](https://github.com/bioinformatics-ua/DrAC/blob/master/OHDSIVocabularies/README.md) and creates vocabularies in the output directory  
    
 ### Usagi
+Next, it is necessary to validate the mappings from extracted information to standard vocabularies using the Usagi tool. To create the input file for the Usagi tool, run the system in annotation mode with the `-u` or `--usagi-input` complementary flag:
+
     $ python3 main.py -a -r -u
 
-    mappings
+The system will generate a CSV file and save it at the `usagi_input` directory defined in the settings file. Next, it is necessary to download the [Usagi tool](https://github.com/OHDSI/Usagi). When running Usagi for the first time, the user is prompted to provide the location of the desired [OHDSI vocabularies](https://github.com/bioinformatics-ua/DrAC/tree/master/OHDSIVocabularies#ohdsi-vocabularies) so that Usagi can create the index. After the index is created, import the `usagi_input` file selecting the options presented in the figure below:
 
 <p align="center"><img src="https://github.com/bioinformatics-ua/DrAC/blob/master/images/UsagiConf.png" alt="UsagiConf"  border="0" /></p>
 
-link para o repositorio Usagi
 
-### Migrate
+
+### Migrate 
+#### Migrate into the OMOP CDM Schema
+ver com João porque atualmente usa input e output direto no mesmo bloco de código, o que não é possivel supostamente
+
 Creates the CSV file only
     
     $ python main.py -a -r -m
@@ -144,10 +146,7 @@ For help, type the following command:
 |---|---|
 |-r, --read-ann|This flag is complementary to the --annotate or --evaluate execution mode. With this flag activated, the system will use the previously stored Neji annotations (default: False)|
 |-d, --detail-eva|This flag is complementary to the --evaluate execution mode. With this flag activated, the system will detail the evaluation by presenting all the false positives and negatives using the dataset (default: False)|
-| -m, --migrate|This flag is complementary to the --annotate execution mode. With this flag activated, the system will load the annotated results into the OMOP CDM Schema (default: False)|
-| -l, --load-db|This flag is complementary to the --annotate execution mode and it only works if the --migrate flag is active. With this flag activated, the system will load the annotated results into the database (default:False)|
-          
-        
-          
-         
+|-u, --usagi-input|This flag is complementary to the --annotate execution mode. With this flag activated, the system will create the input file to use in the Usagi tool (default: False)|
+|-m, --migrate|This flag is complementary to the --annotate execution mode. With this flag activated, the system will load the annotated results into the OMOP CDM Schema (default: False)|
+|-l, --load-db|This flag is complementary to the --annotate execution mode and it only works if the --migrate flag is active. With this flag activated, the system will load the annotated results into the database (default:False)|        
 
