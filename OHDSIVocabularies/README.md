@@ -1,9 +1,10 @@
 # OHDSI Vocabularies
 
-This directory must have the OHDSI standard vocabularies. In order to download them, go to the official repository available at https://athena.ohdsi.org and select the following vocabularies:
+This directory must have the OHDSI standard vocabularies. In order to download them, go to the official repository available [here](https://athena.ohdsi.org) and select the following vocabularies:
+
 - Snomed
 - RXNorm
 
-Then, extract the CSV files to this directory or other (but in that case, it is necessary to define the new directory in the settings file).
+After selecting the vocabularies, extract their CSV files and save them in this directory. It possible to store the OHDSI vocabulary files in a different directory, however it is necessary to change the `ohdsi` directory in the settings file accordingly.
 
-This vocabularies will be also used as database for the Usagi tool during the harmonisation procedure.
+These vocabularies can then be loaded into the database as described [here](https://github.com/bioinformatics-ua/DrAC/blob/master/src/README.md#load-ohdsi-vocabularies), and be also used as a database for the Usagi tool during the [harmonisation procedure](https://github.com/bioinformatics-ua/DrAC/blob/master/src/README.md#usagi).
