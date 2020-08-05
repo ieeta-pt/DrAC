@@ -54,7 +54,7 @@ matrix=../results/< matrix_file >           #Path where the matrix with extracte
 |`[database]`|Section used to define the parameters for creating the database and establishing a connection with it. |
 |`[harmonisation]`|Section used to define the necessary paths for the harmonisation procedure, which involves the `matrix` file containing extracted information and Usagi input and output files.| 
     
-## First stage
+## First stage: Clinical document annotation
 The first stage of the pipeline is responsible for annotating drug information in clinical text and storing all extracted information in a matrix structure.
 This stage is divided in the following parts:
 
@@ -87,7 +87,7 @@ This mode evaluates annotations at two different stages: firstly it evaluates th
     
     $ python main.py -e -r -d
     
-## Second stage
+## Second stage: Harmonisation and migration of extracted data
 The second stage of the pipeline is responsible for harmonising information stored in the matrix structure and migrating it into an OMOP CDM database.
 This stage is divided in the following parts:
 
@@ -96,7 +96,7 @@ Before harmonising extracted information it is necessary to prepare the OHDSI vo
 
     $ python main.py -o
    
-### Usagi
+### Usagi Mapping Validation
 Next, it is necessary to validate the mappings from extracted information to standard vocabularies using the Usagi tool. To create the input file for the Usagi tool, run the system in annotation mode with the `-u` or `--usagi-input` complementary flag:
 
     $ python3 main.py -a -r -u
@@ -105,11 +105,11 @@ The system will generate a CSV file and save it at the `usagi_input` directory d
 
 <p align="center"><img src="https://github.com/bioinformatics-ua/DrAC/blob/master/images/UsagiConf.png" alt="UsagiConf"  border="0" /></p>
 
+Once the input file is imported, Usagi generates mapping suggestions for each concept to the standard vocabularies. Each mapping has a similarity score which represents the confidence of the suggestion. The user can validate each mapping and correct it to another standard concept if necessary. Finally, export the validated mappings file to the `usagi_output` directory.
 
-
-### Migrate 
+### Migrate data
 #### Migrate into the OMOP CDM Schema
-ver com João porque atualmente usa input e output direto no mesmo bloco de código, o que não é possivel supostamente
+The last step in the pipeline is to harmonise extracted annotations using Usagi validated mappings and migrate them
 
 Creates the CSV file only
     
