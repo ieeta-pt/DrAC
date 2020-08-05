@@ -11,14 +11,14 @@ from Utils import Utils
 
 def help(show=False):
 	parser = argparse.ArgumentParser(description="")
-	configs = parser.add_argument_group('System settings', 'The system parameters to run the system in the different modes')
+	configs = parser.add_argument_group('System settings', 'System parameters to run the system in the different modes')
 	configs.add_argument('-s', '--settings', dest='settings', \
 						type=str, default="../settings.ini", \
 						help='The system settings file (default: ../settings.ini)')	
 
-	executionMode = parser.add_argument_group('Execution Mode', 'Choose what is the execution mode!')
+	executionMode = parser.add_argument_group('Execution Mode', 'Choose what the desired execution mode!')
 	executionMode.add_argument('-v', '--voc-builder', default=False, action='store_true', \
-							help='In this mode, the system will create the vocabularies to use in Neju (default: False)')
+							help='In this mode, the system will create the vocabularies to use in Neji (default: False)')
 	executionMode.add_argument('-a', '--annotate', default=False, action='store_true', \
 							help='In this mode, the system will annotate the dataset (default: False)')
 	executionMode.add_argument('-e', '--evaluate', default=False, action='store_true', \
@@ -30,11 +30,10 @@ def help(show=False):
 	complementaryMode = parser.add_argument_group('Complementary functions', 'Choose the complementary functions for the execution modes!')
 	complementaryMode.add_argument('-r', '--read-ann', default=False, action='store_true', \
 							help='This flag is complementary to the --annotate or --evaluate execution mode. With this flag activated, \
-							the system will used the neji annotations stored previously (default: False)')
+							the system will use the previously stored Neji annotations (default: False)')
 	complementaryMode.add_argument('-d', '--detail-eva', default=False, action='store_true', \
 							help='This flag is complementary to the --evaluate execution mode. With this flag activated, the system \
 							will detail the evaluation by presenting all the false positives and negatives using the dataset (default: False)')
-	
 	complementaryMode.add_argument('-u', '--usagi-input', default=False, action='store_true', \
 							help='This flag is complementary to the --annotate execution mode. With this flag activated, \
 							the system will create the input file to use in the Usagi tool (default: False)')
