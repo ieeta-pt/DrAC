@@ -147,6 +147,23 @@ class Writer():
 												 index 		= False,
 												 schema 	= dbSettings["schema"],
 												 dtype 		= BaseTable.getDataTypesForSQL(table))
+	def writeMigratedData(dbSettings, tables):
+		"""
+		This method reads the migrated data in CSV files and write them in the database
+		:param dbSettings: Dict with all the fields to connect with the database (settings["database"])
+		:param tables: Location of the migrated tables (Drug_Exposure, etc.)
+		"""
+		#I may need to change this due to huge files see: https://pythondata.com/working-large-csv-files-python/
+		engine = create_engine(dbSettings["datatype"]+"://"+dbSettings["user"]+":"+dbSettings["password"]+"@"+dbSettings["server"]+":"+dbSettings["port"]+"/"+dbSettings["database"])
+		for key in tables:
+			file = tables[key]
+			table = file.split("/")[-1].split(".")[0].lower()
+			print("Loading {} table...".format(table))
+			fileContent = pd.read_csv(file, na_values='null', sep="\t")
+			fileContent.to_sql(table, engine, if_exists 	= 'replace',
+												 index 		= False,
+												 schema 	= dbSettings["schema"],
+												 dtype 		= BaseTable.getDataTypesForSQL(table))
 
 	def writeUsagiInputs(uniqueConcepts, file):
 		concepts, routes = uniqueConcepts

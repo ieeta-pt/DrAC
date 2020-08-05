@@ -44,6 +44,11 @@ usagi_input=../results/< usagi_in >         #Path with the input file for Usagi
 usagi_output=../results/< usagi_out >       #Output path to export Usagi validated information
 dataset=< ds_type >                         #Dataset to process (i.e., train, test or other)
 matrix=../results/< matrix_file >           #Path where the matrix with extracted information was saved in the pipeline's annotating stage 
+
+[tables]
+drug_exposure=../results/DRUG_EXPOSURE.csv 	#Location for the creation of the DRUG_EXPOSURE table in a CSV format
+note=../results/NOTE.csv 					#Location for the creation of the NOTE table in a CSV format
+note_nlp=../results/NOTE_NLP.csv 			#Location for the creation of the NOTE_NLP table in a CSV format
 ```
 
 | Field           | Description |
@@ -53,6 +58,8 @@ matrix=../results/< matrix_file >           #Path where the matrix with extracte
 |`[post_vocabularies]`|Section used to define the paths for additional resource files used in the post processing stage of the annotator.| 
 |`[database]`|Section used to define the parameters for creating the database and establishing a connection with it. |
 |`[harmonisation]`|Section used to define the necessary paths for the harmonisation procedure, which involves the `matrix` file containing extracted information and Usagi input and output files.| 
+|`[tables]`|Section used to define the paths for the tables created in the system, following a CSV format.|
+
     
 ## First stage: Clinical document annotation
 The first stage of the pipeline is responsible for annotating drug information in clinical text and storing all extracted information in a matrix structure.

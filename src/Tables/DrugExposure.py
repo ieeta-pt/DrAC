@@ -1,7 +1,8 @@
 #from BaseTable import BaseTable
+from Tables.BaseTable import BaseTable
 import sqlalchemy as sa
 
-class DrugExposure():#BaseTable):
+class DrugExposure(BaseTable):
 	columns = [
 			'drug_exposure_id',
 			'person_id',
@@ -52,6 +53,7 @@ class DrugExposure():#BaseTable):
 				drug_source_value = "",
 				route_source_value = "",
 				dose_unit_source_value = ""):
+		super(DrugExposure, self).__init__(table = "drug_exposure")
 		self.drug_exposure_id = drug_exposure_id
 		self.person_id = person_id
 		self.drug_concept_id = drug_concept_id
