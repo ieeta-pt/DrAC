@@ -2,35 +2,17 @@ import re
 
 drugRegex = re.compile("[^\d]+(?=( \d+))", re.IGNORECASE)
 
-def hasNumbers(inputString):
-	return bool(re.search(r'\d', inputString))
-
-def startsWithNumbers(inputString):
-	return inputString[:1].isdigit() 
-
 class Utils():
-	# def mergeAnnsToGetStrength(filterAnn):
-	# 	sub = ""
-	# 	concepts = set()
-	# 	for con in filterAnn:
-	# 		concepts.add(con[0])
-	# 	concepts = list(concepts)
-	# 	if len(concepts) == 2:
-	# 		concept1 = concepts[0]
-	# 		concept2 = concepts[1]
-	# 		if concept1 in concept2:
-	# 			sub = concept2.replace(concept1, "").strip()
-	# 			drug = concept1
-	# 			if concept2 in concept1:
-	# 			sub = concept1.replace(concept2, "").strip()
-	# 			drug = concept2
-	# 	elif len(concepts) > 2:
-	# 		print("More than 2 in _mergeAnns (Unusual, but check)")
-	# 	if startsWithNumbers(sub):
-	# 		return drug, sub
-	# 	return None, None
-
 	def mergeAnnsToGetStrength(filterAnn):
+		"""
+		This method analyses cases where there exist more than one annotation and tries to identify concept overlap.
+		Moreover, it tries to identify the presence of drug strength information in the extracted annotation as RxNorm
+		annotations can contain this type of information. If the list of annotations contains more than two annotations,
+		the method does not analyse the strings and returns None, None
+		:param filterAnn: List of annotation tuples with (annConcept, annCode, annSpan)
+		:return: two strings, a first one containing the drug mention and a second one with the strength component of
+		 the string, if present. Otherwise, the second element is instead returned as None.
+		"""
 		sub = ""
 		concepts = set()
 		for con in filterAnn:
@@ -58,17 +40,17 @@ class Utils():
 			return drug, sub
 
 		elif len(concepts) > 2:
-			print("More than 2 in _mergeAnns (Unusual, but check)")
+			print("More than 2 concepts in _mergeAnns (Unusual, but check)")
 		return None, None
 
 	def getSentencesByAnnotation(clinicalNote, annotation):
 		"""
-		This method returns the teen (or less) words after the concepts annotated (inclusivly)
-		If there is another concept in the teen words, the set is interrupted and the new words
+		This method returns the 15 (or less) words after the annotated concept (inclusively)
+		If there is another concept in the returned words, the set is interrupted and the new words
 		are associated to this new concept.
 		:param clinicalNote: The clinical note to process without any pre-processing
-		:param annotation: The neji annotation with the following structure: (annConcept, annCode, annSpan)
-		:return: Dict with key the span of the concept and value a list of words that followed the concept.
+		:param annotation: The Neji annotation with the following structure: (annConcept, annCode, annSpan)
+		:return: Dict with as key the span of the concept and as value a list of words that follow the concept.
 		"""
 		result = {}
 		AFTER = 16 #means 15
@@ -119,8 +101,9 @@ class Utils():
 
 	def disambiguate(annotation):
 		"""
-		This method disambiguates annotations by giving more priority to the RXNorm concepts
-		:param annotation: The annotation received from neji: dict with the annotations, key is the dataset (train or test), value is another dict containing the
+		This method disambiguates annotations by giving more priority to RxNorm annotations.
+		:param annotation: The annotation received from Neji which is a dict with the annotations,
+		where the key is the dataset (train or test), value is another dict containing the
 		files name as key and a list of annotations. The annotations have the following structure: date|UMLS:C2740799:T129:DrugsBank|10
 			{
 				"train":{
@@ -128,7 +111,7 @@ class Utils():
 				}
 				"test":{...}
 			}
-		:return: The annotations following the same format as the input withou overlap spans
+		:return: The annotations following the same format as the input without overlapping spans
 		"""
 		overlapsDict = {}
 		overlapList = []
@@ -167,9 +150,9 @@ class Utils():
 
 	def cleanConceptBegin(annotation):
 		"""
-		This method cleans the begin of the annotations, for istance when there is present * before the concept
-		:param annotation: List with the annotation for a single clinical note
-		:return: The input list with the annotation clean
+		This method cleans the beginning of the annotations, for instance when there are symbols such as * before the concept
+		:param annotation: List with the annotations for a single clinical note
+		:return: The input list with cleaned annotations
 		"""
 		for idx in range(len(annotation)):
 			if not annotation[idx][0][0].isalnum():
@@ -182,9 +165,9 @@ class Utils():
 
 	def createUniqueConcepts(matrix):
 		"""
-		This method creates a set containing all the mapped concepts to then be used in the Usagi.
+		This method creates a set containing all the mapped concepts to be then used in Usagi.
 		:param matrix: Matrix resulting from the annotation process (List of lists)
-		:return: Tuple of lists converted from sets concepts and routes
+		:return: Tuple of lists converted from sets of concepts and routes
 		"""
 		concepts = set()
 		for concept in matrix[0]:
