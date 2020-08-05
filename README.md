@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://github.com/bioinformatics-ua/DrAC/tree/master)
+[![Build Status](https://travis-ci.org/bioinformatics-ua/DrAC.svg?branch=master)](https://github.com/bioinformatics-ua/DrAC/tree/master)
 
 <p align="center"><img src="images/logo.png" alt="cn-to-cdm" height="100" border="0" /></p>
 
