@@ -46,9 +46,9 @@ dataset=< ds_type >                         #Dataset to process (i.e., train, te
 matrix=../results/< matrix_file >           #Path where the matrix with extracted information was saved in the pipeline's annotating stage 
 
 [tables]
-drug_exposure=../results/DRUG_EXPOSURE.csv 	#Location for the creation of the DRUG_EXPOSURE table in a CSV format
-note=../results/NOTE.csv 					#Location for the creation of the NOTE table in a CSV format
-note_nlp=../results/NOTE_NLP.csv 			#Location for the creation of the NOTE_NLP table in a CSV format
+drug_exposure=../results/DRUG_EXPOSURE.csv  #Location for the creation of the DRUG_EXPOSURE table in a CSV format
+note=../results/NOTE.csv                    #Location for the creation of the NOTE table in a CSV format
+note_nlp=../results/NOTE_NLP.csv            #Location for the creation of the NOTE_NLP table in a CSV format
 ```
 
 | Field           | Description |
