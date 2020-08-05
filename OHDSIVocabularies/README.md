@@ -2,8 +2,8 @@
 
 This directory must have the OHDSI standard vocabularies. In order to download them, go to the official repository available [here](https://athena.ohdsi.org) and select the following vocabularies:
 
-- Snomed
-- RXNorm
+- SNOMED
+- RxNorm
 
 After selecting the vocabularies, extract their CSV files and save them in this directory. It possible to store the OHDSI vocabulary files in a different directory, however it is necessary to change the `ohdsi` directory in the settings file accordingly.
 
