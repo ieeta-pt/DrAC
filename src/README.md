@@ -108,23 +108,16 @@ The system will generate a CSV file and save it at the `usagi_input` directory d
 Once the input file is imported, Usagi generates mapping suggestions for each concept to the standard vocabularies. Each mapping has a similarity score which represents the confidence of the suggestion. The user can validate each mapping and correct it to another standard concept if necessary. Finally, export the validated mappings file to the `usagi_output` directory.
 
 ### Migrate data
-#### Migrate into the OMOP CDM Schema
-The last step in the pipeline is to harmonise extracted annotations using Usagi validated mappings and migrate them
-
-Creates the CSV file only
+The last step in the pipeline is to harmonise content stored in the `matrix` file using Usagi validated mappings and migrate it. To proceed with the harmonisation process and migrate the resulting data to the OMOP CDM Schema, run the system in annotation mode with the `-m` or `--migrate` complementary flag:
     
     $ python main.py -a -r -m
-
-Creates the CSV file and migrates info to BD
     
+This command migrates data into the schema and saves the result of the migration process in a CSV file in the `results/` folder. However, it is also possible to migrate data into the OMOP CDM schema and automatically load it into the database. For that, simply add the `-l`or `--load-db` complementary flag to the previous command:
+
     $ python main.py -a -r -m -l
 
-
 ## Results
-
-results more info [here](https://github.com/bioinformatics-ua/DrAC/blob/master/results/README.md)
-
-
+By preset, the `results/` folder is used to store output files generated when running the system, such as the Neji annotations file, the matrix file or the Usagi output file. For more information on the content stored in the `results/` folder, please refer to its [page](https://github.com/bioinformatics-ua/DrAC/blob/master/results/README.md).
 
 ## Help
 For help, type the following command:
