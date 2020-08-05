@@ -28,11 +28,11 @@ from Tables.DrugExposure import DrugExposure
 class Harmonizer():
 	def harmonize(matrix, usagiOutput):
 		"""
-		This method harmonizes the concepts in the matrix to their standard defition.
-		These mappings were validated in the Usagi tool and here that output is used.
-		:param matrix:
-		:param usagiOuput:
-		:return:
+		This method is used in the system's Migration mode and 1) harmonizes the concepts in the matrix to their standard definition,
+		2) migrates harmonized data into the OMOP CDM schema, and 3) saves it a CSV file.
+		The mappings used for the harmonization procedure must be previously validated in the Usagi tool, before being used in this method.
+		:param matrix: matrix with extracted information from the annotation component
+		:param usagiOuput: CSV file with concept mappings that were validated and exported from Usagi
 		"""
 		headers = matrix[0]
 		stdConcepts = Harmonizer._harmonizedConcepts(usagiOutput) #dict
@@ -72,6 +72,12 @@ class Harmonizer():
 		Harmonizer._writeInFile(listOfValues)
 
 	def _harmonizedConcepts(usagiOutput):
+		"""
+		This method reads the output file from Usagi containing validated concept mappings, and
+		creates a dict with the validated concept mappings.
+		:param usagiOutput: CSV file with concept mappings that were validated and exported from Usagi
+		:return stdConcepts: Dict of validated mappings with the annotated concept as key, and the standard definition as value
+		"""
 		stdConcepts = {}
 		file = open(usagiOutput, 'r') 
 		count = 0
@@ -84,6 +90,11 @@ class Harmonizer():
 		return stdConcepts
 
 	def _writeInFile(listOfValues):
+		"""
+
+		:param
+		:return:
+		"""
 		out = open("../results/DRUG_EXPOSURE.csv", "w", encoding='utf8')
 		fileHeaders = ""
 		for x in DrugExposure.columns:
