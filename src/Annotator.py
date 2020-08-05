@@ -7,7 +7,7 @@ from Utils import Utils
 from Vocabulary import Vocabulary
 
 #Flags to simplify the organization of theinformation in the list
-STRENGHT = 0
+STRENGTH = 0
 DOSAGE = 1
 ROUTE = 2
 #QUANTITY = 3
@@ -32,7 +32,7 @@ class Annotator():
 				}
 				"test":{...}
 			}
-		:return: Dict with the neji annotations, key is the dataset (train or test), value is another dict containing the
+		:return: Dict with the Neji annotations, key is the dataset (train or test), value is another dict containing the
 		files name as key and a list of annotations. The annotations have the following structure: date|UMLS:C2740799:T129:DrugsBank|10
 			{
 				"train":{
@@ -63,12 +63,12 @@ class Annotator():
 
 	def readNejiAnnotations(location):
 		"""
-		This method reads the neji annotations done previously.
-		The file contant has the following structure:
+		This method reads previous Neji annotations that have been stored.
+		The file content has the following structure:
 			file name|concept|neji code|inital span
 		Example:
 			100035|date|UMLS:C2740799:T129:DrugsBank|10
-		:param location: Directory to write the annotations
+		:param location: Directory with the annotation files to be read
 		:return: Dict with the neji annotations, key is the dataset (train or test), value is another dict containing the
 		files name as key and a list of annotations. The annotations have the following structure: date|UMLS:C2740799:T129:DrugsBank|10
 			{
@@ -95,7 +95,7 @@ class Annotator():
 					ann[dataset][fileName].append(nejiann)
 		return ann
 
-	def posProcessing(clinicalNotes, nejiAnnotations, vocabularies):
+	def postProcessing(clinicalNotes, nejiAnnotations, vocabularies):
 		"""
 		:param clinicalNotes: Dict of clinical notes with the following structure (but only the "cn" from each file will be used)
 			{
@@ -121,11 +121,11 @@ class Annotator():
 				"test":{...}
 			}
 		:param vocabularies: Vocabularies to be used in the post processing
-		:return: Dict with the drug and strenght/dosage/quantity/route/span (list) present in each file, by dataset.
+		:return: Dict with the drug and strength/dosage/route/span (list) present in each file, by dataset.
 			{
 				"train":{
 					"file name"":{
-						("concept", annSpan):[strenght, dosage, route, quantity]
+						("concept", annSpan):[strength, dosage, route]
 					}
 				}
 				"test":{...}
@@ -145,12 +145,12 @@ class Annotator():
 				if len(filteredAnn) > 0:
 					sentences = Utils.getSentencesByAnnotation(clinicalNote, filteredAnn)
 
-					readedSpans = []
+					readSpans = []
 					for (annConcept, annCode, annSpan) in filteredAnn:
 						results = [None, None, None, None]
-						if annSpan in readedSpans:
+						if annSpan in readSpans:
 							continue
-						readedSpans.append(annSpan)
+						readSpans.append(annSpan)
 						
 						if int(annSpan) not in sentences:
 							continue 
@@ -161,12 +161,12 @@ class Annotator():
 							if len(filterAnn) > 1:
 								drug, strength = Utils.mergeAnnsToGetStrength(filterAnn)
 								if drug:
-									results[STRENGHT] = strength
+									results[STRENGTH] = strength
 							else:
 								drug = filterAnn[0][0]
 
-							##if results[STRENGHT] == None:
-							##	results[STRENGHT] = Annotator._annotateStrenght(drug, sentence, voc["strenght"])
+							##if results[STRENGTH] == None:
+							##	results[STRENGTH] = Annotator._annotateStrenght(drug, sentence, voc["strenght"])
 							##results[DOSAGE] = Annotator._annotateDosage(drug, sentence, voc["all"])
 							#results[QUANTITY] = Annotator._annotateQuantity(filterAnn[0], sentence, results[ROUTE])
 							
@@ -178,9 +178,9 @@ class Annotator():
 	
 	def _filter(annotations, vocList):
 		"""
-		This method filters the annotations by removing the concepts in the voc[black-list]
-		:param annotations: This are the disambiguated annotations following the same format (see posProcessing method for more details)
-		:param voc: The vocabulary with the concepts to remove
+		This method filters the annotations by removing the concepts in the vocabularies present in vocList
+		:param annotations: These are the disambiguated annotations following the same format (see postProcessing method for more details)
+		:param vocList: List of vocabularies with the concepts to remove
 		:return: The annotations filtered using the same format as the input
 		"""
 		results = []
@@ -191,8 +191,8 @@ class Annotator():
 
 	def _annotateRoute(sentence, complexVoc, voc):
 		"""
-		This method annotates the drug route in the setence that the concept was found.
-		:param sentence: The list of 10 or less word that are after the concept
+		This method annotates the drug route in the sentence where the concept was found.
+		:param sentence: The list of 15 or less words that are after the concept
 		:param complexVoc: The vocabulary of routes with more than one word, list of tuples (concept, type)
 		:param voc: The vocabulary to use in a list of tuples (concept, type)
 		:return: Tuple with Route or None and route span counter
@@ -216,11 +216,11 @@ class Annotator():
 			return route[0][0]
 		return None
 
-	def _annotateQuantity(concept, sentence, route):
-		#NOT USED
-		return None
+#	def _annotateQuantity(concept, sentence, route):
+#		#NOT USED
+#		return None
 
-	def _annotateStrenght(concept, sentence, strenght):
+	def _annotateStrenght(concept, sentence, strength):
 		sentence = "teste 500/200 mg per day"
 		DECIMAL_NUM   = "(?:\\d+,)?\\d+(?:\\.\\d+)?(?:(?: |-)?(?:-|to)(?: |-)?(?:\\d+,)?\\d+(?:\\.\\d+)?)?"
 		STRENGTH_UNIT = "mg/dl|mg/ml|g/l|milligrams|milligram|mg|grams|gram|g|micrograms|microgram|mcg|meq|iu|cc|units|unit|tablespoons|tablespoon|teaspoons|teaspoon"
@@ -232,7 +232,7 @@ class Annotator():
 			pass
 		return None
 
-	def _annotateDosage(concept, sentence, strenght):
+	def _annotateDosage(concept, sentence, strength):
 		"""
 		:return: The dosage/quantity of the drug taken by the patient
 			two tablets -> 2

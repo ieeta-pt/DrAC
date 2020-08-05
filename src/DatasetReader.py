@@ -4,10 +4,11 @@ import codecs
 class DatasetReader():
 	def readClinicalNotes(directory, datasetName):
 		"""
-		Reads the clinical notes in the dataset. For new datasets, it is necessary implement the a new reader in this file.
-		Then, the system will work properly since the return of this method follows always the same structure.
+		Reads the clinical notes in the dataset. For new datasets, it is necessary to implement a new reader in this file.
+		The new reader must follow the same output structure as current readers. Then, the system will work properly since
+		the return of this method always follows the same structure.
 		:param directory: root directory of the dataset
-		:param datasetName: dataset name, used to indetify which method to use 
+		:param datasetName: dataset name, used to identify which reader method should be used
 		:return: Dict of clinical notes with the following structure
 			{
 				"train":{
@@ -31,12 +32,12 @@ class DatasetReader():
 		elif datasetName == "examples":
 			return DatasetReader._readerExamples(directory)
 		else:
-			raise("There are no reader defined for this dataset, please implement it or used one of the ones already existent!")
+			raise("There are no readers defined for this dataset. Please implement it or use one of the already existing readers!")
 		return None
 
 	def _reader2018Track2(directory):
 		"""
-		This private method reads the dataset from N2C2 2018 Track 2
+		This private method reads the dataset from N2C2 2018 Track 2 on Medication Extraction and ADE
 		:param directory: Root directory for the dataset
 		:return: Dict similar to the method readClinicalNotes
 		"""
@@ -99,7 +100,7 @@ class DatasetReader():
 
 	def _reader2009(directory):
 		"""
-		This private method reads the dataset from N2C2 2009 challenge
+		This private method reads the dataset from I2B2 2009 challenge on medication extraction
 		:param directory: Root directory for the dataset
 		:return: Dict similar to the method readClinicalNotes
 		"""
@@ -167,7 +168,7 @@ class DatasetReader():
 
 	def _readerExamples(directory):
 		"""
-		This private method reads the dataset example provided in the repository
+		This private method reads the example dataset provided in the repository
 		:param directory: Root directory for the dataset
 		:return: Dict similar to the method readClinicalNotes
 		"""

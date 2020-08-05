@@ -16,7 +16,7 @@ def help(show=False):
 						type=str, default="../settings.ini", \
 						help='The system settings file (default: ../settings.ini)')	
 
-	executionMode = parser.add_argument_group('Execution Mode', 'Choose what the desired execution mode!')
+	executionMode = parser.add_argument_group('Execution Mode', 'Select the desired execution mode!')
 	executionMode.add_argument('-v', '--voc-builder', default=False, action='store_true', \
 							help='In this mode, the system will create the vocabularies to use in Neji (default: False)')
 	executionMode.add_argument('-a', '--annotate', default=False, action='store_true', \
@@ -56,7 +56,7 @@ def readSettings(settingsFile):
 
 def validateSettings(settings, args):
 	if sum([args.voc_builder,args.annotate,args.evaluate,args.load_ohdsi_voc]) != 1:
-		print("Please you only can choose one execution mode!")
+		print("Please, you can only choose one execution mode!")
 		return False
 
 	if args.voc_builder:
@@ -124,7 +124,7 @@ def annotationMode(settings, read):
 		nejiAnnotations = Annotator.annotate(clinicalNotes)
 		Writer.writeAnnotations(nejiAnnotations, settings["dataset"]["neji_annotations"])
 
-	annotations = Annotator.posProcessing(clinicalNotes, nejiAnnotations, settings["post_vocabularies"])
+	annotations = Annotator.postProcessing(clinicalNotes, nejiAnnotations, settings["post_vocabularies"])
 	matrix = Writer.writeMatrix(annotations, settings["dataset"]["matrix_location"])
 	print("Done!")
 	return matrix
@@ -138,12 +138,12 @@ def evaluationMode(settings, read, detailEva):
 		nejiAnnotations = Annotator.annotate(clinicalNotes)
 	Evaluator.evaluateNeji(clinicalNotes, nejiAnnotations, detailEva)
 
-	annotations = Annotator.posProcessing(clinicalNotes, nejiAnnotations, settings["post_vocabularies"])
+	annotations = Annotator.postProcessing(clinicalNotes, nejiAnnotations, settings["post_vocabularies"])
 	Evaluator.evaluateAnnotations(clinicalNotes, annotations, detailEva)
 	print("Done!")
 
 def buildUsagiInputFile(matrix, settings):
-	print("Usagi Input file mode!")
+	print("Usagi input file mode!")
 	usagiInput = Utils.createUniqueConcepts(matrix)
 	Writer.writeUsagiInputs(usagiInput, settings["harmonisation"]["usagi_input"])
 	print("Done!")
@@ -181,7 +181,7 @@ def main():
 		if args.load_ohdsi_voc:
 			loadingOHDSIVocabulariesMode(settings)
 	else:
-		print("The settings are not defined correctly. Please confirm all the necessary parameters in the documentation!")
+		print("The settings are not defined correctly. Please confirm the necessary parameters in the documentation!")
 		help(show=True)
 		exit()
 

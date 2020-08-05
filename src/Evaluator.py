@@ -3,8 +3,8 @@ import collections
 class Evaluator():
 	def evaluateNeji(clinicalNotes, nejiAnnotations, showDetail=False):
 		"""
-		This method evaluates the Neji performance to detect drugs. 
-		This evaluation only considers if the drug was detecting considering the initial span.
+		This method evaluates the performance of the Neji annotator in the detection of drugs.
+		This evaluation only considers if the drug was detected considering the initial span.
 		Strength was not evaluated in this method.
 		:param clinicalNotes: Dict of clinical notes with the following structure
 			{
@@ -21,7 +21,7 @@ class Evaluator():
 				}
 				"test":{...}
 			}
-		:param nejiAnnotations: Dict with the neji annotations, key is the dataset (train or test), value is another dict containing the
+		:param nejiAnnotations: Dict with the Neji annotations, key is the dataset (train or test), value is another dict containing the
 		files name as key and a list of annotations. The annotations have the following structure: date|UMLS:C2740799:T129:DrugsBank|10
 			{
 				"train":{
@@ -29,7 +29,7 @@ class Evaluator():
 				}
 				"test":{...}
 			}
-		:param showDetail: Boolean that when is set as True, the system shows all the false positives and false negatives annotations
+		:param showDetail: Boolean that when set to True, the system shows all the false positive and false negative annotations
 		"""
 		for dataset in clinicalNotes:
 			if dataset not in nejiAnnotations:
@@ -39,12 +39,12 @@ class Evaluator():
 			metrics = {}
 			for fileName in clinicalNotes[dataset]:
 				if fileName not in nejiAnnotations[dataset]:
-					print ("Note " + fileName + " not annotated! Maybe an decoding error during the annotation procedure!")
+					print ("Note " + fileName + " not annotated! Maybe a decoding error occurred during the annotation procedure!")
 					continue
 				annGSList = []
 				if "annotation" not in clinicalNotes[dataset][fileName]:
 					if showDetail:
-						print("File " + fileName + " not available in the gold standard|")
+						print("File " + fileName + " not available in the gold standard!")
 				else:
 					for annID in clinicalNotes[dataset][fileName]["annotation"]:
 						ann = clinicalNotes[dataset][fileName]["annotation"][annID]
@@ -59,9 +59,9 @@ class Evaluator():
 	def _calculateIndividualMetrics(annGS, ann):
 		"""
 		Private method to calculate metrics individually (Precision, Recall, F1-Score) and 
-		to provide metrics to global calculation (True positives, False positives, False negatives)
+		to provide metrics for the global calculation (True positives, False positives, False negatives)
 		:param annGS: List of tuples with the concepts and the inital span for each Drug annotation in the gold standard
-		:param ann: List of tuples with the concepts and the inital span for each Drug annotated
+		:param ann: List of tuples with the concepts and the inital span for each annotated Drug
 		:return: Dict with individual and global metrics
 			{
 				"individual":(Precision, Recall, F1-Score)
@@ -114,7 +114,7 @@ class Evaluator():
 					"false_positives": False Positives
 				}
 			}
-		:param showDetail: Boolean that when is set as True, the system shows all the false positives and false negatives annotations
+		:param showDetail: Boolean that when set to True, the system shows all the false positive and false negative annotations
 		"""
 		tp = 0
 		fp = 0
@@ -157,11 +157,11 @@ class Evaluator():
 	def evaluateAnnotations(clinicalNotes, annotations, showDetail=False):
 		"""
 		This method evaluates the final result of the NLP process.
-		This evaluation considers the drugs with routes associated, since one pre requisite of this methodology was to detect 
-		drugs and routes, mainly because the OMOP CDM structure.
-		Therefore, this evaluation will compare the route found and the concept initial span
-		This evaluation only considers if the drug was detecting considering the initial span.
-		Strength and quantity were not evaluated in this method (for now).
+		This evaluation considers the drugs with routes associated, since one pre-requisite of this methodology was to detect
+		drugs and routes, mainly due to the OMOP CDM structure having mandatory fields.
+		Therefore, this evaluation will compare the detected route and the concept initial span
+		This evaluation only considers if the drug was detected considering the initial span.
+		Strength and dosage were not evaluated in this method (for now).
 		:param clinicalNotes: Dict of clinical notes with the following structure
 			{
 				"train":{
@@ -177,16 +177,16 @@ class Evaluator():
 				}
 				"test":{...}
 			}
-		:param annotation: Dict with the drug and strenght/dosage/quantity/route (list) present in each file, by dataset.
+		:param annotation: Dict with the drug and strength/dosage/route (list) present in each file, by dataset.
 			{
 				"train":{
 					"file name"":{
-						("concept",annSpan):[strenght, dosage, route, quantity]
+						("concept",annSpan):[strength, dosage, route]
 					}
 				}
 				"test":{...}
 			}
-		:param showDetail: Boolean that when is set as True, the system shows all the false positives and false negatives annotations
+		:param showDetail: Boolean that when set to True, the system shows all the false positive and false negative annotations
 		"""
 		for dataset in clinicalNotes:
 			if dataset not in annotations:
@@ -196,13 +196,13 @@ class Evaluator():
 			metrics = {}
 			for fileName in clinicalNotes[dataset]:
 				if fileName not in annotations[dataset]:
-					print ("Note " + fileName + " not annotated! Maybe an decoding error during the annotation procedure!")
+					print ("Note " + fileName + " not annotated! Maybe a decoding error during the annotation procedure!")
 					continue
 				annGSList = []#(drug, span, route)
 
 				if "relation" not in clinicalNotes[dataset][fileName]:
 					if showDetail:
-						print("File " + fileName + " not available in the gold standard|")
+						print("File " + fileName + " not available in the gold standard!")
 				else:
 					for relID in clinicalNotes[dataset][fileName]["relation"]:
 						annID = clinicalNotes[dataset][fileName]["relation"][relID][0]
@@ -226,7 +226,7 @@ class Evaluator():
 	def _calculateIndividualMetricsRel(annGS, ann, doc):
 		"""
 		Private method to calculate metrics individually (Precision, Recall, F1-Score) and 
-		to provide metrics to global calculation (True positives, False positives, False negatives)
+		to provide metrics for global calculation (True positives, False positives, False negatives)
 		considering the relations between routes and drugs
 		:param annGS: List of tuples with the concepts and routes for each Drug annotation in the gold standard
 		:param ann: List of tuples with the concepts and routes for each Drug annotated
