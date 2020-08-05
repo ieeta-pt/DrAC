@@ -59,7 +59,7 @@ The first stage of the pipeline is responsible for annotating drug information i
 This stage is divided in the following parts:
 
 ### Vocabulary creation
-To create vocabulary files for the Neji annotating system, it is firstly necessary to create domain specific vocabulary files following the procedure presented [here](https://github.com/bioinformatics-ua/DrAC/tree/master/vocabularies/README.md)
+To create vocabulary files for the Neji annotating system, it is firstly necessary to create domain specific vocabulary files following the procedure presented [here](https://github.com/bioinformatics-ua/DrAC/tree/master/vocabularies/README.md).
 
 Once the previous vocabulary files are created, it is necessary to filter and format them to be compliant with Neji. For this, firstly ensure that the variables `umls_rxnorm`, `umls_drugbank` and `umls_aod` are correctly defined. Then, simply run the following command to create Neji compliant dictionary files.
 
