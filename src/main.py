@@ -94,7 +94,7 @@ def validateSettings(settings, args):
 			return False
 
 	if args.annotate and args.usagi_input:
-		if "harmonisation" not in settings:
+		if "harmonisation" not in settings and "tables" not in settings:
 			return False
 		if 	"usagi_input" not in settings["harmonisation"]:
 			return False
@@ -151,7 +151,8 @@ def buildUsagiInputFile(matrix, settings):
 def migrationMode(matrix, settings, loadIntoDB):
 	print("Migration mode!")
 	Harmonizer.harmonize(matrix, settings["harmonisation"]["usagi_output"])
-	print("to do")
+	if loadIntoDB:
+		Writer.writeMigratedData(settings["database"], settings["tables"])
 	print("Done!")
 
 def loadingOHDSIVocabulariesMode(settings):
