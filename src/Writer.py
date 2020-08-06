@@ -1,3 +1,6 @@
+from Tables.DrugExposure import DrugExposure
+from Tables.Note import Note
+from Tables.NoteNLP import NoteNLP
 from Tables.BaseTable import BaseTable
 from sqlalchemy import create_engine
 import pandas as pd
@@ -147,7 +150,7 @@ class Writer():
 												 schema 	= dbSettings["schema"],
 												 dtype 		= BaseTable.getDataTypesForSQL(table))
 
-	def writeMigratedData(dbSettings, tables):
+	def writeMigratedDataDB(dbSettings, tables):
 		"""
 		This method reads the migrated data in CSV files and write them in the database
 		:param dbSettings: Dict with all the fields to establish a connection with the database (settings["database"])
@@ -165,7 +168,6 @@ class Writer():
 												 schema 	= dbSettings["schema"],
 												 dtype 		= BaseTable.getDataTypesForSQL(table))
 
-
 	def writeUsagiInputs(uniqueConcepts, file):
 		"""
 		This method reads the unique concepts with their respective routes and writes them in the "file"
@@ -181,3 +183,30 @@ class Writer():
 		for route in routes:
 			out.write(route+"\n")
 		out.close()
+
+	def writeMigratedDataCSV(values, location):
+		"""
+		:param
+		:return:
+		"""
+		for table in location:
+			print(table)
+			out = open(location[table], "w", encoding='utf8')
+
+			fileHeaders = ""
+			if table == "drug_exposure":
+				for x in DrugExposure.columns:
+					fileHeaders += "{}\t".format(x)
+			elif table == "note":
+				for x in Note.columns:
+					fileHeaders += "{}\t".format(x)
+			elif table == "note_nlp":
+				for x in NoteNLP.columns:
+					fileHeaders += "{}\t".format(x)
+
+
+			fileHeaders = fileHeaders[:-1] + "\n"
+			out.write(fileHeaders)
+			for elem in values[table]:
+				out.write(elem.getRow() + "\n")
+			out.close()

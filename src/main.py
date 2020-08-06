@@ -127,7 +127,7 @@ def annotationMode(settings, read):
 	annotations = Annotator.postProcessing(clinicalNotes, nejiAnnotations, settings["post_vocabularies"])
 	matrix = Writer.writeMatrix(annotations, settings["dataset"]["matrix_location"])
 	print("Done!")
-	return matrix
+	return matrix, clinicalNotes
 
 def evaluationMode(settings, read, detailEva):
 	print("Evaluation mode!")
@@ -148,11 +148,12 @@ def buildUsagiInputFile(matrix, settings):
 	Writer.writeUsagiInputs(usagiInput, settings["harmonisation"]["usagi_input"])
 	print("Done!")
 
-def migrationMode(matrix, settings, loadIntoDB):
+def migrationMode(matrix, settings, loadIntoDB, clinicalNotes):
 	print("Migration mode!")
-	Harmonizer.harmonize(matrix, settings["harmonisation"]["usagi_output"])
+	results = Harmonizer.harmonize(matrix, settings["harmonisation"]["usagi_output"], settings["tables"], clinicalNotes)
+	Writer.writeMigratedDataCSV(results, settings["tables"])
 	if loadIntoDB:
-		Writer.writeMigratedData(settings["database"], settings["tables"])
+		Writer.writeMigratedDataDB(settings["database"], settings["tables"])
 	print("Done!")
 
 def loadingOHDSIVocabulariesMode(settings):
@@ -169,11 +170,11 @@ def main():
 			vocabularyCreationMode(settings)
 
 		if args.annotate:
-			matrix = annotationMode(settings, args.read_ann)
+			matrix, clinicalNotes = annotationMode(settings, args.read_ann)
 			if args.usagi_input:
 				buildUsagiInputFile(matrix[settings["harmonisation"]["dataset"]], settings)
 			if args.migrate:
-				migrationMode(matrix[settings["harmonisation"]["dataset"]], settings, args.load_db)
+				migrationMode(matrix[settings["harmonisation"]["dataset"]], settings, args.load_db, clinicalNotes)
 
 		if args.evaluate:
 			evaluationMode(settings, args.read_ann, args.detail_eva)
