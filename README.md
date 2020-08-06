@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/bioinformatics-ua/DrAC.svg?branch=master)](https://travis-ci.org/github/bioinformatics-ua/DrAC)
+[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](LICENSE)
 
 <p align="center"><img src="images/logo.png" alt="cn-to-cdm" height="100" border="0" /></p>
 
