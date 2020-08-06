@@ -150,7 +150,7 @@ def buildUsagiInputFile(matrix, settings):
 
 def migrationMode(matrix, settings, loadIntoDB, clinicalNotes):
 	print("Migration mode!")
-	results = Harmonizer.harmonize(matrix, settings["harmonisation"]["usagi_output"], settings["tables"], clinicalNotes)
+	results = Harmonizer.harmonize(matrix, settings["harmonisation"]["usagi_output"], clinicalNotes)
 	Writer.writeMigratedDataCSV(results, settings["tables"])
 	if loadIntoDB:
 		Writer.writeMigratedDataDB(settings["database"], settings["tables"])

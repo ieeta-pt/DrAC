@@ -184,14 +184,15 @@ class Writer():
 			out.write(route+"\n")
 		out.close()
 
-	def writeMigratedDataCSV(values, location):
+	def writeMigratedDataCSV(tables, locations):
 		"""
-		:param
-		:return:
+		This method writes the OMOP CDM tables provided in "tables" to the respective directories provided in locations
+		:param tables: tables in the OMOP CDM data schema
+		:param locations: directories where each table should be saved
 		"""
-		for table in location:
+		for table in locations:
 			print(table)
-			out = open(location[table], "w", encoding='utf8')
+			out = open(locations[table], "w", encoding='utf8')
 
 			fileHeaders = ""
 			if table == "drug_exposure":
@@ -207,6 +208,6 @@ class Writer():
 
 			fileHeaders = fileHeaders[:-1] + "\n"
 			out.write(fileHeaders)
-			for elem in values[table]:
+			for elem in tables[table]:
 				out.write(elem.getRow() + "\n")
 			out.close()

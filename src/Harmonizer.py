@@ -3,15 +3,15 @@ from Tables.Note import Note
 from Tables.NoteNLP import NoteNLP
 
 class Harmonizer():
-	def harmonize(matrix, usagiOutput, location, clinicalNotes):
+	def harmonize(matrix, usagiOutput, clinicalNotes):
 		"""
 		This method is used in the system's Migration mode and 1) harmonizes the concepts in the matrix to their standard definition,
-		2) migrates harmonized data into the OMOP CDM schema, and 3) saves it a CSV file.
+		2) migrates harmonized data into the OMOP CDM schema
 		The mappings used for the harmonization procedure must be previously validated in the Usagi tool, before being used in this method.
 		:param matrix: matrix with extracted information from the annotation component
 		:param usagiOuput: CSV file with concept mappings that were validated and exported from Usagi
-
 		:param clinicalNotes: Dict of clinical notes with the following structure (but only the "cn" from each file will be used)
+		:return values: the tables to be migrated into the OMOP CDM data schema
 			{
 				"train":{
 					"file name"":{
