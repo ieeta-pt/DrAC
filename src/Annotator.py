@@ -13,6 +13,24 @@ ROUTE = 2
 #QUANTITY = 3
 SPAN = 3
 
+DOSAGE_FORM   = "tablet|tab|capsule|caplet|cap|pill|lozenge|packet|patch|puff|squirt|gel|softgel"
+EXTENDED_DF   = "extended release enteric coated capsule|12 hour extended release capsule|24 hour extended release capsule|extended release enteric coated tablet|12 hour extended release tablet|24 hour extended release tablet|16 hour transdermal patch|24 hour transdermal patch|72 hour transdermal patch|mucous membrane topical solution|sustained release buccal tablet|soap topical bar|enteric coated capsule|extended release capsule|augmented topical cream|orderable drug form|augmented topical gel|gas for inhalation|metered dose inhaler|dry powder inhaler|solution for injection|suspension for injection|augmented topical lotion|augmented topical ointment|biweekly transdermal patch|weekly transdermal patch|medicated bar soap|medicated liquid soap|ophthalmic irrigation solution|extended release suspension|enteric coated tablet|extended release tablet|toothpaste dental toothpaste|prefilled applicator|chewable bar|topical cake|oral capsule|liquid cleanser|ear cream|eye cream|nasal cream|ophthalmic cream|oral cream|otic cream|rectal cream|topical cream|vaginal cream|buccal film|cutaneous foam|oral foam|rectal foam|topical foam|vaginal foam|inhalation gas|eye gel|nasal gel|ophthalmic gel|oral gel|rectal gel|topical gel|urethral gel|vaginal gel|chewing gum|drug implant|nasal inhalant|nasal inhaler|nasal jelly|ophthalmic jelly|oral jelly|rectal jelly|vaginal jelly|cleanser liquid|topical lotion|topical oil|ear ointment|eye ointment|nasal ointment|ophthalmic ointment|oral ointment|otic ointment|rectal ointment|topical ointment|vaginal ointment|medicated pad|oral paste|transdermal patch|drug pellet|cutaneous powder|inhalant powder|inhalation powder|oral powder|rectal powder|topical powder|vaginal powder|vaginal ring|mouthwash rinse|oral rinse|medicated shampoo|bar soap|ophthalmic sol|cutaneous solution|inhalant solution|inhalation solution|injectable solution|intramuscular solution|intraperitoneal solution|intravenous solution|irrigation solution|nasal solution|ophthalmic solution|oral solution|otic solution|rectal solution|topical solution|mucosal spray|nasal spray|oral spray|powder spray|rectal spray|topical spray|vaginal spray|oral strip|rectal suppositories|vaginal suppositories|rectal suppository|urethral suppository|vaginal suppository|injectable suspension|intramuscular suspension|intrathecal suspension|intravenous suspension|nasal suspension|ophthalmic suspension|oral suspension|otic suspension|rectal suspension|prefilled syringe|buccal tablet|chewable tablet|disintegrating tablet|gastro-resistant tablet|oral tablet|sublingual tablet|vaginal tablet|enteric-coated tablet|medicated tape|oral troche|bar|beads|cake|caplet|caps|capsule|cement|cream|crystal|disk|douche|elixir|enema|flake|foam|gargle|gas|gel|granule|inhalant|jelly|liquid|lotion|lozenge|mouthwash|mouthwash/rinse|oil|ointment|pack|paste|patch|pellet|powder|pudding|salve|solid|solution|spray|suppositories|suppository|suspension|syrup|tablet|toothpaste|troche|unguent|wafer"
+ALL_FORM      = EXTENDED_DF + "|" + DOSAGE_FORM + "|" + "tab|pill|packet|puff|squirt|softgel|nebulizer|neb|supplementation|supplement|aerosol|emulsion|implant|injection|shampoo|soap|cream|elixir|enema|gel|inhalant|liquid|lotion|ointment|powder|solution|spray|suppository|syrup|gttae|gtts"
+DURATION_UNIT = "hours|hour|hrs|days|day|weeks|week|months|month|mons|mon|years|year|yrs|yr"
+STR_NUM       = "half|one|two|three|four|five|six|seven|eight|nine|ten|twelve"
+MEAL          = "breakfast|lunch|dinner|supper|meals|meal"
+DAYTIME       = "am|pm|a\\.m\\.|p\\.m\\.|morning|afternoon|noon|evening|night|daytime|nighttime|bedtime|h\\.s\\.|hs"
+DAYS          = "monday|mon|tuesday|tues|wednesday|wed|thursday|thurs|friday|fri|saturday|sat|sunday|sun|day|mondays|tuesdays|wednesdays|thursdays|fridays|saturdays|sundays"
+TIME_UNIT     = "hour|hr|h|minute|min|hours|hrs|minutes|mins"
+DAY_UNIT      = "day|d|week|wk|month|mon|days|weeks|wks|months|mons"
+PER_UNIT      = "(?:(?:a|one|per)(?:\\s+|-)(?:day|week|wk|month|mon))|nightly|daily|weekly|monthly"
+ASNEED        = "as necessary|as needed|as-needed|as directed|as-directed|prn|p\\.r\\.n\\."
+NUMBER        = "(?:half|one three|one fourth|one|two|three|four|five|six|seven|eight|nine|ten|\\d/\\d|\\d\\.\\d|\\d+)(?:(?: |-)?(?:-|to)(?: |-)?(?:half|one three|one fourth|one|two|three|four|five|six|seven|eight|nine|ten|\\d/\\d|\\d\\.\\d|\\d+))?"
+DECIMAL_NUM   = "(?:\\d+,)?\\d+(?:\\.\\d+)?(?:(?: |-)?(?:-|to)(?: |-)?(?:\\d+,)?\\d+(?:\\.\\d+)?)?"
+FREQ_LATIN    = "tid|bd|bid|bis|qd|qhs|qad|qam|qpm|qds|qh|qid|qqh|od|t\\.i\\.d\\.|b\\.d\\.|b\\.i\\.d.|q\\.d\\.|q\\.h\\.s\\.|q\\.a\\.d\\.|q\\.a\\.m\\.|q\\.p\\.m\\.|q\\.d\\.s\\.|q\\.h\\.|q\\.i\\.d\\.|q\\.q\\.h\\.|o\\.d\\."
+ROUTE_REG     = "subcutaneously|sq|intervenous|intervenously|injected|transdermal|gastric|duodental|skin|pv|topical|topically|vaginally|po|p\\.o\\.|mouth|oral|orally|rectally|anally|pr|p\\.r\\.|ou|o\\.u\\.|iv|nostril|intramuscular"
+STRENGTH_UNIT = "mg/dl|mg/ml|g/l|milligrams|milligram|mg|grams|gram|g|micrograms|microgram|mcg|meq|iu|cc|units|unit|tablespoons|tablespoon|teaspoons|teaspoon"
+		
 class Annotator():
 	def annotate(clinicalNotes):
 		"""
@@ -154,6 +172,7 @@ class Annotator():
 						
 						if int(annSpan) not in sentences:
 							continue 
+
 						results[ROUTE] = Annotator._annotateRoute(sentences[int(annSpan)], voc["route-complex"], voc["route"])
 
 						if results[ROUTE] != None:
@@ -165,12 +184,10 @@ class Annotator():
 							else:
 								drug = filterAnn[0][0]
 
-							##if results[STRENGTH] == None:
-							##	results[STRENGTH] = Annotator._annotateStrength(drug, sentence, voc["strenght"])
-							##results[DOSAGE] = Annotator._annotateDosage(drug, sentence, voc["all"])
-							#results[QUANTITY] = Annotator._annotateQuantity(filterAnn[0], sentence, results[ROUTE])
-							
-							#results[SPAN] = [annSpan]
+							sentence = ' '.join(sentences[int(annSpan)])
+							if results[STRENGTH] == None:
+								results[STRENGTH] = Annotator._annotateStrength(sentence)
+							results[DOSAGE] = Annotator._annotateDosage(sentence)
 
 							annotations[dataset][file][(drug, annSpan)] = results
 
@@ -216,44 +233,46 @@ class Annotator():
 			return route[0][0]
 		return None
 
-#	def _annotateQuantity(concept, sentence, route):
-#		#NOT USED
-#		return None
-
-	def _annotateStrength(concept, sentence, strength):
-		sentence = "teste 500/200 mg per day"
-		DECIMAL_NUM   = "(?:\\d+,)?\\d+(?:\\.\\d+)?(?:(?: |-)?(?:-|to)(?: |-)?(?:\\d+,)?\\d+(?:\\.\\d+)?)?"
-		STRENGTH_UNIT = "mg/dl|mg/ml|g/l|milligrams|milligram|mg|grams|gram|g|micrograms|microgram|mcg|meq|iu|cc|units|unit|tablespoons|tablespoon|teaspoons|teaspoon"
-		strength = re.compile(r"\b(%s/)?(%s)(\s+|-)?(%s)\b" %(DECIMAL_NUM, DECIMAL_NUM, STRENGTH_UNIT), re.IGNORECASE)
-		x = strength.search(sentence)
-		if x:
-			#print(dir(x.groupdict))
-			#print(x.groups())
-			pass
+	def _annotateStrength(sentence):
+		strengthList = [
+			re.compile(r"\b(%s/)?(%s)(\s+|-)?(%s)\b"        %(DECIMAL_NUM, DECIMAL_NUM, STRENGTH_UNIT), re.IGNORECASE),
+			re.compile(r"\b\d+\s?(-|to)\s?\d+(\s|-)?(%s)\b" %STRENGTH_UNIT, re.IGNORECASE),
+			re.compile(r"\b(%s)\s+(to\s+(%s)\s+)?(%s)\b"    %(STR_NUM, STR_NUM, STRENGTH_UNIT), re.IGNORECASE)
+		]
+		for regex in strengthList:
+			x = regex.search(sentence)
+			if x:
+				return x.group(0)
 		return None
 
-	def _annotateDosage(concept, sentence, strength):
+	def _annotateDosage(sentence):
 		"""
 		:return: The dosage/quantity of the drug taken by the patient
 			two tablets -> 2
 		"""
-		DECIMAL_NUM   = "(?:\\d+,)?\\d+(?:\\.\\d+)?(?:(?: |-)?(?:-|to)(?: |-)?(?:\\d+,)?\\d+(?:\\.\\d+)?)?"
-		volume = re.compile(r"\b(%s)\s+(ml)\b" %DECIMAL_NUM, re.IGNORECASE)
-		x = volume.search(sentence)
-		if x:
-			pass
-			#print(dir(x.groupdict))
-			#print(x.groups())
-			#['__class__', '__copy__', '__deepcopy__', '__delattr__', '__dir__', '__doc__', 
-			#'__eq__', '__format__', '__ge__', '__getattribute__', '__getitem__', '__gt__', 
-			#'__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__ne__', '__new__', 
-			#'__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', 
-			#'__subclasshook__', 'end', 'endpos', 'expand', 'group', 'groupdict', 'groups', 
-			#'lastgroup', 'lastindex', 'pos', 're', 'regs', 'span', 'start', 'string']
-
-
-
-			#		"concept":
-			#patient:[strenght, dosage, route, [annSpann]]
-			#patient:[5mg, 2, route, [annSpann]]
+		dosageList = [
+			re.compile(r"\b(%s)\s+(at a time|dose of)\b"                        %NUMBER, re.IGNORECASE),
+			re.compile(r"\b(%s)\s+(%s)(s|es)?\b"                                %(NUMBER, ALL_FORM), re.IGNORECASE),
+			re.compile(r"\b(%s)\s+(%s/)?(%s)(\s|-)?(%s)\s+(%s)(s|es)?\b"        %(NUMBER, DECIMAL_NUM, DECIMAL_NUM, STRENGTH_UNIT, ALL_FORM), re.IGNORECASE),
+			re.compile(r"\b(%s)\s+(%s)(\s|-)?(times|time)\s+(%s)\b"             %(NUMBER, NUMBER, PER_UNIT), re.IGNORECASE),
+			re.compile(r"\b(%s)\s+(after|before|following|with|w/|at)\s+(%s)\b" %(NUMBER, MEAL), re.IGNORECASE),
+			re.compile(r"\b(%s)\s+(in|on|at|during)\s+(the\s+)?(%s)(\W|$)"      %(NUMBER, DAYTIME), re.IGNORECASE),
+			re.compile(r"\b(%s)\s+(each|every|on)\s+(%s)\b"                     %(NUMBER, DAYS), re.IGNORECASE),
+			re.compile(r"\b(%s)\s+every\s+(%s)\s+(%s|%s)\b"                     %(NUMBER, NUMBER, TIME_UNIT, DAY_UNIT), re.IGNORECASE),
+			re.compile(r"\b(%s)\s+(q|q\.) ?(\d ?(to|-) ?)?\d? ?(%s|%s)\b"       %(NUMBER, TIME_UNIT, DAY_UNIT), re.IGNORECASE),
+			re.compile(r"\b(%s)\s*(%s)(\W|$)"                                   %(NUMBER, FREQ_LATIN), re.IGNORECASE),
+			re.compile(r"\b(%s)\s+(once|twice)(\s|-)(%s)\b"                     %(NUMBER, PER_UNIT), re.IGNORECASE),
+			re.compile(r"\b(%s)(\s+|-)(%s)\b"                                   %(NUMBER, PER_UNIT), re.IGNORECASE),
+			re.compile(r"\b(%s)\s+(%s)(\W|$)"                                   %(NUMBER, ASNEED), re.IGNORECASE),
+			re.compile(r"\b(%s)/(%s)\b"                                         %(NUMBER, DAY_UNIT), re.IGNORECASE),
+			re.compile(r"\b(%s)\s+(%s)\b"                                       %(NUMBER, ROUTE_REG), re.IGNORECASE),
+			re.compile(r"\b(%s)\s+(%s)\s+(\S+\s+){0,1}(%s)\b"                   %(STRENGTH_UNIT, NUMBER, ROUTE_REG), re.IGNORECASE)
+		]
+		for regex in dosageList:
+			x = regex.search(sentence)
+			if x:
+				for entry in x.groups():
+					if entry is not None:
+						if entry.isnumeric():
+							return entry
 		return None
