@@ -13,6 +13,8 @@ ROUTE = 2
 #QUANTITY = 3
 SPAN = 3
 
+
+# Group of variables adapted from MedXN to use in regexes
 DOSAGE_FORM   = "tablet|tab|capsule|caplet|cap|pill|lozenge|packet|patch|puff|squirt|gel|softgel"
 EXTENDED_DF   = "extended release enteric coated capsule|12 hour extended release capsule|24 hour extended release capsule|extended release enteric coated tablet|12 hour extended release tablet|24 hour extended release tablet|16 hour transdermal patch|24 hour transdermal patch|72 hour transdermal patch|mucous membrane topical solution|sustained release buccal tablet|soap topical bar|enteric coated capsule|extended release capsule|augmented topical cream|orderable drug form|augmented topical gel|gas for inhalation|metered dose inhaler|dry powder inhaler|solution for injection|suspension for injection|augmented topical lotion|augmented topical ointment|biweekly transdermal patch|weekly transdermal patch|medicated bar soap|medicated liquid soap|ophthalmic irrigation solution|extended release suspension|enteric coated tablet|extended release tablet|toothpaste dental toothpaste|prefilled applicator|chewable bar|topical cake|oral capsule|liquid cleanser|ear cream|eye cream|nasal cream|ophthalmic cream|oral cream|otic cream|rectal cream|topical cream|vaginal cream|buccal film|cutaneous foam|oral foam|rectal foam|topical foam|vaginal foam|inhalation gas|eye gel|nasal gel|ophthalmic gel|oral gel|rectal gel|topical gel|urethral gel|vaginal gel|chewing gum|drug implant|nasal inhalant|nasal inhaler|nasal jelly|ophthalmic jelly|oral jelly|rectal jelly|vaginal jelly|cleanser liquid|topical lotion|topical oil|ear ointment|eye ointment|nasal ointment|ophthalmic ointment|oral ointment|otic ointment|rectal ointment|topical ointment|vaginal ointment|medicated pad|oral paste|transdermal patch|drug pellet|cutaneous powder|inhalant powder|inhalation powder|oral powder|rectal powder|topical powder|vaginal powder|vaginal ring|mouthwash rinse|oral rinse|medicated shampoo|bar soap|ophthalmic sol|cutaneous solution|inhalant solution|inhalation solution|injectable solution|intramuscular solution|intraperitoneal solution|intravenous solution|irrigation solution|nasal solution|ophthalmic solution|oral solution|otic solution|rectal solution|topical solution|mucosal spray|nasal spray|oral spray|powder spray|rectal spray|topical spray|vaginal spray|oral strip|rectal suppositories|vaginal suppositories|rectal suppository|urethral suppository|vaginal suppository|injectable suspension|intramuscular suspension|intrathecal suspension|intravenous suspension|nasal suspension|ophthalmic suspension|oral suspension|otic suspension|rectal suspension|prefilled syringe|buccal tablet|chewable tablet|disintegrating tablet|gastro-resistant tablet|oral tablet|sublingual tablet|vaginal tablet|enteric-coated tablet|medicated tape|oral troche|bar|beads|cake|caplet|caps|capsule|cement|cream|crystal|disk|douche|elixir|enema|flake|foam|gargle|gas|gel|granule|inhalant|jelly|liquid|lotion|lozenge|mouthwash|mouthwash/rinse|oil|ointment|pack|paste|patch|pellet|powder|pudding|salve|solid|solution|spray|suppositories|suppository|suspension|syrup|tablet|toothpaste|troche|unguent|wafer"
 ALL_FORM      = EXTENDED_DF + "|" + DOSAGE_FORM + "|" + "tab|pill|packet|puff|squirt|softgel|nebulizer|neb|supplementation|supplement|aerosol|emulsion|implant|injection|shampoo|soap|cream|elixir|enema|gel|inhalant|liquid|lotion|ointment|powder|solution|spray|suppository|syrup|gttae|gtts"
@@ -234,6 +236,11 @@ class Annotator():
 		return None
 
 	def _annotateStrength(sentence):
+		"""
+		This method uses Regexes to detect the presence of strength information in the input sentence
+		:param sentence: sentence to search for strength information
+		:return: string with detected strength information if such content exists, returns None otherwise
+		"""
 		strengthList = [
 			re.compile(r"\b(%s/)?(%s)(\s+|-)?(%s)\b"        %(DECIMAL_NUM, DECIMAL_NUM, STRENGTH_UNIT), re.IGNORECASE),
 			re.compile(r"\b\d+\s?(-|to)\s?\d+(\s|-)?(%s)\b" %STRENGTH_UNIT, re.IGNORECASE),
@@ -247,8 +254,9 @@ class Annotator():
 
 	def _annotateDosage(sentence):
 		"""
-		:return: The dosage/quantity of the drug taken by the patient
-			two tablets -> 2
+		This method uses Regexes to detect the presence of dosage information in the input sentence
+		:param sentence: sentence to search for dosage information
+		:return: The dosage of the drug taken by the patient if such content exists, returns None otherwise
 		"""
 		dosageList = [
 			re.compile(r"\b(%s)\s+(at a time|dose of)\b"                        %NUMBER, re.IGNORECASE),
