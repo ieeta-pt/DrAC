@@ -166,7 +166,7 @@ class Annotator():
 								drug = filterAnn[0][0]
 
 							##if results[STRENGTH] == None:
-							##	results[STRENGTH] = Annotator._annotateStrenght(drug, sentence, voc["strenght"])
+							##	results[STRENGTH] = Annotator._annotateStrength(drug, sentence, voc["strenght"])
 							##results[DOSAGE] = Annotator._annotateDosage(drug, sentence, voc["all"])
 							#results[QUANTITY] = Annotator._annotateQuantity(filterAnn[0], sentence, results[ROUTE])
 							
@@ -220,7 +220,7 @@ class Annotator():
 #		#NOT USED
 #		return None
 
-	def _annotateStrenght(concept, sentence, strength):
+	def _annotateStrength(concept, sentence, strength):
 		sentence = "teste 500/200 mg per day"
 		DECIMAL_NUM   = "(?:\\d+,)?\\d+(?:\\.\\d+)?(?:(?: |-)?(?:-|to)(?: |-)?(?:\\d+,)?\\d+(?:\\.\\d+)?)?"
 		STRENGTH_UNIT = "mg/dl|mg/ml|g/l|milligrams|milligram|mg|grams|gram|g|micrograms|microgram|mcg|meq|iu|cc|units|unit|tablespoons|tablespoon|teaspoons|teaspoon"
