@@ -1,0 +1,11 @@
+note_nlp_id	note_id	section_concept_id	snippet	"offset"	lexical_variant	note_nlp_concept_id	nlp_system	nlp_date	nlp_datetime	term_exists	term_temporal	term_modifiers	note_nlp_source_concept_id
+0	0	44814645			albuterol	435							1154343
+1	0	44814645			carvedilol	20352							1346823
+2	0	44814645			ibuprofen	5640							1177480
+3	0	44814645			bisacodyl	1596							924939
+4	0	44814645			acetaminophen	161							1125315
+5	0	44814645			furosemide	4603							956874
+6	1	44814645			levetiracetam	114477							711584
+7	1	44814645			metoprolol	6918							1307046
+8	1	44814645			omeprazole	7646							923645
+9	2	44814645			aspirin	1191							1112807

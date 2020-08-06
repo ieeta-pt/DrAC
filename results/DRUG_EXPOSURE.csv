@@ -1,0 +1,11 @@
+drug_exposure_id	person_id	drug_concept_id	drug_exposure_start_date	drug_exposure_start_datetime	drug_exposure_end_date	drug_exposure_end_datetime	verbatim_end_date	drug_type_concept_id	stop_reason	refills	quantity	days_supply	sig	route_concept_id	lot_number	provider_id	visit_occurrence_id	visit_detail_id	drug_source_value	drug_source_concept_id	route_source_value	dose_unit_source_value
+0	0001	1154343						32426						4132161					albuterol	435	po	
+1	0001	1346823						32426						4132161					carvedilol	20352	po	
+2	0001	1177480						32426			40			4132161					ibuprofen	5640	po	
+3	0001	924939						32426						4132161					bisacodyl	1596	po	
+4	0001	1125315						32426						4132161					acetaminophen	161	po	
+5	0001	956874						32426						4132161					furosemide	4603	po	
+6	0002	711584						32426						4132161					levetiracetam	114477	po	
+7	0002	1307046						32426						4132161					metoprolol	6918	po	
+8	0002	923645						32426						4132161					omeprazole	7646	po	
+9	0003	1112807						32426						4132161					aspirin	1191	orally	
