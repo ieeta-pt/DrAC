@@ -6,7 +6,7 @@ class Vocabulary():
 		This method creates the vocabularies to insert in the Neji annotator.
 		We created more than one vocabulary, for different purposes
 		:param vocSettings: Dict of settings for the vocabularies 
-		:return: Dict with all the vocabularies, key is the file name and the value is a list of entries.
+		:return: Dict with all the vocabularies, key is the file name, value is a list of entries.
 	 		{
 				"fileName":
 				{
@@ -29,8 +29,8 @@ class Vocabulary():
 
 	def _relationWithCUIandTUI(tuisFile):
 		"""
-		This method creates the dict with the relation between CUIs ans TUIs
-		:param tuisFile: File location to read the relations between CUIs ans TUIs
+		This method creates the dict with the relation between CUIs and TUIs
+		:param tuisFile: File location to read the relations between CUIs and TUIs
 		:return: Dict with the relations, key is the CUI and value is the TUI
 			{
 				"CUI":("TUI","Name"),
@@ -48,7 +48,7 @@ class Vocabulary():
 
 	def _createSemanticDict(filteredUMLS, cuiToTui, name):
 		"""
-		This private method creates the vocabulary based on the UMLS RXNorm
+		This private method creates the vocabulary based on the UMLS
 		:param filteredUMLS: File location to read filtered UMLS concepts
 		:param cuiToTui: Output from the method _relationWithCUIandTUI
 		:param name: Vocabulary name to add in Neji
@@ -78,7 +78,8 @@ class Vocabulary():
 
 	def _createAllT200BasedOnRXNorm(rxnorm):
 		"""
-		This private method creates the vocabulary based on the UMLS RxNorm without considering the TUIs
+		This private method creates the vocabulary based on the RxNorm vocabulary without considering
+		the TUIs (a default TUI is used for every concept)
 		:param rxnorm: File location to read RxNorm concepts
 		:return: Dict with the vocabulary ready to be written, key is UMLS:CUI:TUI and value is the list of concepts
 			{
@@ -102,8 +103,8 @@ class Vocabulary():
 
 	def readPostProcessingVoc(files):
 		"""
-		This method reads the post processing vocabularies that are in the same format the ones used in Neji
-		:param files: All the files with the vocabularies defined in settings under [post_processing]
+		This method reads the post processing vocabularies that are in the same format as those used in Neji
+		:param files: All the files with the vocabularies defined in the Settings file under the section [post_processing]
 		:return: Dict of types of concepts, key is the type (i.e., route, dosage, etc..) and value is list of tuples(concepts, group)
 			{
 				"route":[("concept", "group")],
