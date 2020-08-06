@@ -6,7 +6,7 @@ import glob
 class Writer():
 	def writeMatrix(annotations, location):
 		"""
-		This method writes the matrix with all the information extracted
+		This method writes the matrix with all the information extracted and returns a dict with the matrix for each dataset (train and test if they exist)
 		First column: Patient id
 		Remaining columns: medications
 		:param annotations: Dict with the drug and dosage/strength present in each file, by dataset. Drugs without strength will have the value yes
@@ -18,11 +18,11 @@ class Writer():
 				}
 				"test":{...}
 			}
-		:param location: It is the location to write the matrix.
-		:return: Dict with both matrix
+		:param location: It is the location where to write the matrix file.
+		:return: Dict with both matrices
 		"""
 		allMatrix = {}
-		for dataset in annotations:#We created two matrix (test and train)
+		for dataset in annotations:#We created two matrices (test and train)
 			matrix = Writer._buildMatrix(annotations[dataset])
 			allMatrix[dataset] = matrix
 			out = open("{}{}_matrix.tsv".format(location, dataset), "w", encoding='utf8')
@@ -76,8 +76,8 @@ class Writer():
 
 	def writeVocabularies(vocabularies, location):
 		"""
-		This method writes the vocabularies in an location.
-		:param vocabularies: Dict containing all the vocabularies, key is the vocabulary name value is the dict with the vocabulary
+		This method writes the vocabularies in the "location" directory.
+		:param vocabularies: Dict containing all the vocabularies, key is the vocabulary name, value is the dict with the vocabulary
 			{
 				"fileName":
 				{
@@ -88,7 +88,7 @@ class Writer():
 				},
 				...
 			}
-		:param location: It is the location to write all the vocabularies.
+		:param location: The location where to write all the vocabularies.
 		"""
 		for vocName in vocabularies:
 			for tui in vocabularies[vocName]:
@@ -104,14 +104,13 @@ class Writer():
 
 	def writeAnnotations(nejiAnnotations, location):
 		"""
-		This method writes the neji annotations by dataset.
-		Since the system performs calls for each note to the neji server, which takes a while, the annotations are stored in disk
-		for reuse during the system development.
+		This method writes the Neji annotations by dataset. Since the system performs calls for each note to the Neji server,
+		which can be a time consuming process, the annotations are stored in the disk so that they can be reused during system development.
 		The output of this file has the following structure:
 			file name|concept|neji code|inital span
 		Example:
 			100035|date|UMLS:C2740799:T129:DrugsBank|10
-		:param nejiAnnotations: Dict with the neji annotations, key is the dataset (train or test), value is another dict containing the
+		:param nejiAnnotations: Dict with the Neji annotations, key is the dataset (train or test), value is another dict containing the
 		files name as key and a list of annotations. The annotations have the following structure: date|UMLS:C2740799:T129:DrugsBank|10
 			{
 				"train":{
@@ -119,7 +118,7 @@ class Writer():
 				}
 				"test":{...}
 			}
-		:param location: Directory to write the annotations
+		:param location: Directory to write the Neji annotations
 		"""
 		#for dataset in nejiAnnotations:
 		out = open("{}{}_nejiann.tsv".format(location, "train"), "w", encoding='utf8')
@@ -131,14 +130,14 @@ class Writer():
 	def writeOHDSIVocabularies(dbSettings, ohdsiVocabularies):
 		"""
 		This method reads the OHDSI Vocabularies in CSV files and write them in the database
-		:param dbSettings: Dict with all the fields to connect with the database (settings["database"])
+		:param dbSettings: Dict with all the fields to establish a connection with the database (settings["database"])
 		:param ohdsiVocabularies: Location of the OHDSI Vocabularies
 		"""
 		#I may need to change this due to huge files see: https://pythondata.com/working-large-csv-files-python/
 		engine = create_engine(dbSettings["datatype"]+"://"+dbSettings["user"]+":"+dbSettings["password"]+"@"+dbSettings["server"]+":"+dbSettings["port"]+"/"+dbSettings["database"])
 		vocabulariesFiles = glob.glob('{}*.{}'.format(ohdsiVocabularies, "csv"))
 		if not vocabulariesFiles:
-			print("The directory does not have any vocabularies to read")
+			print("The directory does not have any vocabularies to read.")
 		for file in vocabulariesFiles:
 			table = file.split("/")[-1].split(".")[0].lower()
 			print("Loading {} table...".format(table))
@@ -147,10 +146,11 @@ class Writer():
 												 index 		= False,
 												 schema 	= dbSettings["schema"],
 												 dtype 		= BaseTable.getDataTypesForSQL(table))
+
 	def writeMigratedData(dbSettings, tables):
 		"""
 		This method reads the migrated data in CSV files and write them in the database
-		:param dbSettings: Dict with all the fields to connect with the database (settings["database"])
+		:param dbSettings: Dict with all the fields to establish a connection with the database (settings["database"])
 		:param tables: Location of the migrated tables (Drug_Exposure, etc.)
 		"""
 		#I may need to change this due to huge files see: https://pythondata.com/working-large-csv-files-python/
@@ -165,7 +165,13 @@ class Writer():
 												 schema 	= dbSettings["schema"],
 												 dtype 		= BaseTable.getDataTypesForSQL(table))
 
+
 	def writeUsagiInputs(uniqueConcepts, file):
+		"""
+		This method reads the unique concepts with their respective routes and writes them in the "file"
+		:param uniqueConcepts: Contains entries with unique concepts and respective routes
+		:param file: file used to write the list of unique concepts and routes
+		"""
 		concepts, routes = uniqueConcepts
 		out = open(file, "w", encoding='utf8')
 		out.write("source\n")
