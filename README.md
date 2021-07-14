@@ -31,7 +31,7 @@ More documentation about the system is available [here](https://github.com/bioin
 Please cite the following, if you use DrAC in your work:
 
 ```bib
-in progress
+João Rafael Almeida, João Figueira Silva, Sérgio Matos, José Luís Oliveira, A two-stage workflow to extract and harmonize drug mentions from clinical notes into observational databases, Journal of Biomedical Informatics, Volume 120, 2021, 103849, ISSN 1532-0464, DOI: 10.1016/j.jbi.2021.103849
 ```
 
 ### Issues
